@@ -45,6 +45,10 @@ const GlobalProvider = (parameter: { children: React.ReactNode }) => {
     });
   };
 
+  /**
+   *
+   * @param link string link to the next pages
+   */
   const handleSetLink = (link: string) => {
     dispatch({
       type: types.SET_LINK,
