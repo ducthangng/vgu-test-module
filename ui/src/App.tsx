@@ -1,12 +1,12 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Footer from './components/Footer';
+import TestLayout from './components/test/TestLayout';
 
 function App() {
   return (
     <div className="App">
-      <Footer />
+      <TestLayout/>
     </div>
   );
 }
