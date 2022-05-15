@@ -7,7 +7,7 @@
 // create a subfolder for them
 
 import React from 'react';
-import { Breadcrumb } from 'antd';
+import { Breadcrumb, Button } from 'antd';
 
 export default function Footer() {
   return (
@@ -38,6 +38,8 @@ export default function Footer() {
         </Breadcrumb.Item>
         <Breadcrumb.Item>An Application</Breadcrumb.Item>
       </Breadcrumb>
+
+      <Button type="primary">Submit</Button>
     </div>
   );
 }
