@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import "./configs/antd/customized.css";
+import './configs/antd/customized.css';
 import Footer from './components/Footer';
 
 function App() {

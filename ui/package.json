@@ -44,13 +44,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "lint-staged": {
-    "src/**/*.{ts,tsx}": [
-      "eslint-config-prettier ui/src/**/*.{ts,tsx}",
-      "eslint ui/src/**/*.{ts,tsx} --fix",
-      "prettier --write ui/src/**/*.{ts,tsx}",
-      "git add ."
-    ]
   }
 }
