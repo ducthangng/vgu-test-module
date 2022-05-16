@@ -1,0 +1,91 @@
+.btn{
+    /* Take button */
+    border-radius: 50px;
+    width: 206px;
+    height: 50px;
+    background-color: #8172D5;
+    color: white;
+    top: 120px;
+    font-family: Roboto;
+    grid-area: a;
+    align-self: center;
+    justify-self: center;
+ }
+ 
+ .card{
+     /* Select card test */
+     width: 352px;
+     border-radius: 20px;
+     border:20px ;
+     height: 245px;
+     display: flex;   
+     align-items: center;
+     justify-content: center;
+ }
+ 
+ .cover{
+ 
+     /* image cover for select card test */
+     /* display: block;
+     grid-area: b;
+     align-self: top center;
+     justify-self: top center; */
+ 
+     /* Overlay */
+     position:absolute;
+     width: 125px;
+     height: 205px;
+     top: 20px;
+     left: 17px;
+     /* background: #3B3735; */
+     /* opacity: 0.2; */
+ }
+
+ .test_title{
+     /* Title for the card test */
+     display: flex;
+     position: absolute;
+     left: 156px;
+     top: 19px;
+     font-family: Roboto;
+     font-size: 25px;
+     font-weight: bold;
+
+ }
+
+ .test_description{
+     /* Description for the card test */
+     display: flex;
+     position: absolute;
+     left: 158px;
+     top: 58px;
+     font-family: Roboto;
+     font-size: 11px;
+
+ }
+ 
+ .content{
+     /* Content for the card test */
+     display: block;
+     align-items: center;
+     justify-content: center;
+     font-family: Roboto;
+     font-size:medium;
+     grid-area: b;
+     align-self: center;
+     justify-self: center;
+ }
+ 
+ .wrapper{
+     /* Center the wrapper */
+     display: grid;
+     grid-template-columns: repeat(0, 1fr);
+     grid-template-rows: repeat(1, 1fr);
+     gap: 10px;
+     grid-auto-rows: 30px;
+     grid-template-areas: 
+         ". a b a ."
+         ". a b a .";
+ }
+ 
+ 
