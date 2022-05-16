@@ -11,8 +11,6 @@ interface TestNavProps {
     submitTest: (event: React.MouseEvent<HTMLElement>) => void
 }
 
-const date:Date = new Date();
-
 export default function TestNav(props: TestNavProps) {
 
     const onClick: MenuProps['onClick'] = e => {
@@ -48,7 +46,7 @@ export default function TestNav(props: TestNavProps) {
 
                 <hr/>
 
-                <h3 style={{ fontWeight: "bold" }}>{ props.testPart }</h3>
+                <h5>{ props.testPart }</h5>
             </div>
 
             <Menu.Item key="mail">
