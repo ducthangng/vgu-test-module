@@ -45,6 +45,7 @@ export default function Footer() {
       </Breadcrumb>
 
       <Button type="primary">Submit</Button>
+      <p className="text-red-500 my-20">Hello</p>
     </div>
   );
 }
