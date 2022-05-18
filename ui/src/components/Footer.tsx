@@ -9,6 +9,11 @@
 import React from 'react';
 import { Breadcrumb, Button } from 'antd';
 
+const pets = [
+  { id: 1, name: 'Bo', age: 12 },
+  { id: 2, name: 'Bong', age: 13 },
+];
+
 export default function Footer() {
   return (
     <div>

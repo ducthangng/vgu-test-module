@@ -1,12 +1,10 @@
 import React from 'react';
-import './App.css';
-import "./configs/antd/customized.css";
-import TestCardPage from './pages/TestCardPage';
+import './App.scss';
+import './configs/antd/customized.css';
+import AppRoute from './routes/routes';
 
-function App() {
-  return(
-    <TestCardPage/>
-  );
-}
+const App = () => {
+  return <AppRoute />;
+};
 
 export default App;
