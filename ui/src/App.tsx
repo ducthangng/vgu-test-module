@@ -1,15 +1,10 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
 import './configs/antd/customized.css';
-import Footer from './components/Footer';
+import AppRoute from './routes/routes';
 
-function App() {
-  return (
-    <div className="App">
-      <Footer />
-    </div>
-  );
-}
+const App = () => {
+  return <AppRoute />;
+};
 
 export default App;
