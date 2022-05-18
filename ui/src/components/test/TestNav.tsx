@@ -3,8 +3,11 @@ import { Button, MenuProps } from 'antd';
 import { Avatar, Menu } from 'antd';
 import { AntDesignOutlined } from '@ant-design/icons';
 
+// interface
+
 interface TestNavProps {
   fullName: string;
+  profilePicture: string;
   studentId: string;
   testPart: string;
   timeLeft: string;
@@ -34,13 +37,17 @@ export default function TestNav(props: TestNavProps) {
           paddingRight: 20,
         }}
       >
-        <Avatar size={55} icon={<AntDesignOutlined />} />
+        <Avatar
+          size={55}
+          icon={<AntDesignOutlined />}
+          src={props.profilePicture}
+        />
         <p style={{ paddingTop: 10 }}>{props.fullName}</p>
-        <p>ID: {props.studentId}</p>
+        <p className="text-primary">ID: {props.studentId}</p>
 
         <hr />
 
-        <h5>{props.testPart}</h5>
+        <h3 className="font-bold mt-3">{props.testPart}</h3>
       </div>
 
       <Menu.Item key="mail">Navigation One</Menu.Item>
@@ -53,18 +60,7 @@ export default function TestNav(props: TestNavProps) {
           paddingRight: 20,
         }}
       >
-        <button
-          style={{
-            borderRadius: 8,
-            margin: 10,
-            padding: 5,
-            paddingLeft: 25,
-            paddingRight: 25,
-          }}
-          disabled
-        >
-          Time: {props.timeLeft}
-        </button>
+        <p className="border-2 rounded-md py-2">Time: {props.timeLeft}</p>
 
         <Button
           type="primary"

@@ -52,6 +52,14 @@ const mockTestQuestions = [
   },
 ];
 
+const mockUserAnswers = [
+  { id: 1, answer: 'A' },
+  { id: 2, answer: 'A' },
+  { id: 3, answer: 'A' },
+  { id: 4, answer: 'A' },
+  { id: 5, answer: 'A' },
+];
+
 export default function TestLayout() {
   //interface
   interface TestQuestion {
@@ -63,9 +71,14 @@ export default function TestLayout() {
     choiceD: string;
     answer: string;
   }
+  interface UserAnswer {
+    id: number;
+    answer: string;
+  }
 
   //student data
   const [fullName, setFullName] = useState<string>('');
+  const [profilePicture, setProfilePicture] = useState<string>('');
   const [studentId, setStudentId] = useState<string>('');
 
   // test data
@@ -74,6 +87,8 @@ export default function TestLayout() {
   const [timeLeft, setTimeLeft] = useState<string>('');
   const [intervalId, setIntervalId] = useState<number | undefined>(undefined);
   const [testQuestions, setTestQuestions] = useState<TestQuestion[]>();
+  const [userAnswers, setUserAnswers] = useState<UserAnswer[]>([]);
+  const userAnswersRef = useRef<UserAnswer[]>([]); //make a copy of userAnswers state to deal with setInterval closure
 
   //other data
   const [openNav, setOpenNav] = useState<boolean>(true);
@@ -82,6 +97,9 @@ export default function TestLayout() {
   const fetchData = () => {
     totalTime = 10;
     setFullName('Hua Nhat Gia Nghi');
+    setProfilePicture(
+      'https://www.bethesdaheadshots.com/wp-content/uploads/2020/02/Jonathan-Business-Headshot.jpg'
+    );
     setStudentId('18242');
     setTestPart('Listening');
     setTestQuestions(mockTestQuestions);
@@ -92,6 +110,8 @@ export default function TestLayout() {
 
   //countdown function
   const countdown = () => {
+    console.log('time is ' + totalTime);
+    console.log(userAnswers);
     if (totalTime == undefined) {
       return;
     }
@@ -110,65 +130,72 @@ export default function TestLayout() {
     setTimeLeft(minutesString + ':' + secondsString);
   };
   useEffect(() => {
-    if (!intervalId) {
-      setIntervalId(
-        window.setInterval(() => {
-          if (totalTime == undefined) {
-            return;
-          }
-          if (totalTime >= 0) {
-            countdown();
-          }
-        }, 1000)
-      );
-    }
-    return () => clearTimeout(intervalId);
-  }, [timeLeft, totalTime]);
+    setIntervalId(
+      window.setInterval(() => {
+        if (totalTime == undefined) {
+          return;
+        }
+        if (totalTime >= 0) {
+          countdown();
+        }
+      }, 1000)
+    );
+    return () => clearInterval(intervalId);
+  }, [timeLeft, totalTime, userAnswers]);
 
   //submit test function
   const submitTest = (event?: React.MouseEvent<HTMLElement>) => {
     event?.preventDefault();
     console.log('submit!');
+    console.log(userAnswersRef.current);
   };
+
+  useEffect(() => {
+    userAnswersRef.current = userAnswers;
+  }, [userAnswers]);
 
   return (
     <div style={{ padding: 30, backgroundColor: 'gray' }}>
       <div
         style={{
-          position: 'fixed',
-          top: '15vh',
           zIndex: 500,
           display: 'flex',
           flexDirection: 'row',
         }}
+        className="fixed top-40 lg:left-20"
       >
         {openNav && (
           <>
             <nav>
               <TestNav
                 fullName={fullName}
+                profilePicture={profilePicture}
                 studentId={studentId}
                 testPart={testPart}
                 timeLeft={timeLeft}
                 submitTest={submitTest}
               />
             </nav>
-            <Button
+            <button
               style={{
                 position: 'fixed',
                 left: '10',
               }}
+              className="p-3 border md:hidden"
               onClick={() => setOpenNav(!openNav)}
             >
               <CloseOutlined />
-            </Button>
+            </button>
           </>
         )}
 
         {!openNav && (
-          <Button onClick={() => setOpenNav(!openNav)}>
+          <button
+            className="p-3 border bg-white rounded-md md:hidden"
+            onClick={() => setOpenNav(!openNav)}
+          >
             <MenuOutlined />
-          </Button>
+          </button>
         )}
       </div>
 
@@ -178,7 +205,11 @@ export default function TestLayout() {
           justifyContent: 'flex-end',
         }}
       >
-        <MultipleChoiceTest testQuestions={testQuestions} />
+        <MultipleChoiceTest
+          testQuestions={testQuestions}
+          userAnswers={userAnswers}
+          setUserAnswers={setUserAnswers}
+        />
       </div>
     </div>
   );

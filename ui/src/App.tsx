@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import TestLayout from './components/test/TestLayout';
+import Footer from './components/Footer';
 import './configs/antd/customized.css';
 
 function App() {
