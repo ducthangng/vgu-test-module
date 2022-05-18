@@ -23,10 +23,8 @@ const UserLayout = () => {
       return ['1'];
     } else if (pathname === '/classroom') {
       return ['2'];
-    } else if (pathname === '/notification') {
-      return ['3'];
     } else if (pathname === '/account') {
-      return ['4'];
+      return ['3'];
     } else {
       return ['1'];
     }
@@ -61,15 +59,6 @@ const UserLayout = () => {
               mode={'horizontal'}
               _internalDisableMenuItemTitleTooltip={true}
             >
-              {/* <Menu.Item
-                key="0"
-                onClick={() => {
-                //   LogOut();
-			alert("log out")
-                }}
-              >
-                <LogoutOutlined />
-              </Menu.Item> */}
               <Menu.Item key="1" onClick={() => navigate('dashboard')}>
                 <HomeOutlined />
               </Menu.Item>
@@ -78,7 +67,7 @@ const UserLayout = () => {
                 <AppstoreOutlined />
               </Menu.Item>
 
-              <Menu.Item key="5" onClick={() => navigate('account')}>
+              <Menu.Item key="3" onClick={() => navigate('account')}>
                 <UserOutlined />
               </Menu.Item>
             </Menu>
