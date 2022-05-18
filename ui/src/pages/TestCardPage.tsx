@@ -7,8 +7,9 @@ import { Pagination } from 'antd';
 function TestCardPage() {
   return (
     <>
-    <Divider orientation="left">Choose the topic</Divider>
-    <Row gutter={[16,24]} justify="center" >
+    <body style = {{ background: "#F2F5F8"}}>
+    <Divider orientation="left">Choose the test</Divider>
+    <Row gutter={[20,20]} justify="center" >
         <Col>
             <TestCard />
         </Col>
@@ -19,7 +20,9 @@ function TestCardPage() {
             <TestCard />
         </Col>
     </Row>
-    <Row gutter={[16,24]} justify="center" >
+    <p></p>
+    <p></p>
+    <Row gutter={[20,20]} justify="center" >
         <Col>
             <TestCard />
         </Col>
@@ -30,11 +33,17 @@ function TestCardPage() {
             <TestCard />
         </Col>
     </Row>
-    <Row gutter={[16,24]} justify="center" >
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p> </p>
+    <Row justify="center" >
     <Pagination defaultCurrent={1} total={50} style={{color: '#8172D5'}}/>
     </Row>
     
-    
+    </body>
     </>
   );
 }
