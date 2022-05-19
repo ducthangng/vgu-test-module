@@ -11,7 +11,7 @@ import (
 )
 
 func TestCreateTestTag(t *testing.T) {
-	q := NewQuerier("TestCreateTestTag")
+	q := NewQuery("TestCreateTestTag")
 	ctx := context.Background()
 	for i := 1; i <= 10; i++ {
 		b := entity.Tag{
