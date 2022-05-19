@@ -57,7 +57,7 @@ const defaultData: TestCardData[] = [
 
 function TestSelection() {
   return (
-    <div>
+    <div style={{ width: '65%', display: 'flex', justifyContent: 'center' }}>
       <body>
         <Divider
           orientation="left"
@@ -66,7 +66,7 @@ function TestSelection() {
           Choose the test
         </Divider>
 
-        <Row gutter={[20, 20]} justify="start">
+        <Row gutter={[20, 20]} justify="space-around">
           {defaultData.map((item) => {
             return (
               <TestCard
