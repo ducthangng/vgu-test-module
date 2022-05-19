@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import SelectTestCard from '../components/SelectTestCard';
+import SelectTestCard from '../../components/GroupCard';
 import { Row, Col } from 'antd';
 
 function SelectTestPage() {

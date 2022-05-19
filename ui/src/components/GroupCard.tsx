@@ -1,32 +1,32 @@
 import { Card, Form, Button } from 'antd';
 import React from 'react';
-import './SelectTestCard.css';
+import styles from '../assets/css/GroupCard.module.css';
 
 const { Meta } = Card;
 
-function SelectTestCard() {
+function GroupCard() {
   return (
     <Form>
       <Card
         hoverable
-        className="card"
+        className={styles.card}
         cover={
           <img
             alt="example"
             src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-            className="cover"
+            className={styles.cover}
             style={{ alignItems: 'center' }}
           />
         }
       >
-        <div className="wrapper">
+        <div className={styles.wrapper}>
           <Meta
             title="ADVANCE IELTS TEST"
             description="Book unique camping experiences on over 300,000 campsites."
-            className="content"
+            className={styles.content}
             style={{ textAlign: 'center' }}
           />
-          <Button className="btn" style={{ alignItems: 'center' }}>
+          <Button className={styles.btn} style={{ alignItems: 'center' }}>
             Take
           </Button>
         </div>
@@ -35,4 +35,4 @@ function SelectTestCard() {
   );
 }
 
-export default SelectTestCard;
+export default GroupCard;
