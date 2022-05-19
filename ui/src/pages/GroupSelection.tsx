@@ -14,24 +14,6 @@ function GroupSelection() {
         <Col>
           <GroupCard />
         </Col>
-        <Col>
-          <GroupCard />
-        </Col>
-        <Col>
-          <GroupCard />
-        </Col>
-        <Col>
-          <GroupCard />
-        </Col>
-        <Col>
-          <GroupCard />
-        </Col>
-        <Col>
-          <GroupCard />
-        </Col>
-        <Col>
-          <GroupCard />
-        </Col>
         <Pagination
           defaultCurrent={1}
           total={50}
