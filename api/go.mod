@@ -8,4 +8,5 @@ require (
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/jinzhu/copier v0.3.5 // indirect
 	github.com/spf13/viper v1.11.0 // indirect
+	github.com/stretchr/testify v1.7.1
 )
