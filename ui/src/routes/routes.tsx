@@ -8,6 +8,7 @@ import UserLayout from '../pages/Layout/UserLayout';
 import ClassroomLayout from '../pages/Layout/ClassroomLayout';
 import TestCardPage from '../pages/TestSelection';
 import GroupSelection from '../pages/GroupSelection';
+import MockTestSelection from '../pages/MockTestSelection';
 import { AdminEC, StudentEC } from '../utils/models/Guard';
 
 export default function AppRoute() {
@@ -38,7 +39,7 @@ export default function AppRoute() {
 
               <Route path="classroom/*">
                 <Route element={<ClassroomLayout />}>
-                  <Route path="" element={<GroupSelection />} />
+                  <Route path="" element={<MockTestSelection />} />
                   {/* <Route path="" element={<Classroom />} /> */}
                   {/* <Route path=":id/home" element={<Classroom />} /> */}
                   {/* <Route path=":id/test" element={<Test />} /> */}
