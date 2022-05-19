@@ -2,10 +2,10 @@ import { Card, Form } from 'antd';
 import React from 'react';
 import './MockTest.css';
 import mocktest from '../assets/images/MOCK-TEST-2022-Apr_1.png';
-
+import { MockTestData } from '../utils/models/MockTestData';
 const { Meta } = Card;
 
-function SelectTestCard() {
+const MockTest: React.FC<MockTestData> = ({ groupId, description }) => {
   return (
     <Form>
       <Card
@@ -16,13 +16,13 @@ function SelectTestCard() {
             alt="example"
             src={mocktest}
             className="image_cover"
-            style={{ alignItems: 'center', borderRadius: 10 }}
+            style={{ alignItems: 'center', borderTop: 20 }}
           />
         }
       >
         <div className="wrapper">
           <Meta
-            title="GROUP 1"
+            title={groupId}
             className="content"
             style={{ textAlign: 'center' }}
           />
@@ -30,6 +30,6 @@ function SelectTestCard() {
       </Card>
     </Form>
   );
-}
+};
 
-export default SelectTestCard;
+export default MockTest;
