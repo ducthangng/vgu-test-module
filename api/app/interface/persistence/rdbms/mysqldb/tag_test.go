@@ -3,10 +3,11 @@ package mysqldb
 import (
 	"context"
 	"log"
+	"server/app/domain/entity"
 	"testing"
 
-	"github.com/Tech-by-GL/LMS/server/app/domain/entity"
-	"github.com/Tech-by-GL/LMS/server/pkg/service"
+	"server/utils/service"
+
 	"github.com/stretchr/testify/require"
 )
 
