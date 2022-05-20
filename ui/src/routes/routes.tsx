@@ -39,7 +39,7 @@ export default function AppRoute() {
 
               <Route path="classroom/*">
                 <Route element={<ClassroomLayout />}>
-                  <Route path="" element={<MockTestSelection />} />
+                  <Route path="" element={<GroupSelection />} />
                   {/* <Route path="" element={<Classroom />} /> */}
                   {/* <Route path=":id/home" element={<Classroom />} /> */}
                   {/* <Route path=":id/test" element={<Test />} /> */}
