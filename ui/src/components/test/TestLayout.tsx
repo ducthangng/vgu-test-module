@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Button, Popover, Modal } from 'antd';
 import TestNav from './TestNav';
-import MultipleChoiceTest from './MultipleChoiceTest';
+import ListeningTest from './ListeningTest';
+import TestHeader from './TestHeader';
 import { MenuOutlined, CloseOutlined } from '@ant-design/icons';
 
 const mockTestQuestions = [
@@ -155,61 +156,64 @@ export default function TestLayout() {
   }, [userAnswers]);
 
   return (
-    <div style={{ padding: 30, backgroundColor: 'gray' }}>
-      <div
-        style={{
-          zIndex: 500,
-          display: 'flex',
-          flexDirection: 'row',
-        }}
-        className="fixed top-40 lg:left-20"
-      >
-        {openNav && (
-          <>
-            <nav>
-              <TestNav
-                fullName={fullName}
-                profilePicture={profilePicture}
-                studentId={studentId}
-                testPart={testPart}
-                timeLeft={timeLeft}
-                submitTest={submitTest}
-              />
-            </nav>
+    <div>
+      <TestHeader timeLeft={timeLeft} submitTest={submitTest} />
+
+      <div style={{ padding: 30, backgroundColor: 'gray' }}>
+        <div
+          style={{
+            zIndex: 500,
+            display: 'flex',
+            flexDirection: 'row',
+          }}
+          className="fixed top-40 lg:left-20"
+        >
+          {openNav && (
+            <>
+              <nav>
+                <TestNav
+                  fullName={fullName}
+                  profilePicture={profilePicture}
+                  studentId={studentId}
+                  testPart={testPart}
+                  submitTest={submitTest}
+                />
+              </nav>
+              <button
+                style={{
+                  position: 'fixed',
+                  left: '10',
+                }}
+                className="p-3 border md:hidden"
+                onClick={() => setOpenNav(!openNav)}
+              >
+                <CloseOutlined />
+              </button>
+            </>
+          )}
+
+          {!openNav && (
             <button
-              style={{
-                position: 'fixed',
-                left: '10',
-              }}
-              className="p-3 border md:hidden"
+              className="p-3 border bg-white rounded-md md:hidden"
               onClick={() => setOpenNav(!openNav)}
             >
-              <CloseOutlined />
+              <MenuOutlined />
             </button>
-          </>
-        )}
+          )}
+        </div>
 
-        {!openNav && (
-          <button
-            className="p-3 border bg-white rounded-md md:hidden"
-            onClick={() => setOpenNav(!openNav)}
-          >
-            <MenuOutlined />
-          </button>
-        )}
-      </div>
-
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-        }}
-      >
-        <MultipleChoiceTest
-          testQuestions={testQuestions}
-          userAnswers={userAnswers}
-          setUserAnswers={setUserAnswers}
-        />
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+          }}
+        >
+          <ListeningTest
+            testQuestions={testQuestions}
+            userAnswers={userAnswers}
+            setUserAnswers={setUserAnswers}
+          />
+        </div>
       </div>
     </div>
   );

@@ -16,13 +16,13 @@ interface UserAnswer {
   id: number;
   answer: string;
 }
-interface MultipleChoiceTestProps {
+interface ListeningTestProps {
   testQuestions: TestQuestion[] | undefined;
   userAnswers: UserAnswer[];
   setUserAnswers: React.Dispatch<React.SetStateAction<UserAnswer[]>>;
 }
 
-export default function MultipleChoiceTest(props: MultipleChoiceTestProps) {
+export default function ListeningTest(props: ListeningTestProps) {
   //form
   const [form] = Form.useForm();
 

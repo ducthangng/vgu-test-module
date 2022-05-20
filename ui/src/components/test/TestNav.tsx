@@ -10,7 +10,6 @@ interface TestNavProps {
   profilePicture: string;
   studentId: string;
   testPart: string;
-  timeLeft: string;
   submitTest: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
@@ -60,8 +59,6 @@ export default function TestNav(props: TestNavProps) {
           paddingRight: 20,
         }}
       >
-        <p className="border-2 rounded-md py-2">Time: {props.timeLeft}</p>
-
         <Button
           type="primary"
           style={{
