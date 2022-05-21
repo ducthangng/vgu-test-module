@@ -9,4 +9,5 @@ require (
 	github.com/jinzhu/copier v0.3.5
 	github.com/spf13/viper v1.11.0
 	github.com/stretchr/testify v1.7.1
+	golang.org/x/time v0.0.0-20191024005414-555d28b269f0
 )
