@@ -9,30 +9,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func checkLogExists(path string) bool {
-	if _, err := os.Stat(path); err == nil {
-		return true
-	}
-	return false
-}
-
-func createLog(name string, s ...string) {
-	file, err := os.Create("../appmiddleware/log/" + name + ".log")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-	for _, items := range s {
-		file.WriteString(items + " ")
-	}
-	if err != nil {
-		log.Fatal(err)
-	}
-	gin.DefaultWriter = file
-}
-
 func saveLog(name string, s ...string) {
-	file, err := os.Open("../appmiddleware/log/" + name + ".log")
+	// open file
+	path := "../appmiddleware/log/" + name + ".log"
+	file, err := os.OpenFile(path, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -40,6 +20,7 @@ func saveLog(name string, s ...string) {
 	for _, items := range s {
 		file.WriteString(items + " ")
 	}
+	file.WriteString("\n")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -65,10 +46,9 @@ func Logger() gin.HandlerFunc {
 		method := ctx.Request.Method
 
 		// save to log file
-		if checkLogExists("../appmiddleware/log/" + name + ".log") {
+		go func() {
 			saveLog(name, started, method, ctx.Request.URL.Path, strconv.Itoa(status), latency.String())
-		} else {
-			createLog(name, started, method, ctx.Request.URL.Path, strconv.Itoa(status), latency.String())
-		}
+		}()
+		time.Sleep(time.Millisecond * 10)
 	}
 }
