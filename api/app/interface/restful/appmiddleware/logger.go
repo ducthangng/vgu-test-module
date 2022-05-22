@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -10,7 +9,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func saveLog(name string, s ...string) {
+func checkLogExists(path string) bool {
+	if _, err := os.Stat(path); err == nil {
+		return true
+	}
+	return false
+}
+
+func createLog(name string, s ...string) {
 	file, err := os.Create("../appmiddleware/log/" + name + ".log")
 	if err != nil {
 		log.Fatal(err)
@@ -22,7 +28,21 @@ func saveLog(name string, s ...string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("%d bytes written\n", len(s))
+	gin.DefaultWriter = file
+}
+
+func saveLog(name string, s ...string) {
+	file, err := os.Open("../appmiddleware/log/" + name + ".log")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+	for _, items := range s {
+		file.WriteString(items + " ")
+	}
+	if err != nil {
+		log.Fatal(err)
+	}
 	gin.DefaultWriter = file
 }
 
@@ -45,8 +65,10 @@ func Logger() gin.HandlerFunc {
 		method := ctx.Request.Method
 
 		// save to log file
-		saveLog(name, started, latency.String(), strconv.Itoa(status), method,
-			ctx.Request.URL.Path, ctx.ClientIP(), ctx.Request.UserAgent())
-
+		if checkLogExists("../appmiddleware/log/" + name + ".log") {
+			saveLog(name, started, method, ctx.Request.URL.Path, strconv.Itoa(status), latency.String())
+		} else {
+			createLog(name, started, method, ctx.Request.URL.Path, strconv.Itoa(status), latency.String())
+		}
 	}
 }
