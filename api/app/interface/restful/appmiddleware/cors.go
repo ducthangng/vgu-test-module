@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-const localhost = "localhost:3000"
+const localhost = "http://localhost:3000"
 
 var (
 	corsOnce       sync.Once
