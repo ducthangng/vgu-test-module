@@ -25,9 +25,9 @@ export default function TestHeader(props: TestHeaderProps) {
           </span>
         </a>
         <div className="flex items-center md:ml-20">
-          <a className="text-primary bg-primary/30 font-bold rounded-lg text-sm px-5 py-2.5 text-center">
+          <p className="text-primary bg-primary/30 font-bold rounded-lg text-sm px-5 py-2.5 my-auto text-center">
             Time: {props.timeLeft}
-          </a>
+          </p>
         </div>
         <div className="flex space-x-2">
           <button

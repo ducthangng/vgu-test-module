@@ -3,6 +3,7 @@ import { Button, Popover, Modal } from 'antd';
 import TestNav from './TestNav';
 import ListeningTest from './ListeningTest';
 import TestHeader from './TestHeader';
+import AudioPlayer from './AudioPlayer';
 import { MenuOutlined, CloseOutlined } from '@ant-design/icons';
 
 const mockTestQuestions = [
@@ -159,7 +160,7 @@ export default function TestLayout() {
     <div>
       <TestHeader timeLeft={timeLeft} submitTest={submitTest} />
 
-      <div style={{ padding: 30, backgroundColor: 'gray' }}>
+      <div style={{ padding: 30, backgroundColor: '#E5E5E5' }}>
         <div
           style={{
             zIndex: 500,
@@ -215,6 +216,8 @@ export default function TestLayout() {
           />
         </div>
       </div>
+
+      <AudioPlayer audioSource="https://www.dropbox.com/s/8cds18ri4qugdi4/guwei.mp3?dl=1" />
     </div>
   );
 }
