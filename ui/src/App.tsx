@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import './App.css';
-import TestLayout from './components/test/TestLayout';
+import TestLayout from './pages/Test';
 import './configs/antd/customized.css';
 
 function App() {

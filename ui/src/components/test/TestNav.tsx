@@ -6,10 +6,7 @@ import { AntDesignOutlined } from '@ant-design/icons';
 // interface
 
 interface TestNavProps {
-  fullName: string;
-  profilePicture: string;
-  studentId: string;
-  testPart: string;
+  testType: string;
   submitTest: (event: React.MouseEvent<HTMLElement>) => void;
 }
 

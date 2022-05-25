@@ -1,51 +1,21 @@
 import React, { useRef, useEffect } from 'react';
-import { Card, Form, Radio, Space } from 'antd';
-import { RadioChangeEvent } from 'antd/lib/radio';
+import { Card, Form } from 'antd';
+import MultipleChoiceQuestion from './MultipleChoiceQuestion';
+import Section from './Section.interface';
 
 //interface
-interface TestQuestion {
-  id: number;
-  content: string;
-  choiceA: string;
-  choiceB: string;
-  choiceC: string;
-  choiceD: string;
-  answer: string;
-}
-interface UserAnswer {
-  id: number;
-  answer: string;
-}
+
 interface ListeningTestProps {
-  testQuestions: TestQuestion[] | undefined;
-  userAnswers: UserAnswer[];
-  setUserAnswers: React.Dispatch<React.SetStateAction<UserAnswer[]>>;
+  sections: Section[];
 }
 
 export default function ListeningTest(props: ListeningTestProps) {
   //form
   const [form] = Form.useForm();
 
-  const handleChange = (event?: RadioChangeEvent) => {
-    let newUserAnswers = [...props.userAnswers];
-    let isNew = true;
-
-    newUserAnswers.forEach((userAnswer) => {
-      if (userAnswer.id == parseInt(event?.target.name as string)) {
-        isNew = false;
-        userAnswer.answer = event?.target.value;
-      }
-    });
-
-    if (isNew) {
-      newUserAnswers.push({
-        id: parseInt(event?.target.name as string),
-        answer: event?.target.value,
-      });
-    }
-
-    props.setUserAnswers(newUserAnswers);
-  };
+  useEffect(() => {
+    console.log(props.sections);
+  }, [props.sections]);
 
   return (
     <Card
@@ -56,30 +26,34 @@ export default function ListeningTest(props: ListeningTestProps) {
       className="md:w-3/4 w-screen"
     >
       <Form form={form} layout="vertical" autoComplete="off">
-        {props.testQuestions &&
-          props.testQuestions.map((testQuestion) => (
-            <Form.Item
-              key={testQuestion.id}
-              label={
-                <h3 style={{ fontWeight: 'bold' }}>
-                  Câu {testQuestion.id}: {testQuestion.content}
-                </h3>
+        {props.sections &&
+          props.sections.map((section) => {
+            if (section.type == 'multiple choice question') {
+              // because content may not be an array, so we need to check before using map()
+              if (Array.isArray(section.content)) {
+                return section.content.map((question, index) => {
+                  // depends on the type of section, we may not have properties "a" or "correct_ans"
+
+                  if ('a' in question && 'correct_ans' in question) {
+                    return (
+                      <MultipleChoiceQuestion
+                        id={section.start_index + index}
+                        q={question.q}
+                        a={question.a}
+                        correct_ans={question.correct_ans}
+                      />
+                    );
+                  }
+                });
               }
-            >
-              <Radio.Group
-                style={{ paddingLeft: 15 }}
-                name={`${testQuestion.id}`}
-                onChange={handleChange}
-              >
-                <Space direction="vertical">
-                  <Radio value="A">{testQuestion.choiceA}</Radio>
-                  <Radio value="B">{testQuestion.choiceB}</Radio>
-                  <Radio value="C">{testQuestion.choiceC}</Radio>
-                  <Radio value="D">{testQuestion.choiceD}</Radio>
-                </Space>
-              </Radio.Group>
-            </Form.Item>
-          ))}
+            } else if (section.type == 'matching heading') {
+              return <h1>Matching Heading</h1>;
+            } else if (section.type == 'fill in the blank') {
+              return <h1>Fill in the Blank</h1>;
+            } else if (section.type == 'tfng') {
+              return <h1>True False</h1>;
+            }
+          })}
       </Form>
     </Card>
   );
