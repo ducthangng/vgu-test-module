@@ -108,7 +108,7 @@
         "smallAnswerDescription": "this might be empty - only show with listening",
         "type": "fill in the blank",
         "content": {
-            "passage": "Why do you want for PE?"
+            "passage": "<form>He <input type='text' class='border border-2'/> a teacher. He is twenty-five <input type='text' class='border border-2'/> old. He love listening <input type='text' class='border border-2'/> music. He can <input type='text' class='border border-2'/> football. He often <input type='text' class='border border-2'/> fishing on Saturday.</form>"
         }
     },
     {

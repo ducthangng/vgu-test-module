@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Input } from 'antd';
 
 // interface
 interface MatchingHeadingProps {
@@ -47,10 +48,7 @@ export default function MatchingHeadingQuestion(props: MatchingHeadingProps) {
                     </span>{' '}
                     {question.q}
                   </p>
-                  <input
-                    type="text"
-                    className="border border-2 border-gray-500 text-center"
-                  />
+                  <Input className="text-center" />
                 </div>
               );
             }

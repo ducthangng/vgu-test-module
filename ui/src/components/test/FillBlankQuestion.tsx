@@ -1,5 +1,19 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
-export default function FillBlankQuestion() {
-  return <></>;
+interface FillBlankQuestionProps {
+  startIndex: number;
+  content: {
+    passage: string;
+  };
+}
+
+export default function FillBlankQuestion(props: FillBlankQuestionProps) {
+  const htmlContentRef = useRef(null);
+
+  return (
+    <div
+      ref={htmlContentRef}
+      dangerouslySetInnerHTML={{ __html: props.content.passage }}
+    />
+  );
 }

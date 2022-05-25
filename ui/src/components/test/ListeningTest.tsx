@@ -2,6 +2,8 @@ import React, { useRef, useEffect } from 'react';
 import { Card, Form } from 'antd';
 import MultipleChoiceQuestion from './MultipleChoiceQuestion';
 import MatchingHeadingQuestion from './MatchingHeadingQuestion';
+import TrueFalseQuestion from './TrueFalseQuestion';
+import FillBlankQuestion from './FillBlankQuestion';
 import Section from './Section.interface';
 
 //interface
@@ -34,7 +36,7 @@ export default function ListeningTest(props: ListeningTestProps) {
               if (Array.isArray(section.content)) {
                 return (
                   <div>
-                    <h1 className="text-lg font-bold text-center">
+                    <h1 className="text-2xl py-5 font-bold text-center">
                       {section.title}
                     </h1>
                     {section.content.map((question, index) => {
@@ -60,7 +62,7 @@ export default function ListeningTest(props: ListeningTestProps) {
               if (Array.isArray(section.content)) {
                 return (
                   <div>
-                    <h1 className="text-lg font-bold text-center">
+                    <h1 className="text-2xl py-5 font-bold text-center">
                       {section.title}
                     </h1>
                     <MatchingHeadingQuestion
@@ -74,9 +76,33 @@ export default function ListeningTest(props: ListeningTestProps) {
                 );
               }
             } else if (section.type == 'fill in the blank') {
-              return <h1>Fill in the Blank</h1>;
+              return (
+                <div>
+                  <h1 className="text-2xl py-5 font-bold text-center">
+                    {section.title}
+                  </h1>
+                  <FillBlankQuestion
+                    startIndex={section.start_index}
+                    content={section.content as { passage: string }}
+                  />
+                </div>
+              );
             } else if (section.type == 'tfng') {
-              return <h1>True False</h1>;
+              if (Array.isArray(section.content)) {
+                return (
+                  <div>
+                    <h1 className="text-2xl py-5 font-bold text-center">
+                      {section.title}
+                    </h1>
+                    <TrueFalseQuestion
+                      startIndex={section.start_index}
+                      content={
+                        section.content as { q: string; correct_ans: number }[]
+                      }
+                    />
+                  </div>
+                );
+              }
             }
           })}
       </Form>
