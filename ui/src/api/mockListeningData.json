@@ -9,7 +9,7 @@
     {
         "start_index": 1,
         "end_index": 5,
-        "title": "Small Title",
+        "title": "Matching Heading",
         "media": [
             {
                 "title": "Illustration 1",
@@ -22,12 +22,12 @@
             {
                 "q": "Hotel managers need to know what would encourage good staff to remain.",
                 "a": "Pfeffer",
-                "p": "A"
+                "p": "E"
             },
             {
                 "q": "The actions of managers may make staff feel they shouldn't move to a different employer.",
                 "a": "Lucas",
-                "p": "B"
+                "p": "D"
             },
             {
                 "q": "Little is done in the hospitality industry to help workers improve their skills.",
@@ -37,12 +37,12 @@
             {
                 "q": "Staff are less likely to change jobs if cooperation is encouraged.",
                 "a": "Ng and Sorensen",
-                "p": "D"
+                "p": "A"
             },
             {
                 "q": "Disssatisfaction with pay is not the only reason why hospitality workers change jobs.",
                 "a": "Enz and Siguaw",
-                "p": "E"
+                "p": "B"
             },
             {
                 "q": "",
@@ -54,7 +54,7 @@
     {
         "start_index": 6,
         "end_index": 10,
-        "title": "Reading's Name is here",
+        "title": "Multiple Choice",
         "media": [
             {
                 "title": "Illustration 1",
@@ -98,7 +98,7 @@
     {
         "start_index": 11,
         "end_index": 16,
-        "title": "Reading's Name is here",
+        "title": "Fill in the Blank",
         "media": [
             {
                 "title": "Illustration 1",
@@ -115,7 +115,7 @@
         "start_index": 17,
         "end_index": 20,
         "media": [],
-        "title": "Reading's Name is here",
+        "title": "True False Not Given",
         "smallAnswerDescription": "this might be empty - only show with listening",
         "type": "tfng",
         "content": [

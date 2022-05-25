@@ -107,7 +107,7 @@ export default function AudioPlayer(props: AudioPlayerProps) {
   }, []);
 
   return (
-    <div className="w-screen text-center text-md-left fixed bottom-0 py-2 bg-primary text-white">
+    <div className="w-screen text-center text-md-left sticky bottom-0 py-2 bg-primary text-white">
       <div className="grid-rows-2">
         <div className="flex place-content-center items-center">
           <BackwardFilled
