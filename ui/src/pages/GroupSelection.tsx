@@ -1,6 +1,6 @@
 import React from 'react';
 import GroupCard from '../components/GroupCard';
-import { Row, Col, Divider } from 'antd';
+import { Row, Divider } from 'antd';
 import { Pagination } from 'antd';
 import { GroupCardData } from '../utils/models/GroupCardData';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import MockTest from '../components/MockTest';
-import { Row, Col, Divider } from 'antd';
+import { Row, Divider } from 'antd';
 import { Pagination } from 'antd';
 import { MockTestData } from '../utils/models/MockTestData';
 
