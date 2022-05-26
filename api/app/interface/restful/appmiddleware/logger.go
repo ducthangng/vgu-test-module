@@ -18,10 +18,12 @@ func saveLog(name string, s ...string) {
 	}
 	defer file.Close()
 	for _, items := range s {
-		file.WriteString(items + " ")
+		if _, err := file.WriteString(items + " "); err != nil {
+			panic(err)
+		}
 	}
-	file.WriteString("\n")
-	if err != nil {
+
+	if _, err := file.WriteString("\n"); err != nil {
 		log.Fatal(err)
 	}
 	gin.DefaultWriter = file

@@ -36,7 +36,7 @@ func CorsMiddleware() gin.HandlerFunc {
 			},
 			ExposeHeaders:    []string{"Content-Length", "Content-Disposition"},
 			AllowCredentials: true,
-			MaxAge:           12 * time.Hour,
+			MaxAge:           72 * time.Hour,
 		})
 	})
 	return corsMiddleware
