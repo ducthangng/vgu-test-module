@@ -1,19 +1,26 @@
 import React from 'react';
-import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import { LeftOutlined, RightOutlined, SendOutlined } from '@ant-design/icons';
+
+import { useNavigate, useParams } from 'react-router-dom';
 
 // interface
 interface TestHeaderProps {
+  sectionsLength: number;
   timeLeft: string;
-  submitTest: (event: React.MouseEvent<HTMLElement>) => void;
+  handleSubmit: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 export default function TestHeader(props: TestHeaderProps) {
+  //routing
+  const { id } = useParams();
+  const navigate = useNavigate();
+
   const handleBack = () => {
-    console.log('back');
+    navigate(`../${parseInt(id as string) - 1}`);
   };
 
   const handleNext = () => {
-    console.log('next');
+    navigate(`../${parseInt(id as string) + 1}`);
   };
 
   return (
@@ -29,35 +36,59 @@ export default function TestHeader(props: TestHeaderProps) {
             Time: {props.timeLeft}
           </p>
         </div>
-        <div className="flex space-x-2">
+        <div className="flex space-x-2 items-center">
           <button
             type="button"
-            className="hidden md:inline text-primary bg-primary/30 font-bold hover:bg-primary/20 rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0"
+            className="disabled:text-white disabled:bg-gray-300 text-primary bg-primary/30 hover:bg-primary/20 hidden md:inline font-bold rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0"
+            disabled={parseInt(id as string) <= 1}
             onClick={handleBack}
           >
             BACK
           </button>
           <button
             type="button"
-            className="hidden md:inline text-white bg-primary font-bold hover:bg-primary/75 rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0"
-            onClick={handleNext}
-          >
-            NEXT
-          </button>
-          <button
-            type="button"
-            className="inline md:hidden text-primary bg-primary/30 font-bold hover:bg-primary/20 rounded-lg text-sm px-2 py-2 text-center mr-3 md:mr-0"
+            className="disabled:text-white disabled:bg-gray-300 inline md:hidden text-primary bg-primary/30 font-bold hover:bg-primary/20 rounded-lg text-sm px-2 py-2 text-center mr-3 md:mr-0"
+            disabled={parseInt(id as string) <= 1}
             onClick={handleBack}
           >
             <LeftOutlined />
           </button>
-          <button
-            type="button"
-            className="inline md:hidden text-white bg-primary font-bold hover:bg-primary/75 rounded-lg text-sm px-2 py-2 text-center mr-3 md:mr-0"
-            onClick={handleNext}
-          >
-            <RightOutlined />
-          </button>
+
+          {parseInt(id as string) >= props.sectionsLength ? (
+            <div>
+              <button
+                type="button"
+                className="disabled:text-white disabled:bg-gray-300 hidden md:inline text-white bg-primary font-bold hover:bg-primary/75 rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0"
+                onClick={props.handleSubmit}
+              >
+                SUBMIT
+              </button>
+              <button
+                type="button"
+                className="disabled:text-white disabled:bg-gray-300 inline md:hidden text-white bg-primary font-bold hover:bg-primary/75 rounded-lg text-sm px-2 py-2 text-center mr-3 md:mr-0"
+                onClick={props.handleSubmit}
+              >
+                <SendOutlined />
+              </button>
+            </div>
+          ) : (
+            <div>
+              <button
+                type="button"
+                className="disabled:text-white disabled:bg-gray-300 hidden md:inline text-white bg-primary font-bold hover:bg-primary/75 rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0"
+                onClick={handleNext}
+              >
+                NEXT
+              </button>
+              <button
+                type="button"
+                className="disabled:text-white disabled:bg-gray-300 inline md:hidden text-white bg-primary font-bold hover:bg-primary/75 rounded-lg text-sm px-2 py-2 text-center mr-3 md:mr-0"
+                onClick={handleNext}
+              >
+                <RightOutlined />
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </nav>

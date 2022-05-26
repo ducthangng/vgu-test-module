@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Input } from 'antd';
+import { Input, message } from 'antd';
 
 // interface
 interface MatchingHeadingProps {
   startIndex: number;
   smallAnswerDescription: string;
+  media: {
+    title: string;
+    content: string;
+  }[];
   content: {
     q: string;
     a: string;
@@ -37,6 +41,15 @@ export default function MatchingHeadingQuestion(props: MatchingHeadingProps) {
   return (
     <div>
       <div>
+        <div>
+          {props.media &&
+            props.media.map((image) => (
+              <div className="flex flex-col items-center">
+                <img src={image.content} className="" />
+                <p className="mb-10 italic">{image.title}</p>
+              </div>
+            ))}
+        </div>
         {props.content &&
           props.content.map((question, index) => {
             if (question.q) {
@@ -53,7 +66,7 @@ export default function MatchingHeadingQuestion(props: MatchingHeadingProps) {
               );
             }
           })}
-        <div className="border flex items-center place-content-center">
+        <div className="p-3 rounded-md border flex items-center place-content-center">
           <div className="">
             <h3 className="font-bold">{props.smallAnswerDescription}</h3>
             {answers &&

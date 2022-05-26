@@ -26,7 +26,7 @@ export default function TrueFalseQuestion(props: TrueFalseQuestionProps) {
                   </span>{' '}
                   {question.q}
                 </p>
-                <Select className="">
+                <Select dropdownStyle={{ width: '100%' }}>
                   <Option value={1}>True</Option>
                   <Option value={0}>False</Option>
                   <Option value={2}>Not Given</Option>

@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Button, Popover, Modal } from 'antd';
 import TestNav from '../components/test/TestNav';
 import TestHeader from '../components/test/TestHeader';
 import ListeningTest from '../components/test/ListeningTest';
 import AudioPlayer from '../components/test/AudioPlayer';
 import { MenuOutlined, CloseOutlined } from '@ant-design/icons';
 import Section from '../components/test/Section.interface';
+
+import { Navigate, Routes, Route, useParams } from 'react-router-dom';
 
 // fake data
 import mockListeningData from '../api/mockListeningData.json';
@@ -51,7 +52,7 @@ export default function Test() {
 
     if (totalTime <= 0) {
       totalTime = totalTime - 1;
-      submitTest();
+      handleSubmit();
       return;
     }
 
@@ -82,7 +83,7 @@ export default function Test() {
   //     console.log('submit!');
   //     console.log(userAnswersRef.current);
   //   };
-  const submitTest = () => {};
+  const handleSubmit = () => {};
 
   //   useEffect(() => {
   //     userAnswersRef.current = userAnswers;
@@ -90,56 +91,28 @@ export default function Test() {
 
   return (
     <div>
-      <TestHeader timeLeft={timeLeft} submitTest={submitTest} />
+      <Routes>
+        <Route
+          path=":id"
+          element={
+            <div>
+              <TestHeader
+                sectionsLength={sections.length}
+                timeLeft={timeLeft}
+                handleSubmit={handleSubmit}
+              />
 
-      <div style={{ padding: 30, backgroundColor: '#E5E5E5' }}>
-        <div
-          style={{
-            zIndex: 500,
-            display: 'flex',
-            flexDirection: 'row',
-          }}
-          className="fixed top-40 lg:left-20"
-        >
-          {openNav && (
-            <>
-              <nav>
-                <TestNav testType={type} submitTest={submitTest} />
-              </nav>
-              <button
-                style={{
-                  position: 'fixed',
-                  left: '10',
-                }}
-                className="p-3 border md:hidden"
-                onClick={() => setOpenNav(!openNav)}
-              >
-                <CloseOutlined />
-              </button>
-            </>
-          )}
+              <div style={{ padding: 30, backgroundColor: '#E5E5E5' }}>
+                <div className="flex content-center place-content-center">
+                  <ListeningTest sections={sections} />
+                </div>
+              </div>
 
-          {!openNav && (
-            <button
-              className="p-3 border bg-white rounded-md md:hidden"
-              onClick={() => setOpenNav(!openNav)}
-            >
-              <MenuOutlined />
-            </button>
-          )}
-        </div>
-
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-          }}
-        >
-          <ListeningTest sections={sections} />
-        </div>
-      </div>
-
-      <AudioPlayer audioSource="https://www.dropbox.com/s/8cds18ri4qugdi4/guwei.mp3?dl=1" />
+              <AudioPlayer audioSource="https://www.dropbox.com/s/8cds18ri4qugdi4/guwei.mp3?dl=1" />
+            </div>
+          }
+        />
+      </Routes>
     </div>
   );
 }
