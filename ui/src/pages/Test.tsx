@@ -5,6 +5,7 @@ import ListeningTest from '../components/test/ListeningTest';
 import AudioPlayer from '../components/test/AudioPlayer';
 import { MenuOutlined, CloseOutlined } from '@ant-design/icons';
 import Section from '../components/test/Section.interface';
+import SectionAnswer from '../components/test/SectionAnswer.interface';
 
 import { Navigate, Routes, Route, useParams } from 'react-router-dom';
 
@@ -22,9 +23,8 @@ export default function Test() {
   const [sections, setSections] = useState<Section[]>([]);
   const [timeLeft, setTimeLeft] = useState<string>('');
   const [intervalId, setIntervalId] = useState<number | undefined>(undefined);
-  // const [testQuestions, setTestQuestions] = useState<TestQuestion[]>();
-  // const [userAnswers, setUserAnswers] = useState<UserAnswer[]>([]);
-  // const userAnswersRef = useRef<UserAnswer[]>([]); //make a copy of userAnswers state to deal with setInterval closure
+  const [userAnswers, setUserAnswers] = useState<SectionAnswer[]>([]);
+  const userAnswersRef = useRef<SectionAnswer[]>([]); //make a copy of userAnswers state to deal with setInterval closure
 
   //other data
   const [openNav, setOpenNav] = useState<boolean>(true);
@@ -89,6 +89,14 @@ export default function Test() {
   //     userAnswersRef.current = userAnswers;
   //   }, [userAnswers]);
 
+  // intialize userAnswer
+  useEffect(() => {
+    let newUserAnswers = [...userAnswers];
+    sections.forEach((section) => {
+      let newAnswerSection;
+    });
+  }, [sections]);
+
   return (
     <div>
       <Routes>
@@ -104,7 +112,11 @@ export default function Test() {
 
               <div style={{ padding: 30, backgroundColor: '#E5E5E5' }}>
                 <div className="flex content-center place-content-center">
-                  <ListeningTest sections={sections} />
+                  {JSON.stringify(userAnswers)}
+                  <ListeningTest
+                    sections={sections}
+                    setUserAnswers={setUserAnswers}
+                  />
                 </div>
               </div>
 

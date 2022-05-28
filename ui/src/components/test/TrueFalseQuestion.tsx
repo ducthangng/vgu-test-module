@@ -6,6 +6,10 @@ const { Option } = Select;
 //interface
 interface TrueFalseQuestionProps {
   startIndex: number;
+  media: {
+    title: string;
+    content: string;
+  }[];
   content: {
     q: string;
     correct_ans: number;
@@ -15,6 +19,16 @@ interface TrueFalseQuestionProps {
 export default function TrueFalseQuestion(props: TrueFalseQuestionProps) {
   return (
     <div>
+      <div>
+        {props.media &&
+          props.media.map((image) => (
+            <div className="flex flex-col items-center">
+              <img src={image.content} className="" />
+              <p className="mb-10 italic">{image.title}</p>
+            </div>
+          ))}
+      </div>
+
       {props.content &&
         props.content.map((question, index) => {
           if (question.q) {

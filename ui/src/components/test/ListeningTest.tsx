@@ -1,19 +1,23 @@
+/* IMPORTS */
 import React, { useEffect, useState } from 'react';
 
 import { useParams } from 'react-router-dom';
-
+// components
 import { Form } from 'antd';
 import MultipleChoiceQuestion from './MultipleChoiceQuestion';
 import MatchingHeadingQuestion from './MatchingHeadingQuestion';
 import TrueFalseQuestion from './TrueFalseQuestion';
 import FillBlankQuestion from './FillBlankQuestion';
-
+//interfaces
 import Section from './Section.interface';
+import SectionAnswer from './SectionAnswer.interface';
 
-//interface
+/*****/
 
+//local interfaces
 interface ListeningTestProps {
   sections: Section[];
+  setUserAnswers: React.Dispatch<React.SetStateAction<SectionAnswer[]>>;
 }
 
 //function for rendering section depends on its data
@@ -24,22 +28,17 @@ const getSectionComponent = (section: Section) => {
       return (
         <div>
           <h1 className="text-2xl py-5 font-bold">{section.title}</h1>
-          {section.content.map((question, index) => {
-            // depends on the type of section, we may not have properties "a" or "correct_ans"
-
-            if ('a' in question && 'correct_ans' in question) {
-              return (
-                <div>
-                  <MultipleChoiceQuestion
-                    id={section.start_index + index}
-                    q={question.q}
-                    a={question.a}
-                    correct_ans={question.correct_ans}
-                  />
-                </div>
-              );
+          <MultipleChoiceQuestion
+            startIndex={section.start_index}
+            media={section.media}
+            content={
+              section.content as {
+                q: string;
+                a: [string];
+                correct_ans: number;
+              }[]
             }
-          })}
+          />
         </div>
       );
     }
@@ -63,6 +62,7 @@ const getSectionComponent = (section: Section) => {
         <h1 className="text-2xl py-5 font-bold">{section.title}</h1>
         <FillBlankQuestion
           startIndex={section.start_index}
+          media={section.media}
           content={section.content as { passage: string }}
         />
       </div>
@@ -74,6 +74,7 @@ const getSectionComponent = (section: Section) => {
           <h1 className="text-2xl py-5 font-bold">{section.title}</h1>
           <TrueFalseQuestion
             startIndex={section.start_index}
+            media={section.media}
             content={section.content as { q: string; correct_ans: number }[]}
           />
         </div>
