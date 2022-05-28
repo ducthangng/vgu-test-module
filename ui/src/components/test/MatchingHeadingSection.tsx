@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Input, message } from 'antd';
+import { Input } from 'antd';
 
-// interface
-interface MatchingHeadingProps {
+// local interfaces
+interface MatchingHeadingSectionProps {
   startIndex: number;
   smallAnswerDescription: string;
   media: {
@@ -21,7 +21,9 @@ interface Answer {
   a: string;
 }
 
-export default function MatchingHeadingQuestion(props: MatchingHeadingProps) {
+export default function MatchingHeadingSection(
+  props: MatchingHeadingSectionProps
+) {
   const [answers, setAnswers] = useState<Answer[]>();
 
   useEffect(() => {

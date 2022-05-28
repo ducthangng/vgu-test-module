@@ -4,7 +4,7 @@ import { Select } from 'antd';
 const { Option } = Select;
 
 //interface
-interface TrueFalseQuestionProps {
+interface TrueFalseSectionProps {
   startIndex: number;
   media: {
     title: string;
@@ -16,7 +16,7 @@ interface TrueFalseQuestionProps {
   }[];
 }
 
-export default function TrueFalseQuestion(props: TrueFalseQuestionProps) {
+export default function TrueFalseSection(props: TrueFalseSectionProps) {
   return (
     <div>
       <div>

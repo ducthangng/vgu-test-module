@@ -1,9 +1,9 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import { Form, Radio, Space } from 'antd';
 import { RadioChangeEvent } from 'antd/lib/radio';
 
 // local interfaces
-interface MultipleChoiceQuestionProps {
+interface MultipleChoiceSectionProps {
   startIndex: number;
   media: {
     title: string;
@@ -16,8 +16,8 @@ interface MultipleChoiceQuestionProps {
   }[];
 }
 
-export default function MultipleChoiceQuestion(
-  props: MultipleChoiceQuestionProps
+export default function MultipleChoiceSection(
+  props: MultipleChoiceSectionProps
 ) {
   const handleChange = (event?: RadioChangeEvent) => {};
 

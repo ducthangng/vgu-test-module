@@ -4,15 +4,13 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 // components
 import { Form } from 'antd';
-import MultipleChoiceQuestion from './MultipleChoiceQuestion';
-import MatchingHeadingQuestion from './MatchingHeadingQuestion';
-import TrueFalseQuestion from './TrueFalseQuestion';
-import FillBlankQuestion from './FillBlankQuestion';
+import MultipleChoiceSection from './MultipleChoiceSection';
+import MatchingHeadingSection from './MatchingHeadingSection';
+import TrueFalseSection from './TrueFalseSection';
+import FillBlankSection from './FillBlankSection';
 //interfaces
 import Section from './Section.interface';
 import SectionAnswer from './SectionAnswer.interface';
-
-/*****/
 
 //local interfaces
 interface ListeningTestProps {
@@ -28,7 +26,7 @@ const getSectionComponent = (section: Section) => {
       return (
         <div>
           <h1 className="text-2xl py-5 font-bold">{section.title}</h1>
-          <MultipleChoiceQuestion
+          <MultipleChoiceSection
             startIndex={section.start_index}
             media={section.media}
             content={
@@ -47,7 +45,7 @@ const getSectionComponent = (section: Section) => {
       return (
         <div>
           <h1 className="text-2xl py-5 font-bold">{section.title}</h1>
-          <MatchingHeadingQuestion
+          <MatchingHeadingSection
             startIndex={section.start_index}
             smallAnswerDescription={section.smallAnswerDescription}
             media={section.media}
@@ -60,7 +58,7 @@ const getSectionComponent = (section: Section) => {
     return (
       <div>
         <h1 className="text-2xl py-5 font-bold">{section.title}</h1>
-        <FillBlankQuestion
+        <FillBlankSection
           startIndex={section.start_index}
           media={section.media}
           content={section.content as { passage: string }}
@@ -72,7 +70,7 @@ const getSectionComponent = (section: Section) => {
       return (
         <div>
           <h1 className="text-2xl py-5 font-bold">{section.title}</h1>
-          <TrueFalseQuestion
+          <TrueFalseSection
             startIndex={section.start_index}
             media={section.media}
             content={section.content as { q: string; correct_ans: number }[]}

@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 
-interface FillBlankQuestionProps {
+interface FillBlankSectionProps {
   startIndex: number;
   media: {
     title: string;
@@ -11,7 +11,7 @@ interface FillBlankQuestionProps {
   };
 }
 
-export default function FillBlankQuestion(props: FillBlankQuestionProps) {
+export default function FillBlankSection(props: FillBlankSectionProps) {
   const htmlContentRef = useRef(null);
 
   return (
