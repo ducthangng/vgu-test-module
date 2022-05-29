@@ -4,8 +4,8 @@ import TestHeader from '../components/test/TestHeader';
 import ListeningTest from '../components/test/ListeningTest';
 import AudioPlayer from '../components/test/AudioPlayer';
 import { MenuOutlined, CloseOutlined } from '@ant-design/icons';
-import Section from '../components/test/Section.interface';
-import SectionAnswer from '../components/test/SectionAnswer.interface';
+import Section from '../interfaces/test/Section.interface';
+import SectionAnswer from '../interfaces/test/SectionAnswer.interface';
 
 import { Navigate, Routes, Route, useParams } from 'react-router-dom';
 

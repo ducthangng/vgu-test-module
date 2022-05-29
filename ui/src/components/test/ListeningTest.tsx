@@ -9,8 +9,8 @@ import MatchingHeadingSection from './MatchingHeadingSection';
 import TrueFalseSection from './TrueFalseSection';
 import FillBlankSection from './FillBlankSection';
 //interfaces
-import Section from './Section.interface';
-import SectionAnswer from './SectionAnswer.interface';
+import Section from '../../interfaces/test/Section.interface';
+import SectionAnswer from '../../interfaces/test/SectionAnswer.interface';
 
 //local interfaces
 interface ListeningTestProps {

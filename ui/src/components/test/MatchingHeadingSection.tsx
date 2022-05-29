@@ -1,7 +1,9 @@
 /* IMPORTS */
 import React, { useEffect, useState } from 'react';
 import { Input } from 'antd';
-import SectionAnswer from './SectionAnswer.interface';
+//interfaces
+import Section from '../../interfaces/test/Section.interface';
+import SectionAnswer from '../../interfaces/test/SectionAnswer.interface';
 
 /* LOCAL INTERFACES */
 interface MatchingHeadingSectionProps {
