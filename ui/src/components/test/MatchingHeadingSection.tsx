@@ -1,7 +1,9 @@
+/* IMPORTS */
 import React, { useEffect, useState } from 'react';
 import { Input } from 'antd';
+import SectionAnswer from './SectionAnswer.interface';
 
-// local interfaces
+/* LOCAL INTERFACES */
 interface MatchingHeadingSectionProps {
   sectionIndex: number;
   startIndex: number;
@@ -22,10 +24,12 @@ interface Answer {
   a: string;
 }
 
+/* COMPONENT */
 export default function MatchingHeadingSection(
   props: MatchingHeadingSectionProps
 ) {
-  const [answers, setAnswers] = useState<Answer[]>();
+  const [answers, setAnswers] = useState<Answer[]>([]);
+  const [chosenAnswers, setChosenAnswers] = useState<string[]>([]);
 
   useEffect(() => {
     // set and sort answers lexicographically
@@ -39,11 +43,34 @@ export default function MatchingHeadingSection(
         })
         .sort((a: Answer, b: Answer) => a.p.localeCompare(b.p))
     );
+
+    // initialize chosenAnswers array
+    let newChosenAnswers = [...chosenAnswers];
+    for (let i = 0; i < props.content.length; i++) {
+      if (props.content[i].q) {
+        newChosenAnswers.push('');
+      }
+    }
+    setChosenAnswers(newChosenAnswers);
+
+    // return () => {
+    //   let newUserAnswers = [...props.userAnswers];
+    //   newUserAnswers[props.sectionIndex].answers = chosenAnswers;
+    //   props.setUserAnswers(newUserAnswers);
+    // }
   }, []);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    let newChosenAnswers = [...chosenAnswers];
+    newChosenAnswers[parseInt(event.target.name as string)] =
+      event.target.value;
+    setChosenAnswers(newChosenAnswers);
+  };
 
   return (
     <div>
       <div>
+        {JSON.stringify(chosenAnswers)}
         <div>
           {props.media &&
             props.media.map((image) => (
@@ -64,7 +91,12 @@ export default function MatchingHeadingSection(
                     </span>{' '}
                     {question.q}
                   </p>
-                  <Input className="text-center" />
+                  <Input
+                    className="text-center"
+                    name={`${index}`}
+                    value={chosenAnswers[index]}
+                    onChange={handleChange}
+                  />
                 </div>
               );
             }

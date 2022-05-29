@@ -93,8 +93,14 @@ export default function Test() {
   useEffect(() => {
     let newUserAnswers = [...userAnswers];
     sections.forEach((section) => {
-      let newAnswerSection;
+      let newAnswerSection: SectionAnswer = {
+        start_index: section.start_index,
+        end_index: section.end_index,
+        answers: [],
+      };
+      newUserAnswers.push(newAnswerSection);
     });
+    setUserAnswers(newUserAnswers);
   }, [sections]);
 
   return (
@@ -104,6 +110,7 @@ export default function Test() {
           path=":id"
           element={
             <div>
+              {JSON.stringify(userAnswers)}
               <TestHeader
                 sectionsLength={sections.length}
                 timeLeft={timeLeft}
@@ -113,10 +120,7 @@ export default function Test() {
               <div style={{ padding: 30, backgroundColor: '#E5E5E5' }}>
                 <div className="flex content-center place-content-center">
                   {JSON.stringify(userAnswers)}
-                  <ListeningTest
-                    sections={sections}
-                    setUserAnswers={setUserAnswers}
-                  />
+                  <ListeningTest sections={sections} />
                 </div>
               </div>
 
