@@ -2,6 +2,9 @@ import React, { useReducer, useContext, createContext } from 'react';
 import reducer from './reducer';
 import * as types from './constants';
 
+// import interfaces
+import Section from '../../interfaces/test/Section.interface';
+
 // interfaces
 interface TrackType {
   title: string;
