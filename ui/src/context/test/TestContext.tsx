@@ -3,31 +3,32 @@ import reducer from './reducer';
 import * as types from './constants';
 
 // import interfaces
-import Section from '../../interfaces/test/Section.interface';
-
-// interfaces
-interface TrackType {
-  title: string;
-  artist: string;
-  link: string;
-}
+import TestData from '../../interfaces/test/TestData.interface';
+import SubmitData from '../../interfaces/test/SubmitData.interface';
 
 interface InitialStateType {
-  track: TrackType;
-  setTitle: (title: string) => void;
-  setArtist: (artist: string) => void;
-  setLink: (link: string) => void;
+  testData: TestData;
+  submitData: SubmitData;
+  setTestData: (testData: TestData) => void;
+  setSubmitData: (submitData: SubmitData) => void;
 }
 
 const initialState: InitialStateType = {
-  track: {
-    title: 'None',
-    artist: 'N/A',
-    link: '',
+  testData: {
+    totalTime: 3599,
+    mediaURL: '',
+    title: '',
+    content: '',
+    description: '',
+    type: '',
+    sections: [],
   },
-  setTitle: () => {},
-  setArtist: () => {},
-  setLink: () => {},
+  submitData: {
+    id: '',
+    sections: [],
+  },
+  setTestData: () => {},
+  setSubmitData: () => {},
 };
 
 const TestContext = createContext<InitialStateType>(initialState);
@@ -35,28 +36,17 @@ const TestContext = createContext<InitialStateType>(initialState);
 const GlobalProvider = (parameter: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const handleSetTitle = (title: string) => {
+  const handleSetTestData = (testData: TestData) => {
     dispatch({
-      type: types.SET_TITLE,
-      payload: title,
+      type: types.SET_TEST_DATA,
+      payload: testData,
     });
   };
 
-  const handleSetArtist = (artist: string) => {
+  const handleSetSubmitData = (submitData: SubmitData) => {
     dispatch({
-      type: types.SET_ARTIST,
-      payload: artist,
-    });
-  };
-
-  /**
-   *
-   * @param link string link to the next pages
-   */
-  const handleSetLink = (link: string) => {
-    dispatch({
-      type: types.SET_LINK,
-      payload: link,
+      type: types.SET_SUBMIT_DATA,
+      payload: submitData,
     });
   };
 
@@ -64,9 +54,8 @@ const GlobalProvider = (parameter: { children: React.ReactNode }) => {
     <TestContext.Provider
       value={{
         ...state,
-        setTitle: handleSetTitle,
-        setArtist: handleSetArtist,
-        setLink: handleSetLink,
+        setTestData: handleSetTestData,
+        setSubmitData: handleSetSubmitData,
       }}
     >
       {parameter.children}

@@ -1,32 +1,24 @@
 import * as types from './constants';
 
-const reducer = (state: { track: any }, { type, payload }: any) => {
+// import interfaces
+import TestData from '../../interfaces/test/TestData.interface';
+import SubmitData from '../../interfaces/test/SubmitData.interface';
+
+const reducer = (
+  state: { testData: TestData; submitData: SubmitData },
+  { type, payload }: any
+) => {
   switch (type) {
-    case types.SET_TITLE: {
+    case types.SET_TEST_DATA: {
       return {
         ...state,
-        track: {
-          ...state.track,
-          title: payload,
-        },
+        testData: payload,
       };
     }
-    case types.SET_ARTIST: {
+    case types.SET_SUBMIT_DATA: {
       return {
         ...state,
-        track: {
-          ...state.track,
-          artist: payload,
-        },
-      };
-    }
-    case types.SET_LINK: {
-      return {
-        ...state,
-        track: {
-          ...state.track,
-          link: payload,
-        },
+        submitData: payload,
       };
     }
     default:
