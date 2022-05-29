@@ -5,6 +5,7 @@ const { Option } = Select;
 
 //interface
 interface TrueFalseSectionProps {
+  sectionIndex: number;
   startIndex: number;
   media: {
     title: string;

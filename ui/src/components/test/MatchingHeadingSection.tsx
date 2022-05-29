@@ -3,6 +3,7 @@ import { Input } from 'antd';
 
 // local interfaces
 interface MatchingHeadingSectionProps {
+  sectionIndex: number;
   startIndex: number;
   smallAnswerDescription: string;
   media: {

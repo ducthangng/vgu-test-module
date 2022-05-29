@@ -19,7 +19,7 @@ interface ListeningTestProps {
 }
 
 //function for rendering section depends on its data
-const getSectionComponent = (section: Section) => {
+const getSectionComponent = (section: Section, sectionIndex: number) => {
   if (section.type == 'multiple choice question') {
     // because content may not be an array, so we need to check before using map()
     if (Array.isArray(section.content)) {
@@ -27,6 +27,7 @@ const getSectionComponent = (section: Section) => {
         <div>
           <h1 className="text-2xl py-5 font-bold">{section.title}</h1>
           <MultipleChoiceSection
+            sectionIndex={sectionIndex}
             startIndex={section.start_index}
             media={section.media}
             content={
@@ -46,6 +47,7 @@ const getSectionComponent = (section: Section) => {
         <div>
           <h1 className="text-2xl py-5 font-bold">{section.title}</h1>
           <MatchingHeadingSection
+            sectionIndex={sectionIndex}
             startIndex={section.start_index}
             smallAnswerDescription={section.smallAnswerDescription}
             media={section.media}
@@ -59,6 +61,7 @@ const getSectionComponent = (section: Section) => {
       <div>
         <h1 className="text-2xl py-5 font-bold">{section.title}</h1>
         <FillBlankSection
+          sectionIndex={sectionIndex}
           startIndex={section.start_index}
           media={section.media}
           content={section.content as { passage: string }}
@@ -71,6 +74,7 @@ const getSectionComponent = (section: Section) => {
         <div>
           <h1 className="text-2xl py-5 font-bold">{section.title}</h1>
           <TrueFalseSection
+            sectionIndex={sectionIndex}
             startIndex={section.start_index}
             media={section.media}
             content={section.content as { q: string; correct_ans: number }[]}
@@ -100,7 +104,8 @@ export default function ListeningTest(props: ListeningTestProps) {
     } else {
       setSectionComponent(
         getSectionComponent(
-          props.sections.at(parseInt(id as string) - 1) as Section
+          props.sections.at(parseInt(id as string) - 1) as Section,
+          parseInt(id as string)
         )
       );
     }

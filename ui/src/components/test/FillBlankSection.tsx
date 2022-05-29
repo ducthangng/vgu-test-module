@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 
 interface FillBlankSectionProps {
+  sectionIndex: number;
   startIndex: number;
   media: {
     title: string;

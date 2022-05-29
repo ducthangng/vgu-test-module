@@ -4,6 +4,7 @@ import { RadioChangeEvent } from 'antd/lib/radio';
 
 // local interfaces
 interface MultipleChoiceSectionProps {
+  sectionIndex: number;
   startIndex: number;
   media: {
     title: string;
