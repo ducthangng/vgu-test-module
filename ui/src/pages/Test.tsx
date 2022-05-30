@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import TestHeader from '../components/test/TestHeader';
 import ListeningTest from '../components/test/ListeningTest';
+import ReadingTest from '../components/test/ReadingTest';
 import SectionAnswer from '../interfaces/test/SectionAnswer.interface';
 import SubmitData from '../interfaces/test/SubmitData.interface';
 
@@ -9,7 +10,8 @@ import { Routes, Route } from 'react-router-dom';
 import { useTestContext } from '../context/test/TestContext';
 
 // fake data
-import mockListeningData from '../api/mockListeningData.json';
+// import data from '../api/mockListeningData.json';
+import data from '../api/mockReadingData.json';
 
 export default function Test() {
   // context
@@ -26,19 +28,19 @@ export default function Test() {
   const fetchData = () => {
     let newTestData = {
       totalTime: 10,
-      mediaURL: mockListeningData.mediaURL,
-      title: mockListeningData.title,
-      content: mockListeningData.content,
-      description: mockListeningData.description,
-      type: mockListeningData.type,
-      sections: mockListeningData.sections,
+      mediaURL: data.mediaURL,
+      title: data.title,
+      content: data.content,
+      description: data.description,
+      type: data.type,
+      sections: data.sections,
     };
 
     let newSections = [];
-    for (let i = 0; i < mockListeningData.sections.length; i++) {
+    for (let i = 0; i < data.sections.length; i++) {
       let newSection = {
-        start_index: mockListeningData.sections[i]?.start_index,
-        end_index: mockListeningData.sections[i]?.end_index,
+        start_index: data.sections[i]?.start_index,
+        end_index: data.sections[i]?.end_index,
         answers: [],
       };
       newSections.push(newSection);
@@ -46,7 +48,7 @@ export default function Test() {
 
     setTestData(newTestData);
     setSubmitData({
-      id: mockListeningData.id,
+      id: data.id,
       sections: newSections,
     });
     // somehow totalTime only works as a normal variable, rather than a state or context state
@@ -128,11 +130,20 @@ export default function Test() {
                 timeLeft={timeLeft}
                 handleSubmit={handleSubmit}
               />
-
-              <ListeningTest
-                sections={testData.sections}
-                audioSource={testData.mediaURL}
-              />
+              {testData.type === 'listening' && (
+                <ListeningTest
+                  sections={testData.sections}
+                  audioSource={testData.mediaURL}
+                />
+              )}
+              {testData.type === 'reading' && (
+                <ReadingTest
+                  sections={testData.sections}
+                  title={testData.title}
+                  passage={testData.content}
+                  illustration={testData.mediaURL}
+                />
+              )}
             </div>
           }
         />
