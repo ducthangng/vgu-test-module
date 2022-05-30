@@ -1,6 +1,6 @@
 import React from 'react';
 import TestCard from '../components/TestCard';
-import { Row, Col, Divider } from 'antd';
+import { Row, Divider } from 'antd';
 import { Pagination } from 'antd';
 import { TestCardData } from '../utils/models/TestCardData';
 
