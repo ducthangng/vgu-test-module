@@ -8,12 +8,13 @@ import MultipleChoiceSection from './MultipleChoiceSection';
 import MatchingHeadingSection from './MatchingHeadingSection';
 import TrueFalseSection from './TrueFalseSection';
 import FillBlankSection from './FillBlankSection';
+import AudioPlayer from './AudioPlayer';
 //interfaces
 import Section from '../../interfaces/test/Section.interface';
-import SectionAnswer from '../../interfaces/test/SectionAnswer.interface';
 
 //local interfaces
 interface ListeningTestProps {
+  audioSource: string;
   sections: Section[];
 }
 
@@ -122,10 +123,18 @@ export default function ListeningTest(props: ListeningTestProps) {
   }, [props.sections, id]);
 
   return (
-    <div className="p-5 md:p-10 rounded-lg w-full md:px-50 bg-white overflow-hidden shadow-lg">
-      <Form form={form} layout="vertical" autoComplete="off">
-        {sectionComponent}
-      </Form>
-    </div>
+    <>
+      <div style={{ padding: 30, backgroundColor: '#E5E5E5' }}>
+        <div className="flex content-center place-content-center">
+          <div className="p-5 md:p-10 rounded-lg w-full md:px-50 bg-white overflow-hidden shadow-lg">
+            <Form form={form} layout="vertical" autoComplete="off">
+              {sectionComponent}
+            </Form>
+          </div>
+        </div>
+      </div>
+
+      <AudioPlayer audioSource={props.audioSource} />
+    </>
   );
 }

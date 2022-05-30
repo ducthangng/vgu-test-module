@@ -5,8 +5,6 @@ import {
   ForwardFilled,
   BackwardFilled,
 } from '@ant-design/icons';
-import { ReactComponent as BackwardIcon } from '../../assets/images/15backward.svg';
-import { ReactComponent as ForwardIcon } from '../../assets/images/15forward.svg';
 
 interface AudioPlayerProps {
   audioSource: string;
@@ -20,6 +18,7 @@ export default function AudioPlayer(props: AudioPlayerProps) {
   const [duration, setDuration] = useState('');
 
   // refs
+  const audioSourceRef = useRef<string>(props.audioSource);
   const audioRef = useRef<HTMLAudioElement>(new Audio(props.audioSource));
   const intervalRef = useRef<number>();
   const isReady = useRef<boolean>(false);
@@ -67,12 +66,28 @@ export default function AudioPlayer(props: AudioPlayerProps) {
   };
 
   // useEffect
+  // assign audio source on audioSource change
+  useEffect(() => {
+    const assignAudio = async () => {
+      try {
+        console.log(props.audioSource);
+        audioRef.current = new Audio(props.audioSource);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    assignAudio();
+  }, [props.audioSource]);
+
+  // keep track of audio's ready state
   useEffect(() => {
     if (audioRef.current.readyState) {
       isReady.current = true;
+      console.log('audio is ready!');
     }
   }, [audioRef.current.readyState]);
 
+  // play/pause audio on isPlaying state change
   useEffect(() => {
     if (isPlaying) {
       audioRef.current.play();
@@ -82,6 +97,7 @@ export default function AudioPlayer(props: AudioPlayerProps) {
     }
   }, [isPlaying]);
 
+  // set CurrentTime string on audio's time change
   useEffect(() => {
     const minutes = Math.floor(audioRef.current.currentTime / 60);
     const seconds = Math.floor(audioRef.current.currentTime - minutes * 60);
@@ -90,6 +106,7 @@ export default function AudioPlayer(props: AudioPlayerProps) {
     );
   }, [audioRef.current.currentTime]);
 
+  // set Duration string on audio's duration change
   useEffect(() => {
     const minutes = Math.floor(audioRef.current.duration / 60);
     const seconds = Math.floor(audioRef.current.duration - minutes * 60);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { LeftOutlined, RightOutlined, SendOutlined } from '@ant-design/icons';
+import { LeftOutlined, RightOutlined, CheckOutlined } from '@ant-design/icons';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -58,17 +58,17 @@ export default function TestHeader(props: TestHeaderProps) {
             <div>
               <button
                 type="button"
-                className="disabled:text-white disabled:bg-gray-300 hidden md:inline text-white bg-primary font-bold hover:bg-primary/75 rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0"
+                className="disabled:text-white disabled:bg-gray-300 hidden md:inline text-white bg-green-500 font-bold hover:bg-primary/75 rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0"
                 onClick={props.handleSubmit}
               >
                 SUBMIT
               </button>
               <button
                 type="button"
-                className="disabled:text-white disabled:bg-gray-300 inline md:hidden text-white bg-primary font-bold hover:bg-primary/75 rounded-lg text-sm px-2 py-2 text-center mr-3 md:mr-0"
+                className="disabled:text-white disabled:bg-gray-300 inline md:hidden text-white bg-green-500 font-bold hover:bg-primary/75 rounded-lg text-sm px-2 py-2 text-center mr-3 md:mr-0"
                 onClick={props.handleSubmit}
               >
-                <SendOutlined />
+                <CheckOutlined />
               </button>
             </div>
           ) : (

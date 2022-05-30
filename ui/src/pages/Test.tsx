@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import TestHeader from '../components/test/TestHeader';
 import ListeningTest from '../components/test/ListeningTest';
-import AudioPlayer from '../components/test/AudioPlayer';
 import SectionAnswer from '../interfaces/test/SectionAnswer.interface';
 import SubmitData from '../interfaces/test/SubmitData.interface';
 
@@ -130,13 +129,10 @@ export default function Test() {
                 handleSubmit={handleSubmit}
               />
 
-              <div style={{ padding: 30, backgroundColor: '#E5E5E5' }}>
-                <div className="flex content-center place-content-center">
-                  <ListeningTest sections={testData.sections} />
-                </div>
-              </div>
-
-              <AudioPlayer audioSource="https://www.dropbox.com/s/8cds18ri4qugdi4/guwei.mp3?dl=1" />
+              <ListeningTest
+                sections={testData.sections}
+                audioSource={testData.mediaURL}
+              />
             </div>
           }
         />
