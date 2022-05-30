@@ -1,0 +1,132 @@
+
+.TestCard {
+    /* Select card test */
+    width: 1096px;
+    border-radius: 20px;
+    border: 20px;
+    height: 113px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cover {
+
+    /* image cover for select card test */
+    /* display: block;
+     grid-area: b;
+     align-self: top center;
+     justify-self: top center; */
+
+    /* Overlay */
+    position: absolute;
+    width: 195px;
+    height: 113px;
+    top: 0px;
+    left: 0px;
+    /* background: #3B3735; */
+    /* opacity: 0.2; */
+}
+
+.test_title {
+    /* Title for the card test */
+    display: flex;
+    position: absolute;
+    left: 228px;
+    top: 10px;
+    font-family: Roboto;
+    font-size: 30px;
+    font-weight: bold;
+
+}
+
+.test_description {
+    /* Description for the card test */
+    display: flex;
+    position: absolute;
+    left: 228px;
+    top: 58px;
+    font-family: Roboto;
+    font-size: 11px;
+
+}
+
+.test_group {
+    /* Group for the card test */
+    display: flex;
+    position: absolute;
+    left: 723px;
+    top: 25px;
+    font-family: Roboto;
+    font-size: 11px;
+
+}
+
+.test_time {
+    /* Time for the card test */
+    display: flex;
+    position: absolute;
+    left: 723px;
+    top: 70px;
+    font-family: Roboto;
+    font-size: 11px;
+
+}
+
+.mail_icon {
+    /* Icon for the card test */
+    display: flex;
+    position: absolute;
+    left: -23px;
+    top: 0px;
+    width: 16.8px;
+    height: 14.83px;
+}
+
+.calendar_icon {
+    /* Icon for the card test */
+    display: flex;
+    position: absolute;
+    left: -23px;
+    top: 0px;
+    width: 16.8px;
+    height: 14.83px;
+}
+
+.content {
+    /* Content for the card test */
+    display: block;
+    align-items: center;
+    justify-content: center;
+    font-family: Roboto;
+    font-size: medium;
+    grid-area: b;
+    align-self: center;
+    justify-self: center;
+}
+
+.btn {
+    /* Button for the card test */
+    display: flex;
+    position: absolute;
+    left: 960px;
+    top: 41px;
+    font-family: Roboto;
+    font-size: 20px;
+    width: 99px;
+    height: 32px;
+    background-color: #8172D5;
+    text-align: center;
+}
+
+.btn_content{
+    /* Button content for the card test */
+    display: flex;
+    position: absolute;
+    left: 30px;
+    top: 1px;
+    font-family: Roboto;
+    font-size: 20px;
+    color: #000000;
+    text-align: center;
+}

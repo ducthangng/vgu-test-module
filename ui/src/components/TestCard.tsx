@@ -1,9 +1,9 @@
-import { Card, Form, Avatar } from 'antd';
+import { Card, Form, Button } from 'antd';
 import React from 'react';
-import './TestCard.css';
 import test from '../assets/images/pexels-photo-1036644.png';
 import mail from '../assets/images/ic_contact_mail_24px.png';
 import calendar from '../assets/images/ic_event_available_24px.png';
+import styles from '../assets/css/TestCard.module.css';
 import { TestCardData } from '../utils/models/TestCardData';
 
 // TODO: CSS need to be changed to /src/assets/css.
@@ -20,28 +20,36 @@ const TestCard: React.FC<TestCardData> = ({
     <Form>
       <Card
         hoverable
-        className="TestCard"
+        className={styles.TestCard}
         cover={
           <img
             alt="example"
             src={test}
-            className="cover"
+            className={styles.cover}
             style={{ alignItems: 'center', borderRadius: 10 }}
           />
         }
       >
         <div>
-          <h1 className="test_title"> Test {testId}</h1>
-          <h2 className="test_description"> {description} </h2>
-          <p className="test_group">
-            <img src={mail} className="mail_icon" alt="mail" />
+          <h1 className={styles.test_title}> Test {testId}</h1>
+          <h2 className={styles.test_description}> {description} </h2>
+          <p className={styles.test_group}>
+            <img src={mail} className={styles.mail_icon} alt="mail" />
             Group {groupId}
           </p>
-          <p className="test_time">
-            <img src={calendar} className="calendar_icon" alt="calendar" />
+          <p className={styles.test_time}>
+            <img
+              src={calendar}
+              className={styles.calendar_icon}
+              alt="calendar"
+            />
             {deadline}
           </p>
         </div>
+        <Button className={styles.btn}>
+          {' '}
+          <h3 className={styles.btn_content}>take</h3>{' '}
+        </Button>
       </Card>
     </Form>
   );
