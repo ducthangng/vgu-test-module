@@ -3,6 +3,7 @@ import './App.css';
 import Test from './pages/Test';
 import './configs/antd/customized.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { TestProvider } from './context/test/TestContext';
 
 function App() {
   // const handleSubmit = () => {
@@ -19,7 +20,14 @@ function App() {
     <div className="h-screen">
       <BrowserRouter>
         <Routes>
-          <Route path="test/*" element={<Test />} />
+          <Route
+            path="test/*"
+            element={
+              <TestProvider>
+                <Test />
+              </TestProvider>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </div>

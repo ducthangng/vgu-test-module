@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, Radio, Space } from 'antd';
 import { RadioChangeEvent } from 'antd/lib/radio';
+
+import { useTestContext } from '../../context/test/TestContext';
 
 // local interfaces
 interface MultipleChoiceSectionProps {
@@ -20,7 +22,24 @@ interface MultipleChoiceSectionProps {
 export default function MultipleChoiceSection(
   props: MultipleChoiceSectionProps
 ) {
-  const handleChange = (event?: RadioChangeEvent) => {};
+  // context
+  const { submitData, setSubmitData } = useTestContext();
+
+  const handleChange = (event?: RadioChangeEvent) => {
+    let newChosenAnswers = [
+      ...submitData.sections[props.sectionIndex - 1].answers,
+    ];
+    newChosenAnswers[parseInt(event?.target.name as string)] =
+      event?.target.value;
+
+    let newSubmitDataSections = [...submitData.sections];
+    newSubmitDataSections[props.sectionIndex - 1].answers = newChosenAnswers;
+    let newSubmitData = {
+      ...submitData,
+      sections: newSubmitDataSections,
+    };
+    setSubmitData(newSubmitData);
+  };
 
   return (
     <div>
@@ -46,7 +65,7 @@ export default function MultipleChoiceSection(
           >
             <Radio.Group
               style={{ paddingLeft: 15 }}
-              name={`${props.startIndex + index}`}
+              name={`${index}`}
               onChange={handleChange}
             >
               <Space direction="vertical">

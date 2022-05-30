@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useTestContext } from '../../context/test/TestContext';
 
 interface FillBlankSectionProps {
   sectionIndex: number;
@@ -13,7 +14,35 @@ interface FillBlankSectionProps {
 }
 
 export default function FillBlankSection(props: FillBlankSectionProps) {
-  const htmlContentRef = useRef(null);
+  // ref
+  const htmlContentRef = useRef<HTMLDivElement>(null);
+
+  // context
+  const { submitData, setSubmitData } = useTestContext();
+
+  const handleInput = () => {
+    if (htmlContentRef.current) {
+      let inputList = Array.from(
+        htmlContentRef.current.getElementsByTagName('input')
+      );
+
+      let newChosenAnswers = [
+        ...submitData.sections[props.sectionIndex - 1].answers,
+      ];
+
+      for (let i = 0; i < inputList.length; i++) {
+        newChosenAnswers[i] = inputList[i].value;
+      }
+
+      let newSubmitDataSections = [...submitData.sections];
+      newSubmitDataSections[props.sectionIndex - 1].answers = newChosenAnswers;
+      let newSubmitData = {
+        ...submitData,
+        sections: newSubmitDataSections,
+      };
+      setSubmitData(newSubmitData);
+    }
+  };
 
   return (
     <div>
@@ -27,6 +56,7 @@ export default function FillBlankSection(props: FillBlankSectionProps) {
           ))}
       </div>
       <div
+        onInput={handleInput}
         ref={htmlContentRef}
         dangerouslySetInnerHTML={{ __html: props.content.passage }}
       />

@@ -1,48 +1,67 @@
 import React, { useEffect, useState, useRef } from 'react';
-import TestNav from '../components/test/TestNav';
 import TestHeader from '../components/test/TestHeader';
 import ListeningTest from '../components/test/ListeningTest';
 import AudioPlayer from '../components/test/AudioPlayer';
-import { MenuOutlined, CloseOutlined } from '@ant-design/icons';
-import Section from '../interfaces/test/Section.interface';
 import SectionAnswer from '../interfaces/test/SectionAnswer.interface';
+import SubmitData from '../interfaces/test/SubmitData.interface';
 
-import { Navigate, Routes, Route, useParams } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+
+import { useTestContext } from '../context/test/TestContext';
 
 // fake data
 import mockListeningData from '../api/mockListeningData.json';
 
 export default function Test() {
+  // context
+  const { testData, submitData, setTestData, setSubmitData } = useTestContext();
+
   // test data
   let totalTime: number | undefined = undefined;
-  const [mediaURL, setMediaURL] = useState<string>('');
-  const [title, setTitle] = useState<string>('');
-  const [content, setContent] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
-  const [type, setType] = useState<string>('');
-  const [sections, setSections] = useState<Section[]>([]);
   const [timeLeft, setTimeLeft] = useState<string>('');
   const [intervalId, setIntervalId] = useState<number | undefined>(undefined);
   const [userAnswers, setUserAnswers] = useState<SectionAnswer[]>([]);
-  const userAnswersRef = useRef<SectionAnswer[]>([]); //make a copy of userAnswers state to deal with setInterval closure
-
-  //other data
-  const [openNav, setOpenNav] = useState<boolean>(true);
+  const submitDataRef = useRef<SubmitData>();
 
   //fetch data function, currently it only sets mock data
   const fetchData = () => {
-    setMediaURL(mockListeningData.mediaURL);
-    setTitle(mockListeningData.title);
-    setContent(mockListeningData.content);
-    setDescription(mockListeningData.description);
-    setType(mockListeningData.type);
-    setSections(mockListeningData.sections);
+    let newTestData = {
+      totalTime: 10,
+      mediaURL: mockListeningData.mediaURL,
+      title: mockListeningData.title,
+      content: mockListeningData.content,
+      description: mockListeningData.description,
+      type: mockListeningData.type,
+      sections: mockListeningData.sections,
+    };
+
+    let newSections = [];
+    for (let i = 0; i < mockListeningData.sections.length; i++) {
+      let newSection = {
+        start_index: mockListeningData.sections[i]?.start_index,
+        end_index: mockListeningData.sections[i]?.end_index,
+        answers: [],
+      };
+      newSections.push(newSection);
+    }
+
+    setTestData(newTestData);
+    setSubmitData({
+      id: mockListeningData.id,
+      sections: newSections,
+    });
+    // somehow totalTime only works as a normal variable, rather than a state or context state
     totalTime = 10;
   };
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  // update submitDataRef when submitData changes
+  useEffect(() => {
+    submitDataRef.current = submitData;
+  }, [submitData]);
 
   //countdown function
   const countdown = () => {
@@ -78,21 +97,16 @@ export default function Test() {
   }, [timeLeft, totalTime]);
 
   //submit test function
-  //   const submitTest = (event?: React.MouseEvent<HTMLElement>) => {
-  //     event?.preventDefault();
-  //     console.log('submit!');
-  //     console.log(userAnswersRef.current);
-  //   };
-  const handleSubmit = () => {};
-
-  //   useEffect(() => {
-  //     userAnswersRef.current = userAnswers;
-  //   }, [userAnswers]);
+  const handleSubmit = (event?: React.MouseEvent<HTMLElement>) => {
+    event?.preventDefault();
+    console.log('submit!');
+    console.log(submitDataRef.current);
+  };
 
   // intialize userAnswer
   useEffect(() => {
     let newUserAnswers = [...userAnswers];
-    sections.forEach((section) => {
+    testData.sections.forEach((section) => {
       let newAnswerSection: SectionAnswer = {
         start_index: section.start_index,
         end_index: section.end_index,
@@ -101,7 +115,7 @@ export default function Test() {
       newUserAnswers.push(newAnswerSection);
     });
     setUserAnswers(newUserAnswers);
-  }, [sections]);
+  }, [testData.sections]);
 
   return (
     <div>
@@ -110,17 +124,15 @@ export default function Test() {
           path=":id"
           element={
             <div>
-              {JSON.stringify(userAnswers)}
               <TestHeader
-                sectionsLength={sections.length}
+                sectionsLength={testData.sections.length}
                 timeLeft={timeLeft}
                 handleSubmit={handleSubmit}
               />
 
               <div style={{ padding: 30, backgroundColor: '#E5E5E5' }}>
                 <div className="flex content-center place-content-center">
-                  {JSON.stringify(userAnswers)}
-                  <ListeningTest sections={sections} />
+                  <ListeningTest sections={testData.sections} />
                 </div>
               </div>
 

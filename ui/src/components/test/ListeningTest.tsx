@@ -34,7 +34,9 @@ export default function ListeningTest(props: ListeningTestProps) {
       if (Array.isArray(section.content)) {
         return (
           <div>
-            <h1 className="text-2xl py-5 font-bold">{section.title}</h1>
+            <h1 className="text-2xl py-5 font-bold">
+              {section.title} {sectionIndex}
+            </h1>
             <MultipleChoiceSection
               sectionIndex={sectionIndex}
               startIndex={section.start_index}
@@ -54,7 +56,10 @@ export default function ListeningTest(props: ListeningTestProps) {
       if (Array.isArray(section.content)) {
         return (
           <div>
-            <h1 className="text-2xl py-5 font-bold">{section.title}</h1>
+            <h1 className="text-2xl py-5 font-bold">
+              {section.title}
+              {sectionIndex}
+            </h1>
             <MatchingHeadingSection
               sectionIndex={sectionIndex}
               startIndex={section.start_index}
@@ -68,7 +73,10 @@ export default function ListeningTest(props: ListeningTestProps) {
     } else if (section.type == 'fill in the blank') {
       return (
         <div>
-          <h1 className="text-2xl py-5 font-bold">{section.title}</h1>
+          <h1 className="text-2xl py-5 font-bold">
+            {section.title}
+            {sectionIndex}
+          </h1>
           <FillBlankSection
             sectionIndex={sectionIndex}
             startIndex={section.start_index}
@@ -81,7 +89,10 @@ export default function ListeningTest(props: ListeningTestProps) {
       if (Array.isArray(section.content)) {
         return (
           <div>
-            <h1 className="text-2xl py-5 font-bold">{section.title}</h1>
+            <h1 className="text-2xl py-5 font-bold">
+              {section.title}
+              {sectionIndex}
+            </h1>
             <TrueFalseSection
               sectionIndex={sectionIndex}
               startIndex={section.start_index}

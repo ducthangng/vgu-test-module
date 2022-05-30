@@ -15,7 +15,6 @@ interface InitialStateType {
 
 const initialState: InitialStateType = {
   testData: {
-    totalTime: 3599,
     mediaURL: '',
     title: '',
     content: '',
@@ -33,10 +32,11 @@ const initialState: InitialStateType = {
 
 const TestContext = createContext<InitialStateType>(initialState);
 
-const GlobalProvider = (parameter: { children: React.ReactNode }) => {
+const TestProvider = (parameter: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const handleSetTestData = (testData: TestData) => {
+    console.log('handlesettestdata');
     dispatch({
       type: types.SET_TEST_DATA,
       payload: testData,
@@ -65,4 +65,4 @@ const GlobalProvider = (parameter: { children: React.ReactNode }) => {
 
 const useTestContext = () => useContext(TestContext);
 
-export { TestContext, GlobalProvider, useTestContext };
+export { TestContext, TestProvider, useTestContext };

@@ -1,9 +1,8 @@
 /* IMPORTS */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Input } from 'antd';
-//interfaces
-import Section from '../../interfaces/test/Section.interface';
-import SectionAnswer from '../../interfaces/test/SectionAnswer.interface';
+
+import { useTestContext } from '../../context/test/TestContext';
 
 /* LOCAL INTERFACES */
 interface MatchingHeadingSectionProps {
@@ -31,7 +30,9 @@ export default function MatchingHeadingSection(
   props: MatchingHeadingSectionProps
 ) {
   const [answers, setAnswers] = useState<Answer[]>([]);
-  const [chosenAnswers, setChosenAnswers] = useState<string[]>([]);
+
+  // context
+  const { submitData, setSubmitData } = useTestContext();
 
   useEffect(() => {
     // set and sort answers lexicographically
@@ -46,33 +47,36 @@ export default function MatchingHeadingSection(
         .sort((a: Answer, b: Answer) => a.p.localeCompare(b.p))
     );
 
-    // initialize chosenAnswers array
-    let newChosenAnswers = [...chosenAnswers];
-    for (let i = 0; i < props.content.length; i++) {
-      if (props.content[i].q) {
-        newChosenAnswers.push('');
+    // initialize answers array of this section
+
+    if (submitData.sections[props.sectionIndex - 1].answers.length < 1) {
+      for (let i = 0; i < props.content.length; i++) {
+        if (props.content[i].q) {
+          submitData.sections[props.sectionIndex - 1].answers.push('');
+        }
       }
     }
-    setChosenAnswers(newChosenAnswers);
-
-    // return () => {
-    //   let newUserAnswers = [...props.userAnswers];
-    //   newUserAnswers[props.sectionIndex].answers = chosenAnswers;
-    //   props.setUserAnswers(newUserAnswers);
-    // }
   }, []);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    let newChosenAnswers = [...chosenAnswers];
+    let newChosenAnswers = [
+      ...submitData.sections[props.sectionIndex - 1].answers,
+    ];
     newChosenAnswers[parseInt(event.target.name as string)] =
       event.target.value;
-    setChosenAnswers(newChosenAnswers);
+
+    let newSubmitDataSections = [...submitData.sections];
+    newSubmitDataSections[props.sectionIndex - 1].answers = newChosenAnswers;
+    let newSubmitData = {
+      ...submitData,
+      sections: newSubmitDataSections,
+    };
+    setSubmitData(newSubmitData);
   };
 
   return (
     <div>
       <div>
-        {JSON.stringify(chosenAnswers)}
         <div>
           {props.media &&
             props.media.map((image) => (
@@ -96,7 +100,9 @@ export default function MatchingHeadingSection(
                   <Input
                     className="text-center"
                     name={`${index}`}
-                    value={chosenAnswers[index]}
+                    value={
+                      submitData.sections[props.sectionIndex - 1].answers[index]
+                    }
                     onChange={handleChange}
                   />
                 </div>
