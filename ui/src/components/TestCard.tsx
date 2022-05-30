@@ -47,8 +47,7 @@ const TestCard: React.FC<TestCardData> = ({
           </p>
         </div>
         <Button className={styles.btn}>
-          {' '}
-          <h3 className={styles.btn_content}>take</h3>{' '}
+          <h3 className={styles.btn_content}>take</h3>
         </Button>
       </Card>
     </Form>
