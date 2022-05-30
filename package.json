@@ -39,5 +39,8 @@
       "prettier --write ui/src/**/**/*.{ts,tsx}",
       "git add ."
     ]
+  },
+  "dependencies": {
+    "interweave": "^13.0.0"
   }
 }

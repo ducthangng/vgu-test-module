@@ -1,10 +1,27 @@
 import React from 'react';
 import './App.scss';
+import Test from './pages/Test';
 import './configs/antd/customized.css';
-import AppRoute from './routes/routes';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { TestProvider } from './context/test/TestContext';
 
-const App = () => {
-  return <AppRoute />;
-};
+function App() {
+  return (
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="test/*"
+            element={
+              <TestProvider>
+                <Test />
+              </TestProvider>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </div>
+  );
+}
 
 export default App;

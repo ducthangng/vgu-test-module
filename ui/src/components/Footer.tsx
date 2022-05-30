@@ -45,6 +45,7 @@ export default function Footer() {
       </Breadcrumb>
 
       <Button type="primary">Submit</Button>
+      <p>Hello</p>
     </div>
   );
 }
