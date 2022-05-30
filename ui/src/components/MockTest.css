@@ -15,9 +15,9 @@
  .card{
      /* Select card test */
      width: 260px;
-     border-radius: 20px;
+     border-radius: 10px;
      border:20px ;
-     height: 368px;
+     height: 310px;
      display: flex;
      align-items: center;
      justify-content: center;
@@ -26,33 +26,28 @@
  .image_cover{
  
      /* image cover for select card test */
-     /* display: block;
-     grid-area: b;
-     align-self: top center;
-     justify-self: top center; */
  
      /* Overlay */
      position:absolute;
      width: 260px;
-     height: 185px;
+     height: 216px;
      top: 0px;
      left: 0px;
      object-fit: cover;
      border-top: 20px;
-     /* background: #3B3735; */
-     /* opacity: 0.2; */
  }
  
  .content{
      /* Content for the card test */
      display: block;
+     position: absolute;
      align-items: center;
      justify-content: center;
      font-family: Roboto;
+     font-weight: bold;
      font-size:medium;
      grid-area: b;
-     align-self: center;
-     justify-self: center;
+     bottom: 54px;
  }
  
  .wrapper{
@@ -66,5 +61,20 @@
          ". a b a ."
          ". a b a .";
  }
+
+ .tag_lon{
+     display: flex;
+     position: absolute;
+     left: 15px;
+     bottom: 16px;
+ }
+
+ .group_icon{
+     display: flex;
+     position: absolute;
+     top: 12px;
+     right: 38px;
+ }
  
+
  

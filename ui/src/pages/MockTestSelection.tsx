@@ -8,34 +8,42 @@ const defaultData: MockTestData[] = [
   {
     groupId: 1,
     description: 'this is the new group',
+    title: 'GROUP 1',
   },
   {
     groupId: 1,
     description: 'this is the new group',
+    title: 'GROUP 1',
   },
   {
     groupId: 1,
     description: 'this is the new group',
+    title: 'GROUP 1',
   },
   {
     groupId: 1,
     description: 'this is the new group',
+    title: 'GROUP 1',
   },
   {
     groupId: 1,
     description: 'this is the new group',
+    title: 'GROUP 1',
   },
   {
     groupId: 1,
     description: 'this is the new group',
+    title: 'GROUP 1',
   },
   {
     groupId: 1,
     description: 'this is the new group',
+    title: 'GROUP 1',
   },
   {
     groupId: 1,
     description: 'this is the new group',
+    title: 'GROUP 1',
   },
 ];
 
@@ -51,7 +59,11 @@ function MockTestSelection() {
         <Row gutter={[20, 20]} justify="space-around">
           {defaultData.map((item) => {
             return (
-              <MockTest groupId={item.groupId} description={item.description} />
+              <MockTest
+                groupId={item.groupId}
+                description={item.description}
+                title={item.title}
+              />
             );
           })}
         </Row>
