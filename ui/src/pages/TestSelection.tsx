@@ -1,6 +1,7 @@
 import React from 'react';
 import TestCard from '../components/TestCard';
 import { Row, Divider } from 'antd';
+
 import { Pagination } from 'antd';
 import { TestCardData } from '../utils/models/TestCardData';
 
@@ -57,14 +58,15 @@ const defaultData: TestCardData[] = [
 
 function TestSelection() {
   return (
-    <div
-      style={{
-        // display: 'flex',
-        width: '60%',
-      }}
-    >
+    <div style={{ width: '65%', display: 'flex', justifyContent: 'center' }}>
       <body>
-        <Divider orientation="left">Choose the test</Divider>
+        <Divider
+          orientation="left"
+          style={{ fontSize: '25px', fontFamily: 'Roboto' }}
+        >
+          Choose the test
+        </Divider>
+
         <Row gutter={[20, 20]} justify="space-around">
           {defaultData.map((item) => {
             return (
@@ -78,7 +80,8 @@ function TestSelection() {
             );
           })}
         </Row>
-
+        <br></br>
+        <br></br>
         <Row justify="center">
           <Pagination
             defaultCurrent={1}
