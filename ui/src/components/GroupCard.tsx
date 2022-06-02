@@ -1,10 +1,10 @@
 import { Card, Form, Button } from 'antd';
 import React from 'react';
 import styles from '../assets/css/GroupCard.module.css';
-
+import { GroupCardData } from '../utils/models/GroupCardData';
 const { Meta } = Card;
 
-function GroupCard() {
+const GroupCard: React.FC<GroupCardData> = ({ title, description }) => {
   return (
     <Form>
       <Card
@@ -21,8 +21,8 @@ function GroupCard() {
       >
         <div className={styles.wrapper}>
           <Meta
-            title="ADVANCE IELTS TEST"
-            description="Book unique camping experiences on over 300,000 campsites."
+            title={title}
+            description={description}
             className={styles.content}
             style={{ textAlign: 'center' }}
           />
@@ -33,6 +33,6 @@ function GroupCard() {
       </Card>
     </Form>
   );
-}
+};
 
 export default GroupCard;
