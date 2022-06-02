@@ -98,7 +98,7 @@ export default function MatchingHeadingSection(
                     {question.q}
                   </p>
                   <Input
-                    className="text-center"
+                    className="text-center ml-2"
                     name={`${index}`}
                     value={
                       submitData.sections[props.sectionIndex - 1].answers[index]

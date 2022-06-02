@@ -3,9 +3,10 @@ import { LeftOutlined, RightOutlined, CheckOutlined } from '@ant-design/icons';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { useTestContext } from '../../context/test/TestContext';
+
 // interface
 interface TestHeaderProps {
-  sectionsLength: number;
   timeLeft: string;
   handleSubmit: (event: React.MouseEvent<HTMLElement>) => void;
 }
@@ -14,6 +15,8 @@ export default function TestHeader(props: TestHeaderProps) {
   //routing
   const { id } = useParams();
   const navigate = useNavigate();
+  // context
+  const { testData } = useTestContext();
 
   const handleBack = () => {
     navigate(`../${parseInt(id as string) - 1}`);
@@ -31,12 +34,16 @@ export default function TestHeader(props: TestHeaderProps) {
             AprilPE
           </span>
         </a>
-        <div className="flex items-center md:ml-20">
+        <div>
           <p className="text-primary bg-primary/30 font-bold rounded-lg text-sm px-5 py-2.5 my-auto text-center">
             Time: {props.timeLeft}
           </p>
         </div>
-        <div className="flex space-x-2 items-center">
+        <div
+          className={`items-center space-x-2 ${
+            testData.type == 'reading' ? 'hidden md:flex' : ''
+          }`}
+        >
           <button
             type="button"
             className="disabled:text-white disabled:bg-gray-300 text-primary bg-primary/30 hover:bg-primary/20 hidden md:inline font-bold rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0"
@@ -54,7 +61,7 @@ export default function TestHeader(props: TestHeaderProps) {
             <LeftOutlined />
           </button>
 
-          {parseInt(id as string) >= props.sectionsLength ? (
+          {parseInt(id as string) >= testData.sections.length ? (
             <div>
               <button
                 type="button"

@@ -7,8 +7,8 @@
     "type": "listening",
     "sections": [
     {
-        "start_index": 1,
-        "end_index": 5,
+        "startIndex": 1,
+        "endIndex": 5,
         "title": "Matching Heading",
         "media": [
             {
@@ -98,7 +98,7 @@
     {
         "start_index": 11,
         "end_index": 16,
-        "title": "Fill in the Blank",
+        "title": "Complete the table below.\n\nChoose ONE WORD ONLY from the passage for each answer.\n\nWrite your answers in boxes 8-13",
         "media": [
             {
                 "title": "Illustration 1",

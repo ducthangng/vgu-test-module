@@ -8,6 +8,7 @@ import MultipleChoiceSection from './MultipleChoiceSection';
 import MatchingHeadingSection from './MatchingHeadingSection';
 import TrueFalseSection from './TrueFalseSection';
 import FillBlankSection from './FillBlankSection';
+import AnswerDrawer from './AnswerDrawer';
 //interfaces
 import Section from '../../interfaces/test/Section.interface';
 
@@ -17,6 +18,7 @@ interface ReadingTestProps {
   passage: string;
   illustration: string;
   sections: Section[];
+  handleSubmit: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 export default function ReadingTest(props: ReadingTestProps) {
@@ -25,6 +27,7 @@ export default function ReadingTest(props: ReadingTestProps) {
   //form
   const [form] = Form.useForm();
   //states
+  const [visible, setVisible] = useState(false);
   const [sectionComponent, setSectionComponent] = useState<
     JSX.Element | undefined
   >(undefined);
@@ -36,9 +39,9 @@ export default function ReadingTest(props: ReadingTestProps) {
       if (Array.isArray(section.content)) {
         return (
           <div>
-            <h1 className="text-2xl py-5 font-bold">
-              {section.title} {sectionIndex}
-            </h1>
+            <p className="whitespace-pre-line font-bold py-5">
+              {section.title}
+            </p>
             <MultipleChoiceSection
               sectionIndex={sectionIndex}
               startIndex={section.start_index}
@@ -58,10 +61,9 @@ export default function ReadingTest(props: ReadingTestProps) {
       if (Array.isArray(section.content)) {
         return (
           <div>
-            <h1 className="text-2xl py-5 font-bold">
+            <p className="whitespace-pre-line font-bold py-5">
               {section.title}
-              {sectionIndex}
-            </h1>
+            </p>
             <MatchingHeadingSection
               sectionIndex={sectionIndex}
               startIndex={section.start_index}
@@ -75,10 +77,7 @@ export default function ReadingTest(props: ReadingTestProps) {
     } else if (section.type == 'fill in the blank') {
       return (
         <div>
-          <h1 className="text-2xl py-5 font-bold">
-            {section.title}
-            {sectionIndex}
-          </h1>
+          <p className="whitespace-pre-line font-bold py-5">{section.title}</p>
           <FillBlankSection
             sectionIndex={sectionIndex}
             startIndex={section.start_index}
@@ -91,10 +90,9 @@ export default function ReadingTest(props: ReadingTestProps) {
       if (Array.isArray(section.content)) {
         return (
           <div>
-            <h1 className="text-2xl py-5 font-bold">
+            <p className="whitespace-pre-line font-bold py-5">
               {section.title}
-              {sectionIndex}
-            </h1>
+            </p>
             <TrueFalseSection
               sectionIndex={sectionIndex}
               startIndex={section.start_index}
@@ -126,20 +124,42 @@ export default function ReadingTest(props: ReadingTestProps) {
   return (
     <>
       <div style={{ padding: 30, backgroundColor: '#E5E5E5' }}>
-        <div className="h-screen flex content-center place-content-center">
-          <div className="grid grid-cols-2 gap-10 p-5 md:p-10 rounded-lg w-full md:px-50 bg-white overflow-hidden shadow-lg">
-            <div className="border-r-2 pr-8 overflow-y-scroll">
+        <div className="md:h-screen flex content-center place-content-center">
+          <div className="md:grid md:grid-cols-2 md:gap-10 p-7 md:p-10 rounded-lg w-full md:px-50 bg-white overflow-hidden shadow-lg">
+            <div className="md:border-r-2 md:pr-8 md:overflow-y-scroll">
               <h1 className="text-center font-bold text-4xl">{props.title}</h1>
+              <img className="py-10" src={props.illustration} />
               <p className="whitespace-pre-line">{props.passage}</p>
             </div>
-            <div className="pr-8 overflow-y-scroll">
+
+            <div className="hidden md:block pr-8 overflow-y-scroll">
               <Form form={form} layout="vertical" autoComplete="off">
                 {sectionComponent}
               </Form>
             </div>
+
+            <div className="block md:hidden">
+              <AnswerDrawer
+                visible={visible}
+                setVisible={setVisible}
+                sectionComponent={sectionComponent}
+                handleSubmit={props.handleSubmit}
+              />
+            </div>
           </div>
         </div>
       </div>
+
+      {!visible && (
+        <div
+          className="md:hidden text-center w-screen sticky bottom-0 bg-primary py-3 text-white"
+          onClick={() => {
+            setVisible(true);
+          }}
+        >
+          Open Answer Drawer
+        </div>
+      )}
     </>
   );
 }
