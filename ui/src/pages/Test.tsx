@@ -125,11 +125,7 @@ export default function Test() {
           path=":id"
           element={
             <div>
-              <TestHeader
-                sectionsLength={testData.sections.length}
-                timeLeft={timeLeft}
-                handleSubmit={handleSubmit}
-              />
+              <TestHeader timeLeft={timeLeft} handleSubmit={handleSubmit} />
               {testData.type === 'listening' && (
                 <ListeningTest
                   sections={testData.sections}
@@ -142,6 +138,7 @@ export default function Test() {
                   title={testData.title}
                   passage={testData.content}
                   illustration={testData.mediaURL}
+                  handleSubmit={handleSubmit}
                 />
               )}
             </div>
