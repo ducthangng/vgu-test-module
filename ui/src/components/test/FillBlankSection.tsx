@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTestContext } from '../../context/test/TestContext';
 import Section from '../../interfaces/test/Section.interface';
 
@@ -13,6 +13,10 @@ export default function FillBlankSection(props: FillBlankSectionProps) {
 
   // context
   const { submitData, setSubmitData } = useTestContext();
+
+  // state
+  const [title, setTitle] = useState<string>();
+  const [passage, setPassage] = useState<string>();
 
   const handleInput = () => {
     if (htmlContentRef.current) {
@@ -40,6 +44,11 @@ export default function FillBlankSection(props: FillBlankSectionProps) {
 
   return (
     <div>
+      <div
+        className="whitespace-pre-line font-bold py-5"
+        dangerouslySetInnerHTML={{ __html: props.section.title }}
+      />
+
       <div>
         {props.section.media &&
           props.section.media.map((image) => (
@@ -52,7 +61,7 @@ export default function FillBlankSection(props: FillBlankSectionProps) {
       <div
         onInput={handleInput}
         ref={htmlContentRef}
-        dangerouslySetInnerHTML={{ __html: props.section.title }}
+        dangerouslySetInnerHTML={{ __html: props.section.content[0].q }}
       />
     </div>
   );

@@ -6,44 +6,38 @@ import { useTestContext } from '../../context/test/TestContext';
 
 import Section from '../../interfaces/test/Section.interface';
 
+import shuffle from '../../utils/shuffleArray';
+
 /* LOCAL INTERFACES */
 interface MatchingHeadingSectionProps {
   sectionIndex: number;
   section: Section;
 }
 
-interface Answer {
-  p: string;
-  a: string;
-}
-
 /* COMPONENT */
 export default function MatchingHeadingSection(
   props: MatchingHeadingSectionProps
 ) {
-  const [answers, setAnswers] = useState<Answer[]>([]);
+  const [answers, setAnswers] = useState<string[]>([]);
 
   // context
   const { submitData, setSubmitData } = useTestContext();
 
   useEffect(() => {
-    // set and sort answers lexicographically
-    setAnswers(
-      props.content
-        .map((item) => {
-          return {
-            a: item.a,
-            p: item.p,
-          };
-        })
-        .sort((a: Answer, b: Answer) => a.p.localeCompare(b.p))
-    );
+    // create answers array made from list of correct answers
+    let newAnswers = props.section.content.map((item) => {
+      return item.correct_ans as string;
+    });
+
+    // shuffle answers array
+    shuffle(newAnswers);
+
+    setAnswers(newAnswers);
 
     // initialize answers array of this section
-
     if (submitData.sections[props.sectionIndex - 1].answers.length < 1) {
-      for (let i = 0; i < props.content.length; i++) {
-        if (props.content[i].q) {
+      for (let i = 0; i < props.section.content.length; i++) {
+        if (props.section.content[i].q) {
           submitData.sections[props.sectionIndex - 1].answers.push('');
         }
       }
@@ -68,24 +62,29 @@ export default function MatchingHeadingSection(
 
   return (
     <div>
+      <div
+        className="whitespace-pre-line font-bold py-5"
+        dangerouslySetInnerHTML={{ __html: props.section.title }}
+      />
+
       <div>
         <div>
-          {props.media &&
-            props.media.map((image) => (
+          {props.section.media &&
+            props.section.media.map((image) => (
               <div className="flex flex-col items-center">
                 <img src={image.content} className="" />
                 <p className="mb-10 italic">{image.title}</p>
               </div>
             ))}
         </div>
-        {props.content &&
-          props.content.map((question, index) => {
+        {props.section.content &&
+          props.section.content.map((question, index) => {
             if (question.q) {
               return (
                 <div className="grid grid-cols-4 flex items-center">
                   <p className="col-span-3">
                     <span className="font-bold">
-                      Câu {props.startIndex + index}:
+                      Câu {props.section.startIndex + index}:
                     </span>{' '}
                     {question.q}
                   </p>
@@ -103,11 +102,16 @@ export default function MatchingHeadingSection(
           })}
         <div className="p-3 rounded-md border flex items-center place-content-center">
           <div className="">
-            <h3 className="font-bold">{props.smallAnswerDescription}</h3>
+            <h3 className="font-bold">
+              {props.section.smallAnswerDescription}
+            </h3>
             {answers &&
-              answers.map((answer) => (
+              answers.map((answer, index) => (
                 <p>
-                  <span className="font-bold pr-2">{answer.p}</span> {answer.a}
+                  <span className="font-bold pr-2">
+                    {String.fromCharCode(index + 65)}
+                  </span>{' '}
+                  {answer}
                 </p>
               ))}
           </div>

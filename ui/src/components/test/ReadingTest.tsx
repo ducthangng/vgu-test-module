@@ -36,53 +36,16 @@ export default function ReadingTest(props: ReadingTestProps) {
   const getSectionComponent = (section: Section, sectionIndex: number) => {
     if (section.type == 'multiple choice question') {
       return (
-        <div>
-          <p className="whitespace-pre-line font-bold py-5">{section.title}</p>
-          <MultipleChoiceSection
-            sectionIndex={sectionIndex}
-            startIndex={section.startIndex}
-            media={section.media}
-            content={section.content}
-          />
-        </div>
+        <MultipleChoiceSection sectionIndex={sectionIndex} section={section} />
       );
     } else if (section.type == 'matching heading') {
       return (
-        <div>
-          <p className="whitespace-pre-line font-bold py-5">{section.title}</p>
-          <MatchingHeadingSection
-            sectionIndex={sectionIndex}
-            startIndex={section.startIndex}
-            smallAnswerDescription={section.smallAnswerDescription}
-            media={section.media}
-            content={section.content}
-          />
-        </div>
+        <MatchingHeadingSection sectionIndex={sectionIndex} section={section} />
       );
     } else if (section.type == 'fill in the blank') {
-      return (
-        <div>
-          <p className="whitespace-pre-line font-bold py-5">{section.title}</p>
-          <FillBlankSection
-            sectionIndex={sectionIndex}
-            startIndex={section.startIndex}
-            media={section.media}
-            content={section.content}
-          />
-        </div>
-      );
+      return <FillBlankSection sectionIndex={sectionIndex} section={section} />;
     } else if (section.type == 'tfng') {
-      return (
-        <div>
-          <p className="whitespace-pre-line font-bold py-5">{section.title}</p>
-          <TrueFalseSection
-            sectionIndex={sectionIndex}
-            startIndex={section.startIndex}
-            media={section.media}
-            content={section.content}
-          />
-        </div>
-      );
+      return <TrueFalseSection sectionIndex={sectionIndex} section={section} />;
     }
   };
 

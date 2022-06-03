@@ -41,7 +41,7 @@ export default function TestHeader(props: TestHeaderProps) {
         </div>
         <div
           className={`items-center space-x-2 ${
-            testData.type == 'reading' ? 'hidden md:flex' : ''
+            testData.type == 'reading' ? 'hidden md:flex' : 'flex'
           }`}
         >
           <button

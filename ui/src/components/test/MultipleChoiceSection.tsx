@@ -4,19 +4,12 @@ import { RadioChangeEvent } from 'antd/lib/radio';
 
 import { useTestContext } from '../../context/test/TestContext';
 
+import Section from '../../interfaces/test/Section.interface';
+
 // local interfaces
 interface MultipleChoiceSectionProps {
   sectionIndex: number;
-  startIndex: number;
-  media: {
-    title: string;
-    content: string;
-  }[];
-  content: {
-    q: string;
-    a: [string];
-    correct_ans: number;
-  }[];
+  section: Section;
 }
 
 export default function MultipleChoiceSection(
@@ -43,9 +36,14 @@ export default function MultipleChoiceSection(
 
   return (
     <div>
+      <div
+        className="whitespace-pre-line font-bold py-5"
+        dangerouslySetInnerHTML={{ __html: props.section.title }}
+      />
+
       <div>
-        {props.media &&
-          props.media.map((image) => (
+        {props.section.media &&
+          props.section.media.map((image) => (
             <div className="flex flex-col items-center">
               <img src={image.content} className="" />
               <p className="mb-10 italic">{image.title}</p>
@@ -53,13 +51,13 @@ export default function MultipleChoiceSection(
           ))}
       </div>
 
-      {props.content &&
-        props.content.map((question, index) => (
+      {props.section.content &&
+        props.section.content.map((question, index) => (
           <Form.Item
-            key={props.startIndex + index}
+            key={props.section.startIndex + index}
             label={
               <h3 style={{ fontWeight: 'bold' }}>
-                Câu {props.startIndex + index}: {question.q}
+                Câu {props.section.startIndex + index}: {question.q}
               </h3>
             }
           >

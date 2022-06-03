@@ -102,7 +102,7 @@
     {
         "startIndex": 11,
         "endIndex": 16,
-        "title": "<div id='title'><p>Complete the table below.\n\nChoose ONE WORD ONLY from the passage for each answer.\n\nWrite your answers in boxes 8-13</p></div><div id='passage'><form>He <input type='text'/> a teacher. He is twenty-five <input type='text'/> old. He love listening <input type='text'/> music. He can <input type='text'/> football. He often <input type='text'/> fishing on Saturday.</form></div>",
+        "title": "<p>Complete the table below. Choose ONE WORD ONLY from the passage for each answer. Write your answers in boxes 8-13</p>",
         "media": [
             {
                 "title": "Illustration 1",
@@ -113,7 +113,7 @@
         "type": "fill in the blank",
         "content": [
             {
-                "q": "",
+                "q": "<form>He <input type='text'/> a teacher. He is twenty-five <input type='text'/> old. He love listening <input type='text'/> music. He can <input type='text'/> football. He often <input type='text'/> fishing on Saturday.</form>",
                 "a": [],
                 "correct_ans": "is",
                 "explanation": "explanation why this is the correct answer"

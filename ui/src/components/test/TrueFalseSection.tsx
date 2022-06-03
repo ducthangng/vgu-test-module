@@ -2,18 +2,12 @@ import React from 'react';
 
 import { useTestContext } from '../../context/test/TestContext';
 
+import Section from '../../interfaces/test/Section.interface';
+
 //interface
 interface TrueFalseSectionProps {
   sectionIndex: number;
-  startIndex: number;
-  media: {
-    title: string;
-    content: string;
-  }[];
-  content: {
-    q: string;
-    correct_ans: number;
-  }[];
+  section: Section;
 }
 
 export default function TrueFalseSection(props: TrueFalseSectionProps) {
@@ -38,9 +32,14 @@ export default function TrueFalseSection(props: TrueFalseSectionProps) {
 
   return (
     <div>
+      <div
+        className="whitespace-pre-line font-bold py-5"
+        dangerouslySetInnerHTML={{ __html: props.section.title }}
+      />
+
       <div>
-        {props.media &&
-          props.media.map((image) => (
+        {props.section.media &&
+          props.section.media.map((image) => (
             <div className="flex flex-col items-center">
               <img src={image.content} className="" />
               <p className="mb-10 italic">{image.title}</p>
@@ -48,14 +47,14 @@ export default function TrueFalseSection(props: TrueFalseSectionProps) {
           ))}
       </div>
 
-      {props.content &&
-        props.content.map((question, index) => {
+      {props.section.content &&
+        props.section.content.map((question, index) => {
           if (question.q) {
             return (
               <div className="grid grid-cols-4 md:grid-cols-5 flex items-center">
                 <p className="col-span-3 md:col-span-4">
                   <span className="font-bold">
-                    Câu {props.startIndex + index}:
+                    Câu {props.section.startIndex + index}:
                   </span>{' '}
                   {question.q}
                 </p>
