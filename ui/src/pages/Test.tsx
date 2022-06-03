@@ -27,7 +27,6 @@ export default function Test() {
   //fetch data function, currently it only sets mock data
   const fetchData = () => {
     let newTestData = {
-      totalTime: 10,
       mediaURL: data.mediaURL,
       title: data.title,
       content: data.content,
@@ -39,8 +38,8 @@ export default function Test() {
     let newSections = [];
     for (let i = 0; i < data.sections.length; i++) {
       let newSection = {
-        start_index: data.sections[i]?.start_index,
-        end_index: data.sections[i]?.end_index,
+        startIndex: data.sections[i]?.startIndex,
+        endIndex: data.sections[i]?.endIndex,
         answers: [],
       };
       newSections.push(newSection);

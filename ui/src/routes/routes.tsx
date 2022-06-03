@@ -8,8 +8,11 @@ import UserLayout from '../pages/Layout/UserLayout';
 import ClassroomLayout from '../pages/Layout/ClassroomLayout';
 import TestCardPage from '../pages/TestSelection';
 import GroupSelection from '../pages/GroupSelection';
+import Test from '../pages/Test';
 import MockTestSelection from '../pages/MockTestSelection';
 import { AdminEC, StudentEC } from '../utils/models/Guard';
+
+import { TestProvider } from '../context/test/TestContext';
 
 export default function AppRoute() {
   const AdminGuard: GuardEC = {
@@ -47,6 +50,7 @@ export default function AppRoute() {
 
                 <Route path="*" element={<Navigate to="" replace />} />
               </Route>
+
               {/* <Route path="account/*" element={<Account />} /> */}
             </Route>
 
@@ -79,6 +83,15 @@ export default function AppRoute() {
 
           {/* not found */}
           {/* <Route path="*" element={<NotFound />} /> */}
+
+          <Route
+            path="test/*"
+            element={
+              <TestProvider>
+                <Test />
+              </TestProvider>
+            }
+          />
         </Routes>
       </CookiesProvider>
     </BrowserRouter>

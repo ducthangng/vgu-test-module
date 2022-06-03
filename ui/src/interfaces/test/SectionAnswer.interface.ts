@@ -1,5 +1,5 @@
 export default interface SectionAnswer {
-  start_index: number;
-  end_index: number;
+  startIndex: number;
+  endIndex: number;
   answers: string[];
 }
