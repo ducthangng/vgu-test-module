@@ -108,8 +108,8 @@ export default function Test() {
     let newUserAnswers = [...userAnswers];
     testData.sections.forEach((section) => {
       let newAnswerSection: SectionAnswer = {
-        start_index: section.start_index,
-        end_index: section.end_index,
+        startIndex: section.startIndex,
+        endIndex: section.endIndex,
         answers: [],
       };
       newUserAnswers.push(newAnswerSection);

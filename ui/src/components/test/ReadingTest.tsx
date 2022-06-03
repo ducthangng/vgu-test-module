@@ -35,73 +35,54 @@ export default function ReadingTest(props: ReadingTestProps) {
   //function for rendering section depends on its data
   const getSectionComponent = (section: Section, sectionIndex: number) => {
     if (section.type == 'multiple choice question') {
-      // because content may not be an array, so we need to check before using map()
-      if (Array.isArray(section.content)) {
-        return (
-          <div>
-            <p className="whitespace-pre-line font-bold py-5">
-              {section.title}
-            </p>
-            <MultipleChoiceSection
-              sectionIndex={sectionIndex}
-              startIndex={section.start_index}
-              media={section.media}
-              content={
-                section.content as {
-                  q: string;
-                  a: [string];
-                  correct_ans: number;
-                }[]
-              }
-            />
-          </div>
-        );
-      }
+      return (
+        <div>
+          <p className="whitespace-pre-line font-bold py-5">{section.title}</p>
+          <MultipleChoiceSection
+            sectionIndex={sectionIndex}
+            startIndex={section.startIndex}
+            media={section.media}
+            content={section.content}
+          />
+        </div>
+      );
     } else if (section.type == 'matching heading') {
-      if (Array.isArray(section.content)) {
-        return (
-          <div>
-            <p className="whitespace-pre-line font-bold py-5">
-              {section.title}
-            </p>
-            <MatchingHeadingSection
-              sectionIndex={sectionIndex}
-              startIndex={section.start_index}
-              smallAnswerDescription={section.smallAnswerDescription}
-              media={section.media}
-              content={section.content as { q: string; a: string; p: string }[]}
-            />
-          </div>
-        );
-      }
+      return (
+        <div>
+          <p className="whitespace-pre-line font-bold py-5">{section.title}</p>
+          <MatchingHeadingSection
+            sectionIndex={sectionIndex}
+            startIndex={section.startIndex}
+            smallAnswerDescription={section.smallAnswerDescription}
+            media={section.media}
+            content={section.content}
+          />
+        </div>
+      );
     } else if (section.type == 'fill in the blank') {
       return (
         <div>
           <p className="whitespace-pre-line font-bold py-5">{section.title}</p>
           <FillBlankSection
             sectionIndex={sectionIndex}
-            startIndex={section.start_index}
+            startIndex={section.startIndex}
             media={section.media}
-            content={section.content as { passage: string }}
+            content={section.content}
           />
         </div>
       );
     } else if (section.type == 'tfng') {
-      if (Array.isArray(section.content)) {
-        return (
-          <div>
-            <p className="whitespace-pre-line font-bold py-5">
-              {section.title}
-            </p>
-            <TrueFalseSection
-              sectionIndex={sectionIndex}
-              startIndex={section.start_index}
-              media={section.media}
-              content={section.content as { q: string; correct_ans: number }[]}
-            />
-          </div>
-        );
-      }
+      return (
+        <div>
+          <p className="whitespace-pre-line font-bold py-5">{section.title}</p>
+          <TrueFalseSection
+            sectionIndex={sectionIndex}
+            startIndex={section.startIndex}
+            media={section.media}
+            content={section.content}
+          />
+        </div>
+      );
     }
   };
 

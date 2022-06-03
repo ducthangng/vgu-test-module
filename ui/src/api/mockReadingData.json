@@ -16,50 +16,38 @@
         "content": [
             {
                 "q": "Hotel managers need to know what would encourage good staff to remain.",
-                "a": [
-                    "Pfeffer"
-                ],
-                "correct_ans": "A",
+                "a": [],
+                "correct_ans": "Pfeffer",
                 "explanation": "explanation why the answer is correct"
             },
             {
                 "q": "The actions of managers may make staff feel they shouldn't move to a different employer.",
-                "a": [
-                    "Lucas"
-                ],
-                "correct_ans": "A",
+                "a": [],
+                "correct_ans": "Lucas",
                 "explanation": "explanation why the answer is correct"
             },
             {
                 "q": "Little is done in the hospitality industry to help workers improve their skills.",
-                "a": [
-                    "Maroudas et al."
-                ],
-                "correct_ans": "A",
+                "a": [],
+                "correct_ans": "Maroudas et al.",
                 "explanation": "explanation why the answer is correct"
             },
             {
                 "q": "Staff are less likely to change jobs if cooperation is encouraged.",
-                "a": [
-                    "Ng and Sorensen"
-                ],
-                "correct_ans": "A",
+                "a": [],
+                "correct_ans": "Ng and Sorensen",
                 "explanation": "explanation why the answer is correct"
             },
             {
                 "q": "Disssatisfaction with pay is not the only reason why hospitality workers change jobs.",
-                "a": [
-                    "Enz and Siguaw"
-                ],
-                "correct_ans": "A",
+                "a": [],
+                "correct_ans": "Enz and Siguaw",
                 "explanation": "explanation why the answer is correct"
             },
             {
                 "q": "",
-                "a": [
-                    "Deery"
-                ],
-                "correct_ans": "A",
+                "a": [],
+                "correct_ans": "Deery",
                 "explanation": "explanation why the answer is correct"
             }
         ]

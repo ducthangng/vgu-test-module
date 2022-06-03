@@ -1,16 +1,10 @@
 import React, { useRef } from 'react';
 import { useTestContext } from '../../context/test/TestContext';
+import Section from '../../interfaces/test/Section.interface';
 
 interface FillBlankSectionProps {
   sectionIndex: number;
-  startIndex: number;
-  media: {
-    title: string;
-    content: string;
-  }[];
-  content: {
-    passage: string;
-  };
+  section: Section;
 }
 
 export default function FillBlankSection(props: FillBlankSectionProps) {
@@ -47,8 +41,8 @@ export default function FillBlankSection(props: FillBlankSectionProps) {
   return (
     <div>
       <div>
-        {props.media &&
-          props.media.map((image) => (
+        {props.section.media &&
+          props.section.media.map((image) => (
             <div className="flex flex-col items-center">
               <img src={image.content} className="" />
               <p className="mb-10 italic">{image.title}</p>
@@ -58,7 +52,7 @@ export default function FillBlankSection(props: FillBlankSectionProps) {
       <div
         onInput={handleInput}
         ref={htmlContentRef}
-        dangerouslySetInnerHTML={{ __html: props.content.passage }}
+        dangerouslySetInnerHTML={{ __html: props.section.title }}
       />
     </div>
   );

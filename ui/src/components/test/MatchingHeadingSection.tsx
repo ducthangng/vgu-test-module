@@ -4,20 +4,12 @@ import { Input } from 'antd';
 
 import { useTestContext } from '../../context/test/TestContext';
 
+import Section from '../../interfaces/test/Section.interface';
+
 /* LOCAL INTERFACES */
 interface MatchingHeadingSectionProps {
   sectionIndex: number;
-  startIndex: number;
-  smallAnswerDescription: string;
-  media: {
-    title: string;
-    content: string;
-  }[];
-  content: {
-    q: string;
-    a: string;
-    p: string;
-  }[];
+  section: Section;
 }
 
 interface Answer {
