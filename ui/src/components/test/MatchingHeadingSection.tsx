@@ -86,6 +86,7 @@ export default function MatchingHeadingSection(
             if (question.q) {
               return (
                 <div
+                  key={index}
                   className={`grid grid-cols-4 flex items-center my-2 p-3 ${
                     reviewMode
                       ? submitData.sections[props.sectionIndex - 1].answers[
@@ -122,7 +123,7 @@ export default function MatchingHeadingSection(
             </h3>
             {answers &&
               answers.map((answer, index) => (
-                <p>
+                <p key={index}>
                   <span className="font-bold pr-2">
                     {String.fromCharCode(index + 65)}
                   </span>{' '}
@@ -139,7 +140,7 @@ export default function MatchingHeadingSection(
           <div className="p-3 rounded-md border bg-gray-200">
             <div className="">
               {props.section.content.map((question, index) => (
-                <div>
+                <div key={index}>
                   <p>
                     <span className="font-bold">
                       Câu {props.section.startIndex + index}:

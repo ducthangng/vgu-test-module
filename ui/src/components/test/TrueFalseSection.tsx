@@ -42,8 +42,8 @@ export default function TrueFalseSection(props: TrueFalseSectionProps) {
 
       <div>
         {props.section.media &&
-          props.section.media.map((image) => (
-            <div className="flex flex-col items-center">
+          props.section.media.map((image, index) => (
+            <div key={index} className="flex flex-col items-center">
               <img src={image.content} className="" />
               <p className="mb-10 italic">{image.title}</p>
             </div>
@@ -54,7 +54,10 @@ export default function TrueFalseSection(props: TrueFalseSectionProps) {
         props.section.content.map((question, index) => {
           if (question.q) {
             return (
-              <div className="grid grid-cols-4 md:grid-cols-5 flex items-center">
+              <div
+                key={index}
+                className="grid grid-cols-4 md:grid-cols-5 flex items-center"
+              >
                 <p className="col-span-3 md:col-span-4">
                   <span className="font-bold">
                     Câu {props.section.startIndex + index}:
