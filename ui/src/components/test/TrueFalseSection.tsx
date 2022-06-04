@@ -69,9 +69,15 @@ export default function TrueFalseSection(props: TrueFalseSectionProps) {
                   value={
                     submitData.sections[props.sectionIndex - 1].answers[index]
                   }
-                  className={`${
-                    reviewMode ? 'bg-gray-200' : 'bg-white'
-                  } w-full text-center rounded bg-white border border-gray-300 py-1`}
+                  className={`w-full text-center rounded border border-gray-300 py-1 ${
+                    reviewMode
+                      ? submitData.sections[props.sectionIndex - 1].answers[
+                          index
+                        ] === question.correct_ans
+                        ? 'bg-green-500'
+                        : 'bg-red-500'
+                      : 'bg-white'
+                  }`}
                 >
                   <option disabled selected value={-1}></option>
                   <option value={1}>T</option>

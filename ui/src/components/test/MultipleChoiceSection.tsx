@@ -18,21 +18,24 @@ export default function MultipleChoiceSection(
   // context
   const { reviewMode, submitData, setSubmitData } = useTestContext();
 
-  const handleChange = (event?: RadioChangeEvent) => {
-    let newChosenAnswers = [
-      ...submitData.sections[props.sectionIndex - 1].answers,
-    ];
-    newChosenAnswers[parseInt(event?.target.name as string)] =
-      event?.target.value;
+  const handleChange = reviewMode
+    ? () => {}
+    : (event?: RadioChangeEvent) => {
+        let newChosenAnswers = [
+          ...submitData.sections[props.sectionIndex - 1].answers,
+        ];
+        newChosenAnswers[parseInt(event?.target.name as string)] =
+          event?.target.value;
 
-    let newSubmitDataSections = [...submitData.sections];
-    newSubmitDataSections[props.sectionIndex - 1].answers = newChosenAnswers;
-    let newSubmitData = {
-      ...submitData,
-      sections: newSubmitDataSections,
-    };
-    setSubmitData(newSubmitData);
-  };
+        let newSubmitDataSections = [...submitData.sections];
+        newSubmitDataSections[props.sectionIndex - 1].answers =
+          newChosenAnswers;
+        let newSubmitData = {
+          ...submitData,
+          sections: newSubmitDataSections,
+        };
+        setSubmitData(newSubmitData);
+      };
 
   return (
     <div>
@@ -52,26 +55,47 @@ export default function MultipleChoiceSection(
       </div>
 
       {props.section.content &&
-        props.section.content.map((question, index) => (
+        props.section.content.map((question, questionIndex) => (
           <Form.Item
-            key={props.section.startIndex + index}
+            key={props.section.startIndex + questionIndex}
             label={
               <h3 className="font-bold">
-                Câu {props.section.startIndex + index}: {question.q}
+                Câu {props.section.startIndex + questionIndex}: {question.q}
               </h3>
             }
           >
             <Radio.Group
               style={{ paddingLeft: 15 }}
-              name={`${index}`}
+              name={`${questionIndex}`}
               onChange={handleChange}
               disabled={reviewMode}
-              value={submitData.sections[props.sectionIndex - 1].answers[index]}
+              value={
+                submitData.sections[props.sectionIndex - 1].answers[
+                  questionIndex
+                ]
+              }
             >
               <Space direction="vertical">
                 {question.a &&
-                  question.a.map((choice, index) => (
-                    <Radio value={index + 1}>{choice}</Radio>
+                  question.a.map((choice, answerIndex) => (
+                    <Radio
+                      value={answerIndex + 1}
+                      className={`${
+                        reviewMode &&
+                        (answerIndex + 1).toString() ==
+                          submitData.sections[props.sectionIndex - 1].answers[
+                            questionIndex
+                          ]
+                          ? submitData.sections[props.sectionIndex - 1].answers[
+                              questionIndex
+                            ] === question.correct_ans
+                            ? 'bg-green-500'
+                            : 'bg-red-500'
+                          : ''
+                      }`}
+                    >
+                      {choice}
+                    </Radio>
                   ))}
               </Space>
             </Radio.Group>

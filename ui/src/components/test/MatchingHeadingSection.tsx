@@ -85,7 +85,17 @@ export default function MatchingHeadingSection(
           props.section.content.map((question, index) => {
             if (question.q) {
               return (
-                <div className="grid grid-cols-4 flex items-center">
+                <div
+                  className={`grid grid-cols-4 flex items-center my-2 p-3 ${
+                    reviewMode
+                      ? submitData.sections[props.sectionIndex - 1].answers[
+                          index
+                        ] === question.correct_ans
+                        ? 'bg-green-500'
+                        : 'bg-red-500'
+                      : ''
+                  }`}
+                >
                   <p className="col-span-3">
                     <span className="font-bold">
                       Câu {props.section.startIndex + index}:

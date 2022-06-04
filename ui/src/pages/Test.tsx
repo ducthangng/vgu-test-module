@@ -66,7 +66,7 @@ export default function Test(props: { reviewMode: boolean }) {
       sections: newSections,
     });
     // somehow totalTime only works as a normal variable, rather than a state or context state
-    totalTime = 10;
+    totalTime = reviewMode ? 0 : 60;
   };
 
   useEffect(() => {

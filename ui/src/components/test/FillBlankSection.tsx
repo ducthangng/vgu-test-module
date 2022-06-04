@@ -22,9 +22,6 @@ export default function FillBlankSection(props: FillBlankSectionProps) {
       );
       // style them, make disabled if in review mode
       for (let i = 0; i < inputList.length; i++) {
-        if (reviewMode) {
-          inputList[i].setAttribute('disabled', '');
-        }
         inputList[i].classList.add('border');
         inputList[i].classList.add('text-center');
         //sync input elements' values with submitData
@@ -32,6 +29,17 @@ export default function FillBlankSection(props: FillBlankSectionProps) {
           .answers[i]
           ? submitData.sections[props.sectionIndex - 1].answers[i]
           : '';
+
+        if (reviewMode) {
+          // disable inputs in review mode
+          inputList[i].setAttribute('disabled', '');
+          // if correct, color green, otherwise red
+          if (inputList[i].value == props.section.content[i].correct_ans) {
+            inputList[i].classList.add('bg-green-500');
+          } else {
+            inputList[i].classList.add('bg-red-500');
+          }
+        }
       }
     }
   }, []);
