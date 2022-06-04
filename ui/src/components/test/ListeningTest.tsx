@@ -9,7 +9,7 @@ import MatchingHeadingSection from './MatchingHeadingSection';
 import TrueFalseSection from './TrueFalseSection';
 import FillBlankSection from './FillBlankSection';
 import AudioPlayer from './AudioPlayer';
-//interfaces
+// interfaces
 import Section from '../../interfaces/test/Section.interface';
 
 //local interfaces
@@ -19,11 +19,11 @@ interface ListeningTestProps {
 }
 
 export default function ListeningTest(props: ListeningTestProps) {
-  //params
+  // params
   const { id } = useParams();
-  //form
+  // form
   const [form] = Form.useForm();
-  //states
+  // states
   const [sectionComponent, setSectionComponent] = useState<
     JSX.Element | undefined
   >(undefined);

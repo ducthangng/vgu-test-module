@@ -1,21 +1,32 @@
+/* IMPORTS */
 import React, { useEffect, useState, useRef } from 'react';
+// components
+import LoadingOverlay from 'react-loading-overlay-ts';
 import TestHeader from '../components/test/TestHeader';
 import ListeningTest from '../components/test/ListeningTest';
 import ReadingTest from '../components/test/ReadingTest';
+// interfaces
 import SectionAnswer from '../interfaces/test/SectionAnswer.interface';
 import SubmitData from '../interfaces/test/SubmitData.interface';
-
+// routing
 import { Routes, Route } from 'react-router-dom';
-
+// context
 import { useTestContext } from '../context/test/TestContext';
-
 // fake data
-import data from '../api/mockListeningData.json';
-// import data from '../api/mockReadingData.json';
+// import data from '../api/mockListeningData.json';
+import data from '../api/mockReadingData.json';
 
+/* COMPONENT */
 export default function Test() {
   // context
-  const { testData, submitData, setTestData, setSubmitData } = useTestContext();
+  const {
+    isLoading,
+    setIsLoading,
+    testData,
+    submitData,
+    setTestData,
+    setSubmitData,
+  } = useTestContext();
 
   // test data
   let totalTime: number | undefined = undefined;
@@ -56,6 +67,7 @@ export default function Test() {
 
   useEffect(() => {
     fetchData();
+    setIsLoading(true);
   }, []);
 
   // update submitDataRef when submitData changes
@@ -65,7 +77,7 @@ export default function Test() {
 
   //countdown function
   const countdown = () => {
-    if (totalTime == undefined) {
+    if (totalTime == undefined || isLoading) {
       return;
     }
 
@@ -94,7 +106,7 @@ export default function Test() {
       }, 1000)
     );
     return () => clearInterval(intervalId);
-  }, [timeLeft, totalTime]);
+  }, [isLoading, timeLeft, totalTime]);
 
   //submit test function
   const handleSubmit = (event?: React.MouseEvent<HTMLElement>) => {
@@ -123,24 +135,30 @@ export default function Test() {
         <Route
           path=":id"
           element={
-            <div>
-              <TestHeader timeLeft={timeLeft} handleSubmit={handleSubmit} />
-              {testData.type === 'listening' && (
-                <ListeningTest
-                  sections={testData.sections}
-                  audioSource={testData.mediaURL}
-                />
-              )}
-              {testData.type === 'reading' && (
-                <ReadingTest
-                  sections={testData.sections}
-                  title={testData.title}
-                  passage={testData.content}
-                  illustration={testData.mediaURL}
-                  handleSubmit={handleSubmit}
-                />
-              )}
-            </div>
+            <LoadingOverlay
+              active={isLoading}
+              spinner
+              text="Your test is loading. Please be patient..."
+            >
+              <div>
+                <TestHeader timeLeft={timeLeft} handleSubmit={handleSubmit} />
+                {testData.type === 'listening' && (
+                  <ListeningTest
+                    sections={testData.sections}
+                    audioSource={testData.mediaURL}
+                  />
+                )}
+                {testData.type === 'reading' && (
+                  <ReadingTest
+                    sections={testData.sections}
+                    title={testData.title}
+                    passage={testData.content}
+                    illustration={testData.mediaURL}
+                    handleSubmit={handleSubmit}
+                  />
+                )}
+              </div>
+            </LoadingOverlay>
           }
         />
       </Routes>

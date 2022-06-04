@@ -11,6 +11,8 @@ import FillBlankSection from './FillBlankSection';
 import AnswerDrawer from './AnswerDrawer';
 //interfaces
 import Section from '../../interfaces/test/Section.interface';
+// context
+import { useTestContext } from '../../context/test/TestContext';
 
 //local interfaces
 interface ReadingTestProps {
@@ -22,6 +24,8 @@ interface ReadingTestProps {
 }
 
 export default function ReadingTest(props: ReadingTestProps) {
+  // context
+  const { setIsLoading } = useTestContext();
   //params
   const { id } = useParams();
   //form
@@ -64,6 +68,10 @@ export default function ReadingTest(props: ReadingTestProps) {
       );
     }
   }, [props.sections, id]);
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
 
   return (
     <>

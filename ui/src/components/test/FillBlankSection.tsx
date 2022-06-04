@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { useTestContext } from '../../context/test/TestContext';
 import Section from '../../interfaces/test/Section.interface';
 
@@ -13,10 +13,6 @@ export default function FillBlankSection(props: FillBlankSectionProps) {
 
   // context
   const { submitData, setSubmitData } = useTestContext();
-
-  // state
-  const [title, setTitle] = useState<string>();
-  const [passage, setPassage] = useState<string>();
 
   const handleInput = () => {
     if (htmlContentRef.current) {
