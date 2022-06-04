@@ -9,7 +9,7 @@ import ReadingTest from '../components/test/ReadingTest';
 import SectionAnswer from '../interfaces/test/SectionAnswer.interface';
 import SubmitData from '../interfaces/test/SubmitData.interface';
 // routing
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 // context
 import { useTestContext } from '../context/test/TestContext';
 // fake data
@@ -17,9 +17,13 @@ import { useTestContext } from '../context/test/TestContext';
 import data from '../api/mockReadingData.json';
 
 /* COMPONENT */
-export default function Test() {
+export default function Test(props: { reviewMode: boolean }) {
+  // routing
+  const navigate = useNavigate();
   // context
   const {
+    reviewMode,
+    setReviewMode,
     isLoading,
     setIsLoading,
     testData,
@@ -66,6 +70,7 @@ export default function Test() {
   };
 
   useEffect(() => {
+    setReviewMode(props.reviewMode);
     fetchData();
     setIsLoading(true);
   }, []);
@@ -109,11 +114,16 @@ export default function Test() {
   }, [isLoading, timeLeft, totalTime]);
 
   //submit test function
-  const handleSubmit = (event?: React.MouseEvent<HTMLElement>) => {
-    event?.preventDefault();
-    console.log('submit!');
-    console.log(submitDataRef.current);
-  };
+  const handleSubmit = reviewMode
+    ? (event?: React.MouseEvent<HTMLElement>) => {}
+    : (event?: React.MouseEvent<HTMLElement>) => {
+        event?.preventDefault();
+        setIsLoading(false);
+        console.log('submit!');
+        console.log(submitDataRef.current);
+        setReviewMode(true);
+        navigate('../test/review/1');
+      };
 
   // intialize userAnswer
   useEffect(() => {

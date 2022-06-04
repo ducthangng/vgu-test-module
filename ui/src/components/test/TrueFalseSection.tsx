@@ -12,23 +12,26 @@ interface TrueFalseSectionProps {
 
 export default function TrueFalseSection(props: TrueFalseSectionProps) {
   // context
-  const { submitData, setSubmitData } = useTestContext();
+  const { reviewMode, submitData, setSubmitData } = useTestContext();
 
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    let newChosenAnswers = [
-      ...submitData.sections[props.sectionIndex - 1].answers,
-    ];
-    newChosenAnswers[parseInt(event?.target.name as string)] =
-      event?.target.value;
+  const handleChange = reviewMode
+    ? () => {}
+    : (event: React.ChangeEvent<HTMLSelectElement>) => {
+        let newChosenAnswers = [
+          ...submitData.sections[props.sectionIndex - 1].answers,
+        ];
+        newChosenAnswers[parseInt(event?.target.name as string)] =
+          event?.target.value;
 
-    let newSubmitDataSections = [...submitData.sections];
-    newSubmitDataSections[props.sectionIndex - 1].answers = newChosenAnswers;
-    let newSubmitData = {
-      ...submitData,
-      sections: newSubmitDataSections,
-    };
-    setSubmitData(newSubmitData);
-  };
+        let newSubmitDataSections = [...submitData.sections];
+        newSubmitDataSections[props.sectionIndex - 1].answers =
+          newChosenAnswers;
+        let newSubmitData = {
+          ...submitData,
+          sections: newSubmitDataSections,
+        };
+        setSubmitData(newSubmitData);
+      };
 
   return (
     <div>
@@ -62,7 +65,13 @@ export default function TrueFalseSection(props: TrueFalseSectionProps) {
                   defaultValue={-1}
                   name={`${index}`}
                   onChange={handleChange}
-                  className="w-full text-center rounded bg-white border border-gray-300 py-1"
+                  disabled={reviewMode}
+                  value={
+                    submitData.sections[props.sectionIndex - 1].answers[index]
+                  }
+                  className={`${
+                    reviewMode ? 'bg-gray-200' : 'bg-white'
+                  } w-full text-center rounded bg-white border border-gray-300 py-1`}
                 >
                   <option disabled selected value={-1}></option>
                   <option value={1}>T</option>
@@ -73,6 +82,26 @@ export default function TrueFalseSection(props: TrueFalseSectionProps) {
             );
           }
         })}
+
+      {reviewMode && (
+        <div className="py-5">
+          <h3 className="font-bold">Explanation</h3>
+          <div className="p-3 rounded-md border bg-gray-200">
+            <div className="">
+              {props.section.content.map((question, index) => (
+                <div>
+                  <p>
+                    <span className="font-bold">
+                      Câu {props.section.startIndex + index}:
+                    </span>{' '}
+                    {question.explanation}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

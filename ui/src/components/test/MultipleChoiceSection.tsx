@@ -16,7 +16,7 @@ export default function MultipleChoiceSection(
   props: MultipleChoiceSectionProps
 ) {
   // context
-  const { submitData, setSubmitData } = useTestContext();
+  const { reviewMode, submitData, setSubmitData } = useTestContext();
 
   const handleChange = (event?: RadioChangeEvent) => {
     let newChosenAnswers = [
@@ -56,7 +56,7 @@ export default function MultipleChoiceSection(
           <Form.Item
             key={props.section.startIndex + index}
             label={
-              <h3 style={{ fontWeight: 'bold' }}>
+              <h3 className="font-bold">
                 Câu {props.section.startIndex + index}: {question.q}
               </h3>
             }
@@ -65,6 +65,8 @@ export default function MultipleChoiceSection(
               style={{ paddingLeft: 15 }}
               name={`${index}`}
               onChange={handleChange}
+              disabled={reviewMode}
+              value={submitData.sections[props.sectionIndex - 1].answers[index]}
             >
               <Space direction="vertical">
                 {question.a &&
@@ -75,6 +77,26 @@ export default function MultipleChoiceSection(
             </Radio.Group>
           </Form.Item>
         ))}
+
+      {reviewMode && (
+        <div className="py-5">
+          <h3 className="font-bold">Explanation</h3>
+          <div className="p-3 rounded-md border bg-gray-200">
+            <div className="">
+              {props.section.content.map((question, index) => (
+                <div>
+                  <p>
+                    <span className="font-bold">
+                      Câu {props.section.startIndex + index}:
+                    </span>{' '}
+                    {question.explanation}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

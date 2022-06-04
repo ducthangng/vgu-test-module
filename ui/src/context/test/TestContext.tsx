@@ -8,15 +8,18 @@ import SubmitData from '../../interfaces/test/SubmitData.interface';
 
 interface InitialStateType {
   isLoading: boolean;
+  reviewMode: boolean;
   testData: TestData;
   submitData: SubmitData;
   setTestData: (testData: TestData) => void;
   setSubmitData: (submitData: SubmitData) => void;
   setIsLoading: (isLoading: boolean) => void;
+  setReviewMode: (reviewMode: boolean) => void;
 }
 
 const initialState: InitialStateType = {
   isLoading: false,
+  reviewMode: false,
   testData: {
     mediaURL: '',
     title: '',
@@ -32,6 +35,7 @@ const initialState: InitialStateType = {
   setTestData: () => {},
   setSubmitData: () => {},
   setIsLoading: () => {},
+  setReviewMode: () => {},
 };
 
 const TestContext = createContext<InitialStateType>(initialState);
@@ -60,6 +64,13 @@ const TestProvider = (parameter: { children: React.ReactNode }) => {
     });
   };
 
+  const handleSetReviewMode = (reviewMode: boolean) => {
+    dispatch({
+      type: types.SET_REVIEW_MODE,
+      payload: reviewMode,
+    });
+  };
+
   return (
     <TestContext.Provider
       value={{
@@ -67,6 +78,7 @@ const TestProvider = (parameter: { children: React.ReactNode }) => {
         setTestData: handleSetTestData,
         setSubmitData: handleSetSubmitData,
         setIsLoading: handleSetIsLoading,
+        setReviewMode: handleSetReviewMode,
       }}
     >
       {parameter.children}

@@ -85,10 +85,18 @@ export default function AppRoute() {
           {/* <Route path="*" element={<NotFound />} /> */}
 
           <Route
-            path="test/*"
+            path="test/review/*"
             element={
               <TestProvider>
-                <Test />
+                <Test reviewMode={true} />
+              </TestProvider>
+            }
+          />
+          <Route
+            path="test/do/*"
+            element={
+              <TestProvider>
+                <Test reviewMode={false} />
               </TestProvider>
             }
           />

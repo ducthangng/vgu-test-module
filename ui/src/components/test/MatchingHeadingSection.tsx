@@ -21,7 +21,7 @@ export default function MatchingHeadingSection(
   const [answers, setAnswers] = useState<string[]>([]);
 
   // context
-  const { submitData, setSubmitData } = useTestContext();
+  const { reviewMode, submitData, setSubmitData } = useTestContext();
 
   useEffect(() => {
     // create answers array made from list of correct answers
@@ -44,21 +44,25 @@ export default function MatchingHeadingSection(
     }
   }, []);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    let newChosenAnswers = [
-      ...submitData.sections[props.sectionIndex - 1].answers,
-    ];
-    newChosenAnswers[parseInt(event.target.name as string)] =
-      event.target.value;
+  // empty function if in review mode
+  const handleChange = reviewMode
+    ? () => {}
+    : (event: React.ChangeEvent<HTMLInputElement>) => {
+        let newChosenAnswers = [
+          ...submitData.sections[props.sectionIndex - 1].answers,
+        ];
+        newChosenAnswers[parseInt(event.target.name as string)] =
+          event.target.value;
 
-    let newSubmitDataSections = [...submitData.sections];
-    newSubmitDataSections[props.sectionIndex - 1].answers = newChosenAnswers;
-    let newSubmitData = {
-      ...submitData,
-      sections: newSubmitDataSections,
-    };
-    setSubmitData(newSubmitData);
-  };
+        let newSubmitDataSections = [...submitData.sections];
+        newSubmitDataSections[props.sectionIndex - 1].answers =
+          newChosenAnswers;
+        let newSubmitData = {
+          ...submitData,
+          sections: newSubmitDataSections,
+        };
+        setSubmitData(newSubmitData);
+      };
 
   return (
     <div>
@@ -95,6 +99,7 @@ export default function MatchingHeadingSection(
                       submitData.sections[props.sectionIndex - 1].answers[index]
                     }
                     onChange={handleChange}
+                    disabled={reviewMode}
                   />
                 </div>
               );
@@ -117,6 +122,26 @@ export default function MatchingHeadingSection(
           </div>
         </div>
       </div>
+
+      {reviewMode && (
+        <div className="py-5">
+          <h3 className="font-bold">Explanation</h3>
+          <div className="p-3 rounded-md border bg-gray-200">
+            <div className="">
+              {props.section.content.map((question, index) => (
+                <div>
+                  <p>
+                    <span className="font-bold">
+                      Câu {props.section.startIndex + index}:
+                    </span>{' '}
+                    {question.explanation}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
