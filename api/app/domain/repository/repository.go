@@ -9,6 +9,7 @@ type UserDataService interface {
 }
 
 type UserRepository interface {
+	UserSendReviewRequest(ctx context.Context, test_result *entity.TestResult) (*entity.TestResult, error)
 }
 
 type TestRepository interface {
