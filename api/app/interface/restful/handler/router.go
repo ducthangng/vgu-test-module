@@ -2,6 +2,8 @@ package handler
 
 import (
 	"log"
+	middleware "server/app/interface/restful/appmiddleware"
+	"server/app/interface/restful/handler/endpoints"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -24,6 +26,12 @@ func Routing() *gin.Engine {
 		AllowCredentials: true,
 		MaxAge:           12 * time.Hour,
 	}))
+
+	// r.Use(middleware.Logger())
+	r.Use(middleware.RateLimit(2, 5))
+	r.Use(middleware.Tracer())
+
+	endpoints.TestHandler(r.Group("/api"))
 
 	return r
 }
