@@ -32,30 +32,6 @@ create table testbank (
 	CONSTRAINT valid_role_check_testbank CHECK (target_entity_code IN (1, 2, 3, 4))
 );
 
-create table testquestions (
-	id INT NOT NULL auto_increment,
-	content TEXT NOT NULL,
-	type int NOT NULL,
-	difficulty INT NOT NULL,
-	dateupdated DATETIME,
-	datecreated DATETIME NOT NULL,
-	PRIMARY KEY (id),
-	-- 1 -- Multiple Choice, 2 -- Text
-	CONSTRAINT valid_type_check_testquestions CHECK (type IN (1, 2)),
-	CONSTRAINT valid_difficulty_check_testquestions CHECK (
-		difficulty BETWEEN 1
-		AND 5
-	)
-);
-
-create table testanswers (
-	id INT NOT NULL auto_increment,
-	question_id INT NOT NULL,
-	content VARCHAR(150) NOT NULL,
-	PRIMARY KEY (id),
-	FOREIGN KEY (question_id) REFERENCES testquestions (id)
-);
-
 create table testresults (
 	id INT NOT NULL AUTO_INCREMENT,
 	test_class_id INT NOT NULL,
@@ -73,23 +49,17 @@ create table testresults (
 	UNIQUE KEY (test_class_id, user_id, datecreated)
 );
 
-create table testentryanswer (
-	result_id INT NOT NULL,
-	question_id INT NOT NULL,
-	answer_id INT NOT NULL,
-	UNIQUE KEY (id, questionid),
-	FOREIGN KEY (result_id) REFERENCES testresults (id),
-	FOREIGN KEY (question_id) REFERENCES testquestions (id),
-	FOREIGN KEY (answer_id) REFERENCES testanswers (id)
-);
-
-create table testentryanswertext (
-	result_id INT NOT NULL,
-	question_id INT NOT NULL,
-	answer TEXT,
-	UNIQUE KEY (result_id, questionid),
-	FOREIGN KEY (result_id) REFERENCES testresults (id),
-	FOREIGN KEY (question_id) REFERENCES testquestions (id)
+create table testskill (
+	id INT NOT NULL AUTO_INCREMENT,
+	media_url VARCHAR,
+	title VARCHAR NOT NULL,
+	content VARCHAR NOT NULL,
+	description VARCHAR NOT NULL,
+	section MEDIUMTEXT NOT NULL,
+	datecreated DATETIME NOT NULL,
+	dateupdated DATETIME NOT NULL,
+	PRIMARY KEY (id),
+	UNIQUE(title)
 );
 
 create table testcomments (
@@ -101,4 +71,12 @@ create table testcomments (
 	UNIQUE KEY (result_id, question_id),
 	FOREIGN KEY (result_id) REFERENCES testresults (id),
 	FOREIGN KEY (question_id) REFERENCES testquestions (id)
+);
+
+create table skilltest_test (
+	tid INT NOT NULL,
+	stid INT NOT NULL,
+	PRIMARY KEY (tid, stid),
+	FOREIGN KEY (tid) REFERENCES testbank (id),
+	FOREIGN KEY (stid) REFERENCES testskill (id)
 );

@@ -10,7 +10,7 @@ import (
 )
 
 func (q *Querier) CreateSkillTest(ctx context.Context, st entity.SkillTest) (id int, err error) {
-	stmt, err := q.DB.PrepareContext(ctx, "INSERT skill_tests SET media_url = ?, title = ?, content = ?, description = ?, type = ?, section = ?, datecreated = ?")
+	stmt, err := q.DB.PrepareContext(ctx, "INSERT skill_tests SET media_url = ?, title = ?, content = ?, description = ?, section = ?, datecreated = ?")
 	if err != nil {
 		return 0, err
 	}
@@ -21,7 +21,7 @@ func (q *Querier) CreateSkillTest(ctx context.Context, st entity.SkillTest) (id 
 		return 0, err
 	}
 
-	result, err := stmt.ExecContext(ctx, st.MediaURL, st.Title, st.Content, st.Description, st.Type, string(byteRes), date)
+	result, err := stmt.ExecContext(ctx, st.MediaURL, st.Title, st.Content, st.Description, string(byteRes), date)
 	if err != nil {
 		return 0, err
 	}
@@ -41,7 +41,7 @@ func (q *Querier) QuerySkillTest(ctx context.Context, id int) (st entity.SkillTe
 	var update sql.NullString
 	err = q.DB.QueryRowContext(ctx, "SELECT * FROM skilltests WHERE id = ?", id).
 		Scan(&st.Id, &st.MediaURL, &st.Title, &st.Content,
-			&st.Description, &st.Type, &jsonSection, &created, &update)
+			&st.Description, &jsonSection, &created, &update)
 	if err != nil {
 		return st, err
 	}
@@ -54,7 +54,7 @@ func (q *Querier) QuerySkillTest(ctx context.Context, id int) (st entity.SkillTe
 }
 
 func (q *Querier) UpdateSkillTest(ctx context.Context, st entity.SkillTest) (err error) {
-	stmt, err := q.DB.PrepareContext(ctx, "INSERT skill_tests SET media_url = ?, title = ?, content = ?, description = ?, type = ?, section = ?, dateupdated = ?")
+	stmt, err := q.DB.PrepareContext(ctx, "INSERT skill_tests SET media_url = ?, title = ?, content = ?, description = ?, section = ?, dateupdated = ?")
 	if err != nil {
 		return err
 	}
@@ -65,7 +65,7 @@ func (q *Querier) UpdateSkillTest(ctx context.Context, st entity.SkillTest) (err
 		return err
 	}
 
-	_, err = stmt.ExecContext(ctx, st.MediaURL, st.Title, st.Content, st.Description, st.Type, string(byteRes), date)
+	_, err = stmt.ExecContext(ctx, st.MediaURL, st.Title, st.Content, st.Description, string(byteRes), date)
 	if err != nil {
 		return err
 	}

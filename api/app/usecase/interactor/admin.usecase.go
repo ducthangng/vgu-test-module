@@ -9,10 +9,10 @@ import (
 )
 
 type AdminUseCase struct {
-	adminRepo repository.AdminRepository
+	adminRepo repository.DataService
 }
 
-func NewAdminUseCase(adminRepo repository.AdminRepository) *AdminUseCase {
+func NewAdminUseCase(adminRepo repository.DataService) *AdminUseCase {
 	return &AdminUseCase{
 		adminRepo: adminRepo,
 	}

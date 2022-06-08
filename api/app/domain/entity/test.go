@@ -33,7 +33,6 @@ type (
 		Title       string  `db:"title"`
 		Content     string  `db:"content"`
 		Description string  `db:"description"`
-		Type        int     `db:"type"`
 		Section     Section `db:"section"`
 	}
 
@@ -62,10 +61,9 @@ type (
 	}
 
 	TestClassRelation struct {
-		ID          int `db:"id"`
-		IsPublished int `db:"is_published"`
-		TestID      int `db:"test_id"`
-		ClassID     int `db:"class_id"`
+		ID      int `db:"id"`
+		TestID  int `db:"test_id"`
+		ClassID int `db:"class_id"`
 	}
 )
 

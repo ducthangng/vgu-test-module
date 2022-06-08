@@ -14,9 +14,8 @@ func TestCreateTestClass(t *testing.T) {
 	ctx := context.Background()
 	for i := 1; i <= 10; i++ {
 		err := q.AssignTestClass(ctx, entity.TestClassRelation{
-			TestID:      i,
-			ClassID:     i,
-			IsPublished: 1,
+			TestID:  i,
+			ClassID: i,
 		})
 		require.NoError(t, err)
 	}

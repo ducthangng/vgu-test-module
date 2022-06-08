@@ -3,21 +3,68 @@ package repository
 import (
 	"context"
 	"server/app/domain/entity"
+	"time"
 )
 
-type UserDataService interface {
+type DataService interface {
+	UserRepository
+	TestRepository
+	TestResultRepository
+	SkillTestRepository
+	TagRepository
 }
 
 type UserRepository interface {
-	UserSendReviewRequest(ctx context.Context, test_result *entity.TestResult) (*entity.TestResult, error)
+	CreateUser(ctx context.Context, user entity.User) (int, error)
+	QueryUser(ctx context.Context, Username string, Fullname string, ID int, Flag int, HasPassword bool) ([]entity.User, error)
+	UpdateUser(ctx context.Context, user entity.User) error
+	DeleteUser(ctx context.Context, ID int) error
 }
 
 type TestRepository interface {
-	GetAllUserTestResults(ctx context.Context) ([]entity.TestResult, error)
-	GetUserTestResultByID(ctx context.Context, user_id interface{}) ([]entity.TestResult, error)
+	CreateTest(ctx context.Context, test entity.Test) (int, error)
+	QueryTestHeadline(ctx context.Context, ID int, TestName string) (result []entity.Test, err error)
+	QueryTestByTestTag(ctx context.Context, TestTagID int) (result []entity.Test, err error)
+	QueryAllTestHeadlines(ctx context.Context) ([]entity.Test, error)
+	UpdateTest(ctx context.Context, test entity.Test) error
+	DeleteTest(ctx context.Context, TestID int) error
+
+	AssignSkillTest2Test(ctx context.Context, TestID int, SkillTestID int) error
+	QuerySkillTestOfTest(ctx context.Context, TestID int) (result []int, err error)
+	DeleteSkillTestAndTest(ctx context.Context, TestID int, SkillTestID int) error
+
+	AssignTestClass(ctx context.Context, TestClass entity.TestClassRelation) error
+	QueryTestClass(ctx context.Context, TestClassID int) (result []entity.TestClassRelation, err error)
+	QueryTestOfClass(ctx context.Context, ClassID int) (result []entity.TestClassRelation, err error)
+	QueryClassDoneTest(ctx context.Context, TestID int) (result []entity.TestClassRelation, err error)
+	DeleteTestClass(ctx context.Context, TestID int, ClassID int) error
+
+	AddUserClass(ctx context.Context, ClassID int, UserID int) error
+	QueryUserOfClass(ctx context.Context, ClassID int) ([]int, error)
+	QueryClassOfUser(ctx context.Context, UserID int) ([]int, error)
+	DeleteUserClass(ctx context.Context, ClassID int, StudentID int) error
 }
 
-type AdminRepository interface {
-	UpdateUserTestResult(ctx context.Context, testResult *entity.TestResult) (updated *entity.TestResult, err error)
-	DeleteUserTestResult(ctx context.Context, id interface{}) (deleted *entity.TestResult, err error)
+type TestResultRepository interface {
+	CreateTestResult(ctx context.Context, data entity.TestResult) (int, error)
+	UpdateTestResult(ctx context.Context, data entity.TestResult) error
+	QueryTestResultDetails(ctx context.Context, ID int) ([]entity.TestResult, error)
+	QueryTestResultIndexScore(ctx context.Context, TestClassID int, UserID int, DateCreate time.Time, Flag int) ([]entity.TestResult, error)
+	DeleteTestResult(ctx context.Context, ID int) error
+	ArchieveTestResult(ctx context.Context, TestClassID int, UserID int) error
+	DeleteTestResultOfClass(ctx context.Context, TestClassID int) error
+}
+
+type SkillTestRepository interface {
+	CreateSkillTest(ctx context.Context, st entity.SkillTest) (id int, err error)
+	QuerySkillTest(ctx context.Context, id int) (st entity.SkillTest, err error)
+	UpdateSkillTest(ctx context.Context, st entity.SkillTest) (err error)
+	DeleteSkillTest(ctx context.Context, st entity.SkillTest) (err error)
+}
+
+type TagRepository interface {
+	CreateTag(ctx context.Context, testtag entity.Tag) (int, error)
+	UpdateTag(ctx context.Context, testtag entity.Tag) error
+	QueryTag(ctx context.Context, TestTagID int, flag int) ([]entity.Tag, error)
+	DeleteTag(ctx context.Context, TestTagID int) error
 }
