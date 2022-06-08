@@ -4,6 +4,9 @@ import { useTestContext } from '../../context/test/TestContext';
 
 import Section from '../../interfaces/test/Section.interface';
 
+import { Select } from 'antd';
+const { Option } = Select;
+
 //interface
 interface TrueFalseSectionProps {
   sectionIndex: number;
@@ -16,12 +19,11 @@ export default function TrueFalseSection(props: TrueFalseSectionProps) {
 
   const handleChange = reviewMode
     ? () => {}
-    : (event: React.ChangeEvent<HTMLSelectElement>) => {
+    : (value: string, index: number) => {
         let newChosenAnswers = [
           ...submitData.sections[props.sectionIndex - 1].answers,
         ];
-        newChosenAnswers[parseInt(event?.target.name as string)] =
-          event?.target.value;
+        newChosenAnswers[index] = value;
 
         let newSubmitDataSections = [...submitData.sections];
         newSubmitDataSections[props.sectionIndex - 1].answers =
@@ -56,7 +58,15 @@ export default function TrueFalseSection(props: TrueFalseSectionProps) {
             return (
               <div
                 key={index}
-                className="grid grid-cols-4 md:grid-cols-5 flex items-center"
+                className={`grid grid-cols-4 md:grid-cols-5 flex items-center p-2 my-1 ${
+                  reviewMode
+                    ? submitData.sections[props.sectionIndex - 1].answers[
+                        index
+                      ] === question.correct_ans
+                      ? 'bg-green-500'
+                      : 'bg-red-500'
+                    : 'bg-white'
+                }`}
               >
                 <p className="col-span-3 md:col-span-4">
                   <span className="font-bold">
@@ -64,29 +74,21 @@ export default function TrueFalseSection(props: TrueFalseSectionProps) {
                   </span>{' '}
                   {question.q}
                 </p>
-                <select
-                  defaultValue={-1}
-                  name={`${index}`}
-                  onChange={handleChange}
+                <Select
+                  onChange={(value) => {
+                    handleChange(value, index);
+                  }}
                   disabled={reviewMode}
                   value={
                     submitData.sections[props.sectionIndex - 1].answers[index]
                   }
-                  className={`w-full text-center rounded border border-gray-300 py-1 ${
-                    reviewMode
-                      ? submitData.sections[props.sectionIndex - 1].answers[
-                          index
-                        ] === question.correct_ans
-                        ? 'bg-green-500'
-                        : 'bg-red-500'
-                      : 'bg-white'
-                  }`}
+                  className={`w-full text-center py-1`}
+                  dropdownClassName="text-center"
                 >
-                  <option disabled selected value={-1}></option>
-                  <option value={1}>T</option>
-                  <option value={0}>F</option>
-                  <option value={2}>NG</option>
-                </select>
+                  <Option value={1}>T</Option>
+                  <Option value={0}>F</Option>
+                  <Option value={2}>NG</Option>
+                </Select>
               </div>
             );
           }

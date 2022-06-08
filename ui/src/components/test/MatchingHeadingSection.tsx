@@ -87,7 +87,7 @@ export default function MatchingHeadingSection(
               return (
                 <div
                   key={index}
-                  className={`grid grid-cols-4 flex items-center my-2 p-3 ${
+                  className={`grid grid-cols-4 flex items-center my-1 p-2 ${
                     reviewMode
                       ? submitData.sections[props.sectionIndex - 1].answers[
                           index
