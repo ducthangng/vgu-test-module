@@ -18,6 +18,9 @@ type DataService interface {
 
 type UserRepository interface {
 	CreateUser(ctx context.Context, user entity.User) (int, error)
+
+	// Flag determine the query element of the functions: [0 - username]  [1 - fullname] [2 - ID].
+	// Option 2 is unindex search, therefore do not overuse.
 	QueryUser(ctx context.Context, Username string, Fullname string, ID int, Flag int, HasPassword bool) ([]entity.User, error)
 	UpdateUser(ctx context.Context, user entity.User) error
 	DeleteUser(ctx context.Context, ID int) error
