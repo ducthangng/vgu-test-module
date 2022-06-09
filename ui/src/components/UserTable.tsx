@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import axios from 'axios';
+import { isEmpty } from 'lodash';
 
 //import library from antd
 import { Table, Button, Popconfirm } from 'antd';
@@ -13,9 +15,23 @@ type Props = {
 };
 
 const UserTable: React.FC<Props> = () => {
+  const [gridData, setGridData] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    setLoading(true);
+    const response = await axios.get('http://localhost:3000/users');
+    setGridData(response.data);
+    setLoading(false);
+  };
+
   //GOTO: Call to delete user information from database
   const onDelete = (userId: number) => {
-    console.log('Delete id: ', userId);
+    console.log('Delete Test:', userId);
   };
 
   //create title of columns in user table information
