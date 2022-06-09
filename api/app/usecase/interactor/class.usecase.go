@@ -79,7 +79,7 @@ func (c *ClassUsecase) AddMember2Class(ctx context.Context, classId int, userId 
 	return nil
 }
 
-func (c *ClassUsecase) RemoveMember2Class(ctx context.Context, classId int, userId int) (err error) {
+func (c *ClassUsecase) RemoveMemberFromClass(ctx context.Context, classId int, userId int) (err error) {
 	err = c.ClassRepository.DeleteUserClass(ctx, classId, userId)
 	if err != nil {
 		return err
