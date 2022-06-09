@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"server/app/domain/entity"
+	"server/app/usecase/usecase_dto"
 	"time"
 )
 
@@ -11,6 +12,7 @@ type DataService interface {
 	TestRepository
 	TestResultRepository
 	SkillTestRepository
+	ClassRepository
 	TagRepository
 
 	TransactionMng
@@ -68,6 +70,17 @@ type SkillTestRepository interface {
 	QuerySkillTest(ctx context.Context, id int) (st entity.SkillTest, err error)
 	UpdateSkillTest(ctx context.Context, st entity.SkillTest) (err error)
 	DeleteSkillTest(ctx context.Context, st entity.SkillTest) (err error)
+}
+
+type ClassRepository interface {
+	DeleteClass(ctx context.Context, classId int) error
+	CreateClass(ctx context.Context, class entity.Class) error
+	GetClasses(ctx context.Context) (classes []usecase_dto.Class, err error)
+	QueryClassMembers(ctx context.Context, classId int) (users []usecase_dto.User, err error)
+	AddMember2Class(ctx context.Context, classId int, userId int) (err error)
+	RemoveMember2Class(ctx context.Context, classId int, userId int) (err error)
+	QueryClassTestResult(ctx context.Context, classId int, testId int) (err error)
+	GetClassTest(ctx context.Context, classId int) (tests []usecase_dto.Test, err error)
 }
 
 type TagRepository interface {
