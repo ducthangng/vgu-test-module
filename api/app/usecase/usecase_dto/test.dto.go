@@ -33,12 +33,12 @@ type (
 	}
 
 	SkillTest struct {
-		Id          int     `db:"id"`
-		MediaURL    string  `db:"media_url"`
-		Title       string  `db:"title"`
-		Content     string  `db:"content"`
-		Description string  `db:"description"`
-		Section     Section `db:"section"`
+		Id          int       `db:"id"`
+		MediaURL    string    `db:"media_url"`
+		Title       string    `db:"title"`
+		Content     string    `db:"content"`
+		Description string    `db:"description"`
+		Section     []Section `db:"section"`
 	}
 
 	Section struct {

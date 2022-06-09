@@ -10,7 +10,7 @@ import (
 )
 
 func (q *Querier) CreateSkillTest(ctx context.Context, st entity.SkillTest) (id int, err error) {
-	stmt, err := q.DB.PrepareContext(ctx, "INSERT skill_tests SET media_url = ?, title = ?, content = ?, description = ?, section = ?, datecreated = ?")
+	stmt, err := q.DB.PrepareContext(ctx, "INSERT skill_tests SET media_url = ?, title = ?, content = ?, description = ?, sections = ?, datecreated = ?")
 	if err != nil {
 		return 0, err
 	}
@@ -46,7 +46,7 @@ func (q *Querier) QuerySkillTest(ctx context.Context, id int) (st entity.SkillTe
 		return st, err
 	}
 
-	if err = json.Unmarshal([]byte(jsonSection), &st.Section); err != nil {
+	if err = json.Unmarshal([]byte(jsonSection), &st.Sections); err != nil {
 		return st, err
 	}
 
@@ -54,7 +54,7 @@ func (q *Querier) QuerySkillTest(ctx context.Context, id int) (st entity.SkillTe
 }
 
 func (q *Querier) UpdateSkillTest(ctx context.Context, st entity.SkillTest) (err error) {
-	stmt, err := q.DB.PrepareContext(ctx, "INSERT skill_tests SET media_url = ?, title = ?, content = ?, description = ?, section = ?, dateupdated = ?")
+	stmt, err := q.DB.PrepareContext(ctx, "INSERT skill_tests SET media_url = ?, title = ?, content = ?, description = ?, sections = ?, dateupdated = ?")
 	if err != nil {
 		return err
 	}
