@@ -31,7 +31,11 @@ func (u *UserUsecase) CreateUser(ctx context.Context, user usecase_dto.User) (id
 		return 0, err
 	}
 
-	copier.Copy(&id, &created)
+	err = copier.Copy(&id, &created)
+	if err != nil {
+		return 0, err
+	}
+
 	return id, nil
 }
 
@@ -87,7 +91,6 @@ func (u *UserUsecase) FindUser(ctx context.Context, user usecase_dto.User, HasPa
 
 func (u *UserUsecase) GetAllUserTestResults(ctx context.Context, userId int) (results []usecase_dto.TestResult, err error) {
 
-	return
 }
 
 func (u *UserUsecase) ReviewTestResult(ctx context.Context, resultId int) (skilltest usecase_dto.SkillTest, err error) {
