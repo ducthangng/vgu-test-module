@@ -12,6 +12,8 @@ type DataService interface {
 	TestResultRepository
 	SkillTestRepository
 	TagRepository
+
+	TransactionMng
 }
 
 type UserRepository interface {
@@ -49,6 +51,9 @@ type TestResultRepository interface {
 	CreateTestResult(ctx context.Context, data entity.TestResult) (int, error)
 	UpdateTestResult(ctx context.Context, data entity.TestResult) error
 	QueryTestResultDetails(ctx context.Context, ID int) ([]entity.TestResult, error)
+
+	// Query TestResultIndex allows you to search according to flag, but only return the indexed value: ID, TestID, user_id, ClassID. Other fields are expected to be 0/nil.
+	// Flag determine the query element of the functions: [1 - TestClassID] [2 - user_id] [3 - DateCreated] [4 - TestClassID, user_id] [5 - TestClassID, DateCreated] [6 - user_id, DateCreated] [7 - TestClassID, user_id, DateCreated]
 	QueryTestResultIndexScore(ctx context.Context, TestClassID int, UserID int, DateCreate time.Time, Flag int) ([]entity.TestResult, error)
 	DeleteTestResult(ctx context.Context, ID int) error
 	ArchieveTestResult(ctx context.Context, TestClassID int, UserID int) error
@@ -67,4 +72,8 @@ type TagRepository interface {
 	UpdateTag(ctx context.Context, testtag entity.Tag) error
 	QueryTag(ctx context.Context, TestTagID int, flag int) ([]entity.Tag, error)
 	DeleteTag(ctx context.Context, TestTagID int) error
+}
+
+type TransactionMng interface {
+	EnableTx(txFunc func() error) error
 }
