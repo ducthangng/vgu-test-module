@@ -3,7 +3,6 @@ package repository
 import (
 	"context"
 	"server/app/domain/entity"
-	"server/app/usecase/usecase_dto"
 	"time"
 )
 
@@ -45,11 +44,6 @@ type TestRepository interface {
 	QueryTestOfClass(ctx context.Context, ClassID int) (result []entity.TestClassRelation, err error)
 	QueryClassDoneTest(ctx context.Context, TestID int) (result []entity.TestClassRelation, err error)
 	DeleteTestClass(ctx context.Context, TestID int, ClassID int) error
-
-	AddUserClass(ctx context.Context, ClassID int, UserID int) error
-	QueryUserOfClass(ctx context.Context, ClassID int) ([]int, error)
-	QueryClassOfUser(ctx context.Context, UserID int) ([]int, error)
-	DeleteUserClass(ctx context.Context, ClassID int, StudentID int) error
 }
 
 type TestResultRepository interface {
@@ -73,14 +67,14 @@ type SkillTestRepository interface {
 }
 
 type ClassRepository interface {
-	DeleteClass(ctx context.Context, classId int) error
-	CreateClass(ctx context.Context, class entity.Class) error
-	GetClasses(ctx context.Context) (classes []usecase_dto.Class, err error)
-	QueryClassMembers(ctx context.Context, classId int) (users []usecase_dto.User, err error)
-	AddMember2Class(ctx context.Context, classId int, userId int) (err error)
-	RemoveMember2Class(ctx context.Context, classId int, userId int) (err error)
-	QueryClassTestResult(ctx context.Context, classId int, testId int) (err error)
-	GetClassTest(ctx context.Context, classId int) (tests []usecase_dto.Test, err error)
+	DeleteClass(ctx context.Context, ID int) error
+	CreateClass(ctx context.Context, class entity.Class) (int, error)
+	QueryAllClass(ctx context.Context) ([]entity.Class, error)
+	AddUserClass(ctx context.Context, ClassID int, UserID int) error
+	QueryUserOfClass(ctx context.Context, ClassID int) ([]int, error)
+	QueryClassOfUser(ctx context.Context, UserID int) ([]int, error)
+	QueryTestOfClass(ctx context.Context, ClassID int) (result []entity.TestClassRelation, err error)
+	DeleteUserClass(ctx context.Context, ClassID int, StudentID int) error
 }
 
 type TagRepository interface {

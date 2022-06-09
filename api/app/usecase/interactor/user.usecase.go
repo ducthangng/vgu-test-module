@@ -90,7 +90,7 @@ func (u *UserUsecase) FindUser(ctx context.Context, user usecase_dto.User, HasPa
 }
 
 func (u *UserUsecase) GetAllUserTestResults(ctx context.Context, userId int) (results []usecase_dto.TestResult, err error) {
-
+	return
 }
 
 func (u *UserUsecase) ReviewTestResult(ctx context.Context, resultId int) (skilltest usecase_dto.SkillTest, err error) {
