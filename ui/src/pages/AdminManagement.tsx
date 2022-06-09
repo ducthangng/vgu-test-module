@@ -1,8 +1,13 @@
 import React from 'react';
-import UserTable from '../components/UserTable';
+
+// import library from antd
 import { Divider, Row } from 'antd';
 import { Pagination } from 'antd';
 
+// import Component from components
+import UserTable from '../components/UserTable';
+
+// create a default data for user table
 const defaultData = [
   {
     key: '1',

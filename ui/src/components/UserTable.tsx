@@ -1,7 +1,10 @@
 import React from 'react';
+
+//import library from antd
 import { Table, Button, Popconfirm } from 'antd';
 // import { RouterComponentProps } from "react-router";
 
+// create interface for UserTable
 type Props = {
   name: string;
   Email: string;
@@ -15,6 +18,7 @@ const UserTable: React.FC<Props> = () => {
     console.log('Delete id: ', userId);
   };
 
+  //create title of columns in user table information
   const columns = [
     {
       title: 'Name',
@@ -35,6 +39,7 @@ const UserTable: React.FC<Props> = () => {
       title: 'Action',
       dataIndex: 'action',
       key: 'action',
+      // Button to delete user information
       render: (userId: number) => (
         <Popconfirm
           title=" You want to delete this user?"
