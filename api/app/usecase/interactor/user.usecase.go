@@ -20,13 +20,33 @@ func NewUserUseCase(userRepository repository.DataService) *UserUsecase {
 }
 
 func (u *UserUsecase) CreateUser(ctx context.Context, user usecase_dto.User) (id int, err error) {
+	var record entity.User
+	err = copier.Copy(&record, &user)
+	if err != nil {
+		return 0, err
+	}
 
-	return
+	created, err := u.UserRepository.CreateUser(ctx, record)
+	if err != nil {
+		return 0, err
+	}
+
+	copier.Copy(&id, &created)
+	return id, nil
 }
 
 func (u *UserUsecase) UpdateUser(ctx context.Context, user usecase_dto.User) (err error) {
+	var record entity.User
+	err = copier.Copy(&record, &user)
+	if err != nil {
+		return err
+	}
+	err = u.UserRepository.UpdateUser(ctx, record)
+	if err != nil {
+		return err
+	}
 
-	return
+	return nil
 }
 
 func (u *UserUsecase) FindUser(ctx context.Context, user usecase_dto.User, HasPassword bool) (result []usecase_dto.User, err error) {
