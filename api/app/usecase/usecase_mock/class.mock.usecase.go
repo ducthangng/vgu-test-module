@@ -13,19 +13,16 @@ type MockClassUseCase struct {
 	recorder *MockClassUseCaseMockRecorder
 }
 
-// MockUserUseCaseMockRecorder is the mock recorder for MockUserUseCase
 type MockClassUseCaseMockRecorder struct {
 	mock *MockClassUseCase
 }
 
-// NewMockUserUseCase creates a new mock instance
 func NewMockClassUseCase(ctrl *gomock.Controller) *MockClassUseCase {
 	mock := &MockClassUseCase{ctrl: ctrl}
 	mock.recorder = &MockClassUseCaseMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
 func (m *MockClassUseCase) EXPECT() *MockClassUseCaseMockRecorder {
 	return m.recorder
 }
