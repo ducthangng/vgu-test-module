@@ -19,9 +19,7 @@ type UserService interface {
 
 	UpdateUser(ctx context.Context, user usecase_dto.User) (err error)
 
-	FindUser(ctx context.Context, user usecase_dto.User, HasPassword bool) (result usecase_dto.User, err error)
-
-	GetUserTestResultsAll(ctx context.Context, userId int) (results []usecase_dto.TestResult, err error)
+	FindUser(ctx context.Context, user usecase_dto.User, HasPassword bool) (result []usecase_dto.User, err error)
 
 	ReviewTestResult(ctx context.Context, resultId int) (skilltest usecase_dto.SkillTest, err error)
 }
@@ -50,9 +48,15 @@ type TestService interface {
 
 	QueryTestDetails(ctx context.Context, testId int) (test usecase_dto.SkillTest, err error)
 
-	QueryTestSkill() (result []usecase_dto.SkillTest, err error)
+	QuerySkillTest(ctx context.Context, testId int) (test usecase_dto.SkillTest, err error)
 
-	SubmitTest(ctx context.Context, data usecase_dto.SubmitData) (testResultId int, err error)
+	SubmitTest(ctx context.Context, data usecase_dto.SubmitData, userId int, entityCode int, testClassId int, testSkillId int) (testResultId int, err error)
+}
+
+type TestResultService interface {
+	GetUserTestResultsAll(ctx context.Context, userID int) (results []usecase_dto.TestResult, err error)
+
+	GetUserTestResultDetail(ctx context.Context, testId int) (result usecase_dto.TestResult, err error)
 }
 
 type TestSkillService interface {

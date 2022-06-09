@@ -34,6 +34,10 @@ func (t *TestUsecase) QueryTestInfo(ctx context.Context, testId int) (test useca
 	return
 }
 
+func (t *TestUsecase) QueryTestDetails(ctx context.Context, testId int) (test usecase_dto.SkillTest, err error) {
+	return
+}
+
 func (t *TestUsecase) QuerySkillTest(ctx context.Context, testId int) (test usecase_dto.SkillTest, err error) {
 	skID, err := t.TestRepository.QuerySkillTestOfTest(ctx, testId)
 	if err != nil {
