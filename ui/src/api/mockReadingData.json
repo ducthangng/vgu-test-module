@@ -7,8 +7,8 @@
     "type": "reading",
     "sections": [
     {
-        "start_index": 1,
-        "end_index": 5,
+        "startIndex": 1,
+        "endIndex": 5,
         "title": "Matching Heading",
         "media": [],
         "type": "matching heading",
@@ -16,39 +16,45 @@
         "content": [
             {
                 "q": "Hotel managers need to know what would encourage good staff to remain.",
-                "a": "Pfeffer",
-                "p": "E"
+                "a": [],
+                "correct_ans": "Pfeffer",
+                "explanation": "explanation why the answer is correct"
             },
             {
                 "q": "The actions of managers may make staff feel they shouldn't move to a different employer.",
-                "a": "Lucas",
-                "p": "D"
+                "a": [],
+                "correct_ans": "Lucas",
+                "explanation": "explanation why the answer is correct"
             },
             {
                 "q": "Little is done in the hospitality industry to help workers improve their skills.",
-                "a": "Maroudas et al.",
-                "p": "C"
+                "a": [],
+                "correct_ans": "Maroudas et al.",
+                "explanation": "explanation why the answer is correct"
             },
             {
                 "q": "Staff are less likely to change jobs if cooperation is encouraged.",
-                "a": "Ng and Sorensen",
-                "p": "A"
+                "a": [],
+                "correct_ans": "Ng and Sorensen",
+                "explanation": "explanation why the answer is correct"
             },
             {
                 "q": "Disssatisfaction with pay is not the only reason why hospitality workers change jobs.",
-                "a": "Enz and Siguaw",
-                "p": "B"
+                "a": [],
+                "correct_ans": "Enz and Siguaw",
+                "explanation": "explanation why the answer is correct"
             },
             {
                 "q": "",
-                "a": "Deery",
-                "p": "F"
+                "a": [],
+                "correct_ans": "Deery",
+                "explanation": "explanation why the answer is correct"
             }
         ]
     },
     {
-        "start_index": 6,
-        "end_index": 10,
+        "startIndex": 6,
+        "endIndex": 10,
         "title": "Multiple Choice",
         "media": [
             {
@@ -67,7 +73,8 @@
                     "ans 3",
                     "ans 4"
                 ],
-                "correct_ans": 1
+                "correct_ans": 1,
+                "explanation": "explanation why the answer is correct"
             },
             {
                 "q": "question",
@@ -76,7 +83,8 @@
                     "ans 2",
                     "ans 3"
                 ],
-                "correct_ans": 4
+                "correct_ans": 2,
+                "explanation": "explanation why the answer is correct"
             },
             {
                 "q": "question",
@@ -86,14 +94,15 @@
                     "ans 3",
                     "ans 4"
                 ],
-                "correct_ans": 4
+                "correct_ans": 4,
+                "explanation": "explanation why the answer is correct"
             }
         ]
     },
     {
-        "start_index": 11,
-        "end_index": 16,
-        "title": "Complete the table below.\n\nChoose ONE WORD ONLY from the passage for each answer.\n\nWrite your answers in boxes 8-13",
+        "startIndex": 11,
+        "endIndex": 16,
+        "title": "<p>Complete the table below. Choose ONE WORD ONLY from the passage for each answer. Write your answers in boxes 8-13</p>",
         "media": [
             {
                 "title": "Illustration 1",
@@ -102,13 +111,42 @@
         ],
         "smallAnswerDescription": "this might be empty - only show with listening",
         "type": "fill in the blank",
-        "content": {
-            "passage": "<form>He <input type='text' class='border border-2 text-center'/> a teacher. He is twenty-five <input type='text' class='border border-2 text-center'/> old. He love listening <input type='text' class='border border-2 text-center'/> music. He can <input type='text' class='border border-2 text-center'/> football. He often <input type='text' class='border border-2 text-center'/> fishing on Saturday.</form>"
-        }
+        "content": [
+            {
+                "q": "<form>He <input type='text'/> a teacher. He is twenty-five <input type='text'/> old. He love listening <input type='text'/> music. He can <input type='text'/> football. He often <input type='text'/> fishing on Saturday.</form>",
+                "a": [],
+                "correct_ans": "is",
+                "explanation": "explanation why this is the correct answer"
+            },
+            {
+                "q": "",
+                "a": [],
+                "correct_ans": "years",
+                "explanation": "explanation why this is the correct answer"
+            },
+            {
+                "q": "",
+                "a": [],
+                "correct_ans": "to",
+                "explanation": "explanation why this is the correct answer"
+            },
+            {
+                "q": "",
+                "a": [],
+                "correct_ans": "play",
+                "explanation": "explanation why this is the correct answer"
+            },
+            {
+                "q": "",
+                "a": [],
+                "correct_ans": "goes",
+                "explanation": "explanation why this is the correct answer"
+            }
+        ]
     },
     {
-        "start_index": 17,
-        "end_index": 20,
+        "startIndex": 17,
+        "endIndex": 20,
         "media": [],
         "title": "True False Not Given",
         "smallAnswerDescription": "this might be empty - only show with listening",
@@ -116,15 +154,21 @@
         "content": [
             {
                 "q": "question",
-                "correct_ans": 1
+                "a": [],
+                "correct_ans": 1,
+                "explanation": "explanation why this is the correct answer"
             },
             {
                 "q": "question",
-                "correct_ans": 1
+                "a": [],
+                "correct_ans": 2,
+                "explanation": "explanation why this is the correct answer"
             },
             {
                 "q": "question",
-                "correct_ans": 0
+                "a": [],
+                "correct_ans": 0,
+                "explanation": "explanation why this is the correct answer"
             }
         ]
     }

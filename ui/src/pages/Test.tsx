@@ -1,21 +1,36 @@
+/* IMPORTS */
 import React, { useEffect, useState, useRef } from 'react';
+// components
+import LoadingOverlay from 'react-loading-overlay-ts';
 import TestHeader from '../components/test/TestHeader';
 import ListeningTest from '../components/test/ListeningTest';
 import ReadingTest from '../components/test/ReadingTest';
+// interfaces
 import SectionAnswer from '../interfaces/test/SectionAnswer.interface';
 import SubmitData from '../interfaces/test/SubmitData.interface';
-
-import { Routes, Route } from 'react-router-dom';
-
+// routing
+import { Routes, Route, useNavigate } from 'react-router-dom';
+// context
 import { useTestContext } from '../context/test/TestContext';
-
 // fake data
 // import data from '../api/mockListeningData.json';
 import data from '../api/mockReadingData.json';
 
-export default function Test() {
+/* COMPONENT */
+export default function Test(props: { reviewMode: boolean }) {
+  // routing
+  const navigate = useNavigate();
   // context
-  const { testData, submitData, setTestData, setSubmitData } = useTestContext();
+  const {
+    reviewMode,
+    setReviewMode,
+    isLoading,
+    setIsLoading,
+    testData,
+    submitData,
+    setTestData,
+    setSubmitData,
+  } = useTestContext();
 
   // test data
   let totalTime: number | undefined = undefined;
@@ -27,7 +42,6 @@ export default function Test() {
   //fetch data function, currently it only sets mock data
   const fetchData = () => {
     let newTestData = {
-      totalTime: 10,
       mediaURL: data.mediaURL,
       title: data.title,
       content: data.content,
@@ -39,8 +53,8 @@ export default function Test() {
     let newSections = [];
     for (let i = 0; i < data.sections.length; i++) {
       let newSection = {
-        start_index: data.sections[i]?.start_index,
-        end_index: data.sections[i]?.end_index,
+        startIndex: data.sections[i]?.startIndex,
+        endIndex: data.sections[i]?.endIndex,
         answers: [],
       };
       newSections.push(newSection);
@@ -52,11 +66,13 @@ export default function Test() {
       sections: newSections,
     });
     // somehow totalTime only works as a normal variable, rather than a state or context state
-    totalTime = 10;
+    totalTime = reviewMode ? 0 : 60;
   };
 
   useEffect(() => {
+    setReviewMode(props.reviewMode);
     fetchData();
+    setIsLoading(true);
   }, []);
 
   // update submitDataRef when submitData changes
@@ -66,7 +82,7 @@ export default function Test() {
 
   //countdown function
   const countdown = () => {
-    if (totalTime == undefined) {
+    if (totalTime == undefined || isLoading) {
       return;
     }
 
@@ -95,22 +111,27 @@ export default function Test() {
       }, 1000)
     );
     return () => clearInterval(intervalId);
-  }, [timeLeft, totalTime]);
+  }, [isLoading, timeLeft, totalTime]);
 
   //submit test function
-  const handleSubmit = (event?: React.MouseEvent<HTMLElement>) => {
-    event?.preventDefault();
-    console.log('submit!');
-    console.log(submitDataRef.current);
-  };
+  const handleSubmit = reviewMode
+    ? (event?: React.MouseEvent<HTMLElement>) => {}
+    : (event?: React.MouseEvent<HTMLElement>) => {
+        event?.preventDefault();
+        setIsLoading(false);
+        console.log('submit!');
+        console.log(submitDataRef.current);
+        setReviewMode(true);
+        navigate('../test/review/1');
+      };
 
   // intialize userAnswer
   useEffect(() => {
     let newUserAnswers = [...userAnswers];
     testData.sections.forEach((section) => {
       let newAnswerSection: SectionAnswer = {
-        start_index: section.start_index,
-        end_index: section.end_index,
+        startIndex: section.startIndex,
+        endIndex: section.endIndex,
         answers: [],
       };
       newUserAnswers.push(newAnswerSection);
@@ -124,24 +145,30 @@ export default function Test() {
         <Route
           path=":id"
           element={
-            <div>
-              <TestHeader timeLeft={timeLeft} handleSubmit={handleSubmit} />
-              {testData.type === 'listening' && (
-                <ListeningTest
-                  sections={testData.sections}
-                  audioSource={testData.mediaURL}
-                />
-              )}
-              {testData.type === 'reading' && (
-                <ReadingTest
-                  sections={testData.sections}
-                  title={testData.title}
-                  passage={testData.content}
-                  illustration={testData.mediaURL}
-                  handleSubmit={handleSubmit}
-                />
-              )}
-            </div>
+            <LoadingOverlay
+              active={isLoading}
+              spinner
+              text="Your test is loading. Please be patient..."
+            >
+              <div>
+                <TestHeader timeLeft={timeLeft} handleSubmit={handleSubmit} />
+                {testData.type === 'listening' && (
+                  <ListeningTest
+                    sections={testData.sections}
+                    audioSource={testData.mediaURL}
+                  />
+                )}
+                {testData.type === 'reading' && (
+                  <ReadingTest
+                    sections={testData.sections}
+                    title={testData.title}
+                    passage={testData.content}
+                    illustration={testData.mediaURL}
+                    handleSubmit={handleSubmit}
+                  />
+                )}
+              </div>
+            </LoadingOverlay>
           }
         />
       </Routes>

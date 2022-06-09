@@ -5,10 +5,27 @@ import TestData from '../../interfaces/test/TestData.interface';
 import SubmitData from '../../interfaces/test/SubmitData.interface';
 
 const reducer = (
-  state: { testData: TestData; submitData: SubmitData },
+  state: {
+    reviewMode: boolean;
+    isLoading: boolean;
+    testData: TestData;
+    submitData: SubmitData;
+  },
   { type, payload }: any
 ) => {
   switch (type) {
+    case types.SET_IS_LOADING: {
+      return {
+        ...state,
+        isLoading: payload,
+      };
+    }
+    case types.SET_REVIEW_MODE: {
+      return {
+        ...state,
+        reviewMode: payload,
+      };
+    }
     case types.SET_TEST_DATA: {
       return {
         ...state,

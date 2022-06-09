@@ -9,7 +9,7 @@ import MatchingHeadingSection from './MatchingHeadingSection';
 import TrueFalseSection from './TrueFalseSection';
 import FillBlankSection from './FillBlankSection';
 import AudioPlayer from './AudioPlayer';
-//interfaces
+// interfaces
 import Section from '../../interfaces/test/Section.interface';
 
 //local interfaces
@@ -19,11 +19,11 @@ interface ListeningTestProps {
 }
 
 export default function ListeningTest(props: ListeningTestProps) {
-  //params
+  // params
   const { id } = useParams();
-  //form
+  // form
   const [form] = Form.useForm();
-  //states
+  // states
   const [sectionComponent, setSectionComponent] = useState<
     JSX.Element | undefined
   >(undefined);
@@ -31,78 +31,17 @@ export default function ListeningTest(props: ListeningTestProps) {
   //function for rendering section depends on its data
   const getSectionComponent = (section: Section, sectionIndex: number) => {
     if (section.type == 'multiple choice question') {
-      // because content may not be an array, so we need to check before using map()
-      if (Array.isArray(section.content)) {
-        return (
-          <div>
-            <h1 className="text-2xl py-5 font-bold">
-              {section.title} {sectionIndex}
-            </h1>
-            <MultipleChoiceSection
-              sectionIndex={sectionIndex}
-              startIndex={section.start_index}
-              media={section.media}
-              content={
-                section.content as {
-                  q: string;
-                  a: [string];
-                  correct_ans: number;
-                }[]
-              }
-            />
-          </div>
-        );
-      }
-    } else if (section.type == 'matching heading') {
-      if (Array.isArray(section.content)) {
-        return (
-          <div>
-            <h1 className="text-2xl py-5 font-bold">
-              {section.title}
-              {sectionIndex}
-            </h1>
-            <MatchingHeadingSection
-              sectionIndex={sectionIndex}
-              startIndex={section.start_index}
-              smallAnswerDescription={section.smallAnswerDescription}
-              media={section.media}
-              content={section.content as { q: string; a: string; p: string }[]}
-            />
-          </div>
-        );
-      }
-    } else if (section.type == 'fill in the blank') {
       return (
-        <div>
-          <h1 className="text-2xl py-5 font-bold">
-            {section.title}
-            {sectionIndex}
-          </h1>
-          <FillBlankSection
-            sectionIndex={sectionIndex}
-            startIndex={section.start_index}
-            media={section.media}
-            content={section.content as { passage: string }}
-          />
-        </div>
+        <MultipleChoiceSection sectionIndex={sectionIndex} section={section} />
       );
+    } else if (section.type == 'matching heading') {
+      return (
+        <MatchingHeadingSection sectionIndex={sectionIndex} section={section} />
+      );
+    } else if (section.type == 'fill in the blank') {
+      return <FillBlankSection sectionIndex={sectionIndex} section={section} />;
     } else if (section.type == 'tfng') {
-      if (Array.isArray(section.content)) {
-        return (
-          <div>
-            <h1 className="text-2xl py-5 font-bold">
-              {section.title}
-              {sectionIndex}
-            </h1>
-            <TrueFalseSection
-              sectionIndex={sectionIndex}
-              startIndex={section.start_index}
-              media={section.media}
-              content={section.content as { q: string; correct_ans: number }[]}
-            />
-          </div>
-        );
-      }
+      return <TrueFalseSection sectionIndex={sectionIndex} section={section} />;
     }
   };
 

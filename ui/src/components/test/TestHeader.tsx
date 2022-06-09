@@ -16,7 +16,7 @@ export default function TestHeader(props: TestHeaderProps) {
   const { id } = useParams();
   const navigate = useNavigate();
   // context
-  const { testData } = useTestContext();
+  const { reviewMode, testData } = useTestContext();
 
   const handleBack = () => {
     navigate(`../${parseInt(id as string) - 1}`);
@@ -41,7 +41,7 @@ export default function TestHeader(props: TestHeaderProps) {
         </div>
         <div
           className={`items-center space-x-2 ${
-            testData.type == 'reading' ? 'hidden md:flex' : ''
+            testData.type == 'reading' ? 'hidden md:flex' : 'flex'
           }`}
         >
           <button
@@ -67,6 +67,7 @@ export default function TestHeader(props: TestHeaderProps) {
                 type="button"
                 className="disabled:text-white disabled:bg-gray-300 hidden md:inline text-white bg-green-500 font-bold hover:bg-primary/75 rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0"
                 onClick={props.handleSubmit}
+                disabled={reviewMode}
               >
                 SUBMIT
               </button>
@@ -74,6 +75,7 @@ export default function TestHeader(props: TestHeaderProps) {
                 type="button"
                 className="disabled:text-white disabled:bg-gray-300 inline md:hidden text-white bg-green-500 font-bold hover:bg-primary/75 rounded-lg text-sm px-2 py-2 text-center mr-3 md:mr-0"
                 onClick={props.handleSubmit}
+                disabled={reviewMode}
               >
                 <CheckOutlined />
               </button>
