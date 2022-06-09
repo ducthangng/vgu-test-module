@@ -110,13 +110,13 @@ func (c *ClassUsecase) GetClassTest(ctx context.Context, classId int, testName s
 	if err != nil {
 		return nil, err
 	}
-	for i, item := range test_class_records {
+	for _, item := range test_class_records {
 		test_records, err := c.ClassRepository.QueryTestHeadline(ctx, item.TestID, testName)
 		if err != nil {
 			return nil, err
 		}
 
-		err = copier.Copy(&tests[i], &test_records[i])
+		err = copier.Copy(&tests, &test_records)
 		if err != nil {
 			return nil, err
 		}
