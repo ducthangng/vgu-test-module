@@ -106,21 +106,23 @@ func (c *ClassUsecase) QueryClassTestResult(ctx context.Context, testResult usec
 
 // get all test within a class
 func (c *ClassUsecase) GetClassTest(ctx context.Context, classId int, testName string) (tests []usecase_dto.Test, err error) {
-	test_class_records, err := c.ClassRepository.QueryTestOfClass(ctx, classId)
+	var totalRecord []entity.Test
+	records, err := c.ClassRepository.QueryTestOfClass(ctx, classId)
 	if err != nil {
 		return nil, err
 	}
-	for _, item := range test_class_records {
-		test_records, err := c.ClassRepository.QueryTestHeadline(ctx, item.TestID, testName)
+	for _, item := range records {
+		record_item, err := c.ClassRepository.QueryTestHeadline(ctx, item.TestID, testName)
 		if err != nil {
 			return nil, err
 		}
 
-		err = copier.Copy(&tests, &test_records)
-		if err != nil {
-			return nil, err
-		}
-
+		totalRecord = append(totalRecord, record_item...)
 	}
+	err = copier.Copy(&tests, &totalRecord)
+	if err != nil {
+		return nil, err
+	}
+
 	return tests, nil
 }
