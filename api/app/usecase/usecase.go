@@ -22,6 +22,8 @@ type UserService interface {
 	FindUser(ctx context.Context, user usecase_dto.User, HasPassword bool) (result []usecase_dto.User, err error)
 
 	ReviewTestResult(ctx context.Context, resultId int) (skilltest usecase_dto.SkillTest, err error)
+
+	FindUserClasses(ctx context.Context, userId int) (classes []usecase_dto.Class, err error)
 }
 
 type ClassService interface {

@@ -80,6 +80,8 @@ type ClassRepository interface {
 	DeleteClass(ctx context.Context, ID int) error
 	CreateClass(ctx context.Context, class entity.Class) (int, error)
 	QueryAllClass(ctx context.Context) ([]entity.Class, error)
+	QueryClass(ctx context.Context, ClassID int, ClassName string) ([]entity.Class, error)
+
 	AddUserClass(ctx context.Context, ClassID int, UserID int) error
 	QueryUserOfClass(ctx context.Context, ClassID int) ([]int, error)
 	QueryClassOfUser(ctx context.Context, UserID int) ([]int, error)

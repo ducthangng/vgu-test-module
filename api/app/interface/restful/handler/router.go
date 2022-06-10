@@ -2,8 +2,8 @@ package handler
 
 import (
 	"log"
-	middleware "server/app/interface/restful/appmiddleware"
 	"server/app/interface/restful/handler/endpoints"
+	"server/app/interface/restful/handler/middleware"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -19,7 +19,7 @@ func Routing() *gin.Engine {
 	r := gin.New()
 	r.Use(gin.Recovery(), gin.Logger())
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:3000"},
+		AllowOrigins:     []string{"http://localhost:3000", "http://ducthang.dev"},
 		AllowMethods:     []string{"POST"},
 		AllowHeaders:     []string{"Origin", "Content-Type"},
 		ExposeHeaders:    []string{"Content-Length", "Content-Type", "Access-Control-Allow-Headers", "Access-Control-Allow-Origin", "Origin", "Accept-Encoding", "X-CSRF-Token", "Authorization"},
@@ -27,11 +27,21 @@ func Routing() *gin.Engine {
 		MaxAge:           12 * time.Hour,
 	}))
 
-	// r.Use(middleware.Logger())
 	r.Use(middleware.RateLimit(2, 5))
 	r.Use(middleware.Tracer())
 
-	endpoints.TestHandler(r.Group("/api"))
+	r.POST(`/api/login`, endpoints.Login)
+	r.POST("/api/logout", middleware.ValidateToken(), endpoints.Logout)
+	r.GET("/api/validateRole", middleware.ValidateToken(), endpoints.ValidateRole)
+
+	v1 := r.Group("/api/v1")
+
+	v1.Use(middleware.ValidateToken())
+	v1.GET("/ID", endpoints.GetID)
+	endpoints.UserHandler(v1.Group("/user"))
+	endpoints.TestHandler(v1.Group("/test"))
+	endpoints.ClassHandler(v1.Group("/class"))
+	endpoints.AdminHandler(v1.Group("/admin"))
 
 	return r
 }

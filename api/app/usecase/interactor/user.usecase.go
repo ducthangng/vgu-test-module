@@ -13,9 +13,9 @@ type UserUsecase struct {
 	UserRepository repository.DataService
 }
 
-func NewUserUsecase(userRepository repository.DataService) *UserUsecase {
+func NewUserUsecase(dataService repository.DataService) *UserUsecase {
 	return &UserUsecase{
-		UserRepository: userRepository,
+		UserRepository: dataService,
 	}
 }
 
@@ -89,8 +89,33 @@ func (u *UserUsecase) FindUser(ctx context.Context, user usecase_dto.User, HasPa
 	return result, err
 }
 
-func (u *UserUsecase) GetAllUserTestResults(ctx context.Context, userId int) (results []usecase_dto.TestResult, err error) {
-	return
+func (u *UserUsecase) FindUserClasses(ctx context.Context, userId int) (classes []usecase_dto.Class, err error) {
+	classID, err := u.UserRepository.QueryClassOfUser(ctx, userId)
+	if err != nil {
+		return classes, err
+	}
+
+	for _, v := range classID {
+		class, err := u.UserRepository.QueryClass(ctx, v, "")
+		if err != nil {
+			return classes, err
+		}
+
+		if len(class) == 0 {
+			continue
+		}
+
+		classes = append(classes, usecase_dto.Class{
+			ID:           class[0].ID,
+			Classname:    class[0].Classname,
+			Info:         class[0].Info,
+			Announcement: class[0].Announcement,
+			RoomCode:     class[0].RoomCode,
+			Level:        class[0].Level,
+		})
+	}
+
+	return classes, nil
 }
 
 func (u *UserUsecase) ReviewTestResult(ctx context.Context, resultId int) (skilltest usecase_dto.SkillTest, err error) {

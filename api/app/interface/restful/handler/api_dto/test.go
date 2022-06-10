@@ -1,4 +1,4 @@
-package handler_dto
+package api_dto
 
 import (
 	"server/utils/e"
