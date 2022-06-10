@@ -7,6 +7,7 @@ require (
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-playground/assert/v2 v2.0.1 // indirect
 	github.com/go-sql-driver/mysql v1.6.0
+	github.com/golang/mock v1.6.0
 	github.com/jinzhu/copier v0.3.5
 	github.com/kr/text v0.2.0 // indirect
 	github.com/opentracing/opentracing-go v1.2.0

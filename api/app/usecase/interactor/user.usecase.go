@@ -20,13 +20,37 @@ func NewUserUsecase(userRepository repository.DataService) *UserUsecase {
 }
 
 func (u *UserUsecase) CreateUser(ctx context.Context, user usecase_dto.User) (id int, err error) {
+	var record entity.User
+	err = copier.Copy(&record, &user)
+	if err != nil {
+		return 0, err
+	}
 
-	return
+	created, err := u.UserRepository.CreateUser(ctx, record)
+	if err != nil {
+		return 0, err
+	}
+
+	err = copier.Copy(&id, &created)
+	if err != nil {
+		return 0, err
+	}
+
+	return id, nil
 }
 
 func (u *UserUsecase) UpdateUser(ctx context.Context, user usecase_dto.User) (err error) {
+	var record entity.User
+	err = copier.Copy(&record, &user)
+	if err != nil {
+		return err
+	}
+	err = u.UserRepository.UpdateUser(ctx, record)
+	if err != nil {
+		return err
+	}
 
-	return
+	return nil
 }
 
 func (u *UserUsecase) FindUser(ctx context.Context, user usecase_dto.User, HasPassword bool) (result []usecase_dto.User, err error) {
@@ -65,9 +89,10 @@ func (u *UserUsecase) FindUser(ctx context.Context, user usecase_dto.User, HasPa
 	return result, err
 }
 
-// Review the user's work from the database with explaination.
-// @1. Query SkillTest from database.
-// @2. Query Query The Result from database.
+func (u *UserUsecase) GetAllUserTestResults(ctx context.Context, userId int) (results []usecase_dto.TestResult, err error) {
+	return
+}
+
 func (u *UserUsecase) ReviewTestResult(ctx context.Context, resultId int) (skilltest usecase_dto.SkillTest, err error) {
 
 	return

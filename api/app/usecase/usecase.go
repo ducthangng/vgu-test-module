@@ -35,11 +35,11 @@ type ClassService interface {
 
 	AddMember2Class(ctx context.Context, classId int, userId int) (err error)
 
-	RemoveMember2Class(ctx context.Context, classId int, userId int) (err error)
+	RemoveMemberFromClass(ctx context.Context, classId int, userId int) (err error)
 
-	QueryClassTestResult(ctx context.Context, classId int, testId int) (err error)
+	QueryClassTestResult(ctx context.Context, testResult usecase_dto.TestResult) (results []usecase_dto.TestResult, err error)
 
-	GetClassTest(ctx context.Context, classId int) (tests []usecase_dto.Test, err error)
+	GetClassTest(ctx context.Context, classId int, testName string) (tests []usecase_dto.Test, err error)
 }
 
 type TestService interface {

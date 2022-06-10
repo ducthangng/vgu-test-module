@@ -11,6 +11,7 @@ type DataService interface {
 	TestRepository
 	TestResultRepository
 	SkillTestRepository
+	ClassRepository
 	TagRepository
 
 	TransactionMng
@@ -73,6 +74,17 @@ type SkillTestRepository interface {
 	QuerySkillTest(ctx context.Context, id int) (st entity.SkillTest, err error)
 	UpdateSkillTest(ctx context.Context, st entity.SkillTest) (err error)
 	DeleteSkillTest(ctx context.Context, st entity.SkillTest) (err error)
+}
+
+type ClassRepository interface {
+	DeleteClass(ctx context.Context, ID int) error
+	CreateClass(ctx context.Context, class entity.Class) (int, error)
+	QueryAllClass(ctx context.Context) ([]entity.Class, error)
+	AddUserClass(ctx context.Context, ClassID int, UserID int) error
+	QueryUserOfClass(ctx context.Context, ClassID int) ([]int, error)
+	QueryClassOfUser(ctx context.Context, UserID int) ([]int, error)
+	QueryTestOfClass(ctx context.Context, ClassID int) (result []entity.TestClassRelation, err error)
+	DeleteUserClass(ctx context.Context, ClassID int, StudentID int) error
 }
 
 type TagRepository interface {
