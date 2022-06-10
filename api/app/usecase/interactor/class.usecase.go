@@ -90,7 +90,7 @@ func (c *ClassUsecase) RemoveMemberFromClass(ctx context.Context, classId int, u
 
 // get all reults of corresponding class and test
 func (c *ClassUsecase) QueryClassTestResult(ctx context.Context, classId int, testId int) (results []usecase_dto.TestResult, err error) {
-	var totalRecord []entity.TestResult
+	var records []entity.TestResult
 	testClass, err := c.ClassRepository.QueryClassDoneTest(ctx, testId) // list of TestClassID (int)
 	if err != nil {
 		return results, err
@@ -104,14 +104,13 @@ func (c *ClassUsecase) QueryClassTestResult(ctx context.Context, classId int, te
 			// query according to user
 			flag := 2
 			// date created will be ignored in this case
-			records, err := c.ClassRepository.QueryTestResultIndexScore(ctx, item.ID, userId[pos], time.Unix(results[pos].DateCreated, 0), flag)
+			records, err = c.ClassRepository.QueryTestResultIndexScore(ctx, item.ID, userId[pos], time.Unix(results[pos].DateCreated, 0), flag)
 			if err != nil {
 				return results, err
 			}
-			totalRecord = append(totalRecord, records...)
 		}
 	}
-	err = copier.Copy(&results, &totalRecord)
+	err = copier.Copy(&results, &records)
 	if err != nil {
 		return results, err
 	}
