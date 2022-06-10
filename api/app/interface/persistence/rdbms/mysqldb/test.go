@@ -158,7 +158,3 @@ func refactorQueryTest(r *sql.Rows, err error) ([]entity.Test, error) {
 
 	return finalresult, err
 }
-
-func (q *Querier) QueryFullTest(ctx context.Context, TestID int) (result []entity.TestComponent, err error) {
-	return result, err
-}

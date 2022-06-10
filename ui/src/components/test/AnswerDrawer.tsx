@@ -21,7 +21,7 @@ export default function AnswerDrawer(props: AnswerDrawerProps) {
   const { id } = useParams();
   const navigate = useNavigate();
   // context
-  const { testData } = useTestContext();
+  const { reviewMode, testData } = useTestContext();
 
   const handleBack = () => {
     navigate(`../${parseInt(id as string) - 1}`);
@@ -65,6 +65,7 @@ export default function AnswerDrawer(props: AnswerDrawerProps) {
                 type="button"
                 className="disabled:text-white disabled:bg-gray-300 hidden sm:inline text-white bg-green-500 font-bold hover:bg-primary/75 rounded-lg text-sm px-5 py-2.5 text-center mr-3 sm:mr-0"
                 onClick={props.handleSubmit}
+                disabled={reviewMode}
               >
                 SUBMIT
               </button>
@@ -72,6 +73,7 @@ export default function AnswerDrawer(props: AnswerDrawerProps) {
                 type="button"
                 className="disabled:text-white disabled:bg-gray-300 inline sm:hidden text-white bg-green-500 font-bold hover:bg-primary/75 rounded-lg text-sm px-4 py-2 text-center mr-3 sm:mr-0"
                 onClick={props.handleSubmit}
+                disabled={reviewMode}
               >
                 <CheckOutlined />
               </button>

@@ -8,32 +8,18 @@ import (
 )
 
 func (q *Querier) AssignTestClass(ctx context.Context, TestClass entity.TestClassRelation) error {
-	stmt, err := q.DB.PrepareContext(ctx, "INSERT test_class SET tid = ?, cid = ?, ispublished = ?")
+	stmt, err := q.DB.PrepareContext(ctx, "INSERT test_class SET tid = ?, cid = ?")
 	if err != nil {
 		return err
 	}
 
-	_, err = stmt.ExecContext(ctx, TestClass.TestID, TestClass.ClassID, TestClass.IsPublished)
+	_, err = stmt.ExecContext(ctx, TestClass.TestID, TestClass.ClassID)
 	if err != nil {
 		if (strings.Index(err.Error(), "1062")) != 0 {
 			return nil
 		} else {
 			return err
 		}
-	}
-
-	return nil
-}
-
-func (q *Querier) UpdateTestClass(ctx context.Context, TestClass entity.TestClassRelation) error {
-	stmt, err := q.DB.PrepareContext(ctx, "UPDATE test_class SET ispublished = ? WHERE tid = ? AND cid = ?")
-	if err != nil {
-		return err
-	}
-
-	_, err = stmt.ExecContext(ctx, TestClass.IsPublished, TestClass.TestID, TestClass.ClassID)
-	if err != nil {
-		return err
 	}
 
 	return nil
@@ -50,13 +36,13 @@ func (q *Querier) QueryTestClass(ctx context.Context, TestClassID int) (result [
 	}
 
 	for rows.Next() {
-		var tid, cid, published int
-		err := rows.Scan(&cid, &tid, &published)
+		var tid, cid int
+		err := rows.Scan(&cid, &tid)
 		if err != nil {
 			return result, err
 		}
 
-		result = append(result, entity.TestClassRelation{ID: TestClassID, TestID: tid, ClassID: cid, IsPublished: published})
+		result = append(result, entity.TestClassRelation{ID: TestClassID, TestID: tid, ClassID: cid})
 	}
 
 	return result, nil
@@ -73,20 +59,20 @@ func (q *Querier) QueryTestOfClass(ctx context.Context, ClassID int) (result []e
 	}
 
 	for rows.Next() {
-		var id, tid, published int
-		err := rows.Scan(&id, &tid, &published)
+		var id, tid int
+		err := rows.Scan(&id, &tid)
 		if err != nil {
 			return result, err
 		}
 
-		result = append(result, entity.TestClassRelation{ID: id, TestID: tid, ClassID: ClassID, IsPublished: published})
+		result = append(result, entity.TestClassRelation{ID: id, TestID: tid, ClassID: ClassID})
 	}
 
 	return result, nil
 }
 
 func (q *Querier) QueryClassDoneTest(ctx context.Context, TestID int) (result []entity.TestClassRelation, err error) {
-	rows, err := q.DB.QueryContext(ctx, "SELECT id, cid, ispublished FROM test_class WHERE tid = ?", TestID)
+	rows, err := q.DB.QueryContext(ctx, "SELECT id, cid FROM test_class WHERE tid = ?", TestID)
 	if err == sql.ErrNoRows {
 		return nil, nil
 	}
@@ -96,13 +82,13 @@ func (q *Querier) QueryClassDoneTest(ctx context.Context, TestID int) (result []
 	}
 
 	for rows.Next() {
-		var id, cid, published int
-		err := rows.Scan(&id, &cid, &published)
+		var id, cid int
+		err := rows.Scan(&id, &cid)
 		if err != nil {
 			return result, err
 		}
 
-		result = append(result, entity.TestClassRelation{ID: id, TestID: TestID, ClassID: cid, IsPublished: published})
+		result = append(result, entity.TestClassRelation{ID: id, TestID: TestID, ClassID: cid})
 	}
 
 	return result, nil

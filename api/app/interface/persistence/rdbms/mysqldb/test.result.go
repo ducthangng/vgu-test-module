@@ -106,18 +106,3 @@ func (q *Querier) DeleteTestResultOfClass(ctx context.Context, TestClassID int) 
 
 	return nil
 }
-
-func (q *Querier) QueryTestResult(ctx context.Context, TestResultID int) (Answers []entity.TestEntryAnswer, AnswerTexts []entity.TestEntryAnswerText, err error) {
-	Answers, err = q.QueryTestEntryAnswer(ctx, TestResultID)
-	if err != nil {
-		return Answers, AnswerTexts, err
-	}
-
-	AnswerTexts, err = q.QueryTestEntryAnswerText(ctx, TestResultID)
-	if err != nil {
-		return Answers, AnswerTexts, err
-	}
-
-	return Answers, AnswerTexts, nil
-
-}

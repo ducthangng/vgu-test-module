@@ -3,105 +3,44 @@ package mysqldb
 import (
 	"context"
 	"database/sql"
+	"encoding/json"
+	"errors"
 	"server/app/domain/entity"
-	"server/utils/e"
 )
 
-func buildBulkInsertTestAnswers(records []entity.TestAnswer) (string, []interface{}) {
-	var sqlqueries string
-	vals := []interface{}{}
-
-	sqlqueries = "INSERT INTO testanswers(question_id, content, is_correct) VALUES "
-	for _, record := range records {
-		sqlqueries += "(?, ?, ?),"
-		vals = append(vals, record.QuestionID, record.Content)
+func (q *Querier) CreateTestAnswer(ctx context.Context, ans entity.SubmittedAnswer) (err error) {
+	sectionString, err := json.Marshal(&ans.Sections)
+	if err != nil {
+		return errors.New("Failed to marshal section answer")
 	}
-
-	// Trim the last comma
-	sqlqueries = sqlqueries[0 : len(sqlqueries)-1]
-	return sqlqueries, vals
+	_, err = q.DB.ExecContext(ctx, "INSERT INTO test_answer (id, section_answer) VALUES (?, ?)", ans.ID, string(sectionString))
+	return
 }
 
-func (q *Querier) CreateTestAnswer(ctx context.Context, record []entity.TestAnswer) (int, error) {
-	execString, vals := buildBulkInsertTestAnswers(record)
-
-	result, err := q.DB.ExecContext(ctx, execString, vals...)
-	if err != nil {
-		return 0, err
-	}
-
-	k, err := result.LastInsertId()
-	if err != nil {
-		return 0, err
-	}
-
-	id := int(k)
-	return id, nil
+func (q *Querier) DeleteTestAnswer(ctx context.Context, ans entity.SubmittedAnswer) (err error) {
+	_, err = q.DB.ExecContext(ctx, "DELETE FROM test_answer WHERE id = ?", ans.ID)
+	return
 }
 
-// Replaceable fields: content, type, difficulty, answerid.
-func (q *Querier) UpdateTestAnswer(ctx context.Context, record entity.TestAnswer) error {
-	stmt, err := q.DB.PrepareContext(ctx, "UPDATE testanswers SET content = ?, is_correct = ? WHERE id = ?")
+func (q *Querier) UpdateTestAnswer(ctx context.Context, ans entity.SubmittedAnswer) (err error) {
+	sectionString, err := json.Marshal(&ans.Sections)
 	if err != nil {
-		return err
+		return errors.New("Failed to marshal section answer")
 	}
-
-	_, err = stmt.ExecContext(ctx, record.Content, record.IsCorrect, record.ID)
-
-	if err != nil {
-		return err
-	}
-
-	return nil
+	_, err = q.DB.ExecContext(ctx, "UPDATE test_answer SET section_answer = ? WHERE id = ?", string(sectionString), ans.ID)
+	return
 }
 
-// Flag determine the query element of the functions: [0 - ID]  [1 - Content]
-func (q *Querier) QueryTestAnswer(ctx context.Context, ID int, Content string, Flag int) (result []entity.TestAnswer, err error) {
-	switch Flag {
-	case 0:
-		rows, err := q.DB.QueryContext(ctx, "SELECT * FROM testanswers WHERE id = ?", ID)
-		return refactorQueryTestAnswer(rows, err)
-	case 1:
-		rows, err := q.DB.QueryContext(ctx, "SELECT * FROM testanswers WHERE content like ?", "%"+Content+"%", 1)
-		return refactorQueryTestAnswer(rows, err)
-	default:
-		return result, e.ErrorInputInvalid
-	}
-}
-
-func refactorQueryTestAnswer(rows *sql.Rows, err error) (result []entity.TestAnswer, nerr error) {
+func (q *Querier) FindTestAnswer(ctx context.Context, id int) (ans entity.SubmittedAnswer, err error) {
+	var sectionString string
+	err = q.DB.QueryRowContext(ctx, "SELECT * FROM test_answer WHERE id = ?", id).Scan(&ans.ID, &sectionString)
 	if err == sql.ErrNoRows {
-		return result, nil
+		return entity.SubmittedAnswer{}, nil
 	}
 
-	if err != nil {
-		return result, nil
+	if err := json.Unmarshal([]byte(sectionString), &ans.Sections); err != nil {
+		return ans, errors.New("Failed to unmarshal section answer")
 	}
 
-	for rows.Next() {
-		var t entity.TestAnswer
-		err := rows.Scan(&t.ID, &t.QuestionID, &t.Content, &t.IsCorrect)
-
-		if err != nil {
-			return result, err
-		}
-
-		result = append(result, t)
-	}
-
-	return result, nil
-}
-
-func (q *Querier) DeleteTestAnswer(ctx context.Context, ID int) error {
-	stmt, err := q.DB.PrepareContext(ctx, "Delete from testanswers set WHERE id = ?")
-	if err != nil {
-		return err
-	}
-
-	_, err = stmt.ExecContext(ctx, 0, ID)
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return
 }
