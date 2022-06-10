@@ -44,6 +44,16 @@ type TestRepository interface {
 	QueryTestOfClass(ctx context.Context, ClassID int) (result []entity.TestClassRelation, err error)
 	QueryClassDoneTest(ctx context.Context, TestID int) (result []entity.TestClassRelation, err error)
 	DeleteTestClass(ctx context.Context, TestID int, ClassID int) error
+
+	AddUserClass(ctx context.Context, ClassID int, UserID int) error
+	QueryUserOfClass(ctx context.Context, ClassID int) ([]int, error)
+	QueryClassOfUser(ctx context.Context, UserID int) ([]int, error)
+	DeleteUserClass(ctx context.Context, ClassID int, StudentID int) error
+
+	CreateTestAnswer(ctx context.Context, ans entity.SubmittedAnswer) (err error)
+	DeleteTestAnswer(ctx context.Context, ans entity.SubmittedAnswer) (err error)
+	UpdateTestAnswer(ctx context.Context, ans entity.SubmittedAnswer) (err error)
+	FindTestAnswer(ctx context.Context, id int) (ans entity.SubmittedAnswer, err error)
 }
 
 type TestResultRepository interface {
