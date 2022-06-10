@@ -5,6 +5,7 @@ import (
 	"server/app/domain/entity"
 	"server/app/domain/repository"
 	"server/app/usecase/usecase_dto"
+	"time"
 
 	"github.com/jinzhu/copier"
 )
@@ -89,18 +90,36 @@ func (c *ClassUsecase) RemoveMemberFromClass(ctx context.Context, classId int, u
 
 // get all reults of corresponding class and test
 func (c *ClassUsecase) QueryClassTestResult(ctx context.Context, testResult usecase_dto.TestResult) (results []usecase_dto.TestResult, err error) {
-	records, err := c.ClassRepository.QueryTestResultDetails(ctx, testResult.ID)
-	if err != nil {
-		return nil, err
-	}
-	for _, record := range records {
-		var testResult usecase_dto.TestResult
-		err = copier.Copy(&testResult, &record)
+	var totalRecord []entity.TestResult
+	if testResult.TestClassID != 0 {
+		record, err := c.ClassRepository.QueryTestResultIndexScore(ctx, testResult.TestClassID, testResult.UserID, time.Unix(testResult.DateCreated, 0), 1)
 		if err != nil {
-			return nil, err
+			return results, err
 		}
-		results = append(results, testResult)
+		totalRecord = append(totalRecord, record...)
 	}
+
+	if testResult.UserID != 0 {
+		record, err := c.ClassRepository.QueryTestResultIndexScore(ctx, testResult.TestClassID, testResult.UserID, time.Unix(testResult.DateCreated, 0), 1)
+		if err != nil {
+			return results, err
+		}
+		totalRecord = append(totalRecord, record...)
+	}
+
+	if testResult.DateCreated != 0 {
+		record, err := c.ClassRepository.QueryTestResultIndexScore(ctx, testResult.TestClassID, testResult.UserID, time.Unix(testResult.DateCreated, 0), 2)
+		if err != nil {
+			return results, err
+		}
+		totalRecord = append(totalRecord, record...)
+	}
+
+	err = copier.Copy(&results, &totalRecord) // copy to dto
+	if err != nil {
+		return results, err
+	}
+
 	return results, nil
 }
 

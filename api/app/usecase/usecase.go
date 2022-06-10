@@ -37,7 +37,7 @@ type ClassService interface {
 
 	AddMember2Class(ctx context.Context, classId int, userId int) (err error)
 
-	RemoveMember2Class(ctx context.Context, classId int, userId int) (err error)
+	RemoveMemberFromClass(ctx context.Context, classId int, userId int) (err error)
 
 	QueryClassTestResult(ctx context.Context, testResult usecase_dto.TestResult) (results []usecase_dto.TestResult, err error)
 
