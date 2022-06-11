@@ -26,6 +26,7 @@ type (
 		DateUpdated int64 `db:"dateupdated"`
 		// Date, when inserting to database, should be set to type "yyyy-mm-dd"
 	}
+
 	SkillTest struct {
 		Id          int       `db:"id"`
 		MediaURL    string    `db:"media_url"`
