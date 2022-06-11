@@ -1,83 +1,205 @@
-// Reusable components (e.g: Navbar, Footer, Slider,...) to be put here
+// // Reusable components (e.g: Navbar, Footer, Slider,...) to be put here
 
-// File names in Pascal Case (e.g: RegisterForm.js, CategoryItem.js,...)
+// // File names in Pascal Case (e.g: RegisterForm.js, CategoryItem.js,...)
 
-// If there are many components of
-// the same type (e.g: HomeNavbar, DashboardNavbar,...),
-// create a subfolder for them
+// // If there are many components of
+// // the same type (e.g: HomeNavbar, DashboardNavbar,...),
+// // create a subfolder for them
 
-import React, { useState, useEffect } from 'react';
-import { List, Input } from 'antd';
-import ReactDragListView from 'react-drag-listview';
+import React, { useState } from 'react';
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+  DragOverEvent,
+  UniqueIdentifier,
+  DragStartEvent,
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
 
-const mockData = [
-  { title: 'row 1' },
-  { title: 'row 2' },
-  { title: 'row 3' },
-  { title: 'row 4' },
-  { title: 'row 5' },
-];
+import { SortableItem } from './dnd/SortableItem';
 
 export default function Footer() {
-  const [data, setData] = useState<{ title: string }[]>(mockData);
+  const [items, setItems] = useState({
+    root: ['1', '2', '3'],
+    container1: ['4', '5', '6'],
+  });
+  const [activeId, setActiveId] = useState<UniqueIdentifier | null>();
 
-  const onDragEnd = (fromIndex: number, toIndex: number) => {
-    if (toIndex < 0) return;
-    const items = [...data];
-    const item = items.splice(fromIndex, 1)[0];
-    items.splice(toIndex, 0, item);
-    setData(items);
-  };
-
-  const onOuterDragEnd = (fromIndex: number, toIndex: number) => {};
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
 
   return (
-    <div>
-      <div>
-        <div>
-          <div>
-            <h3>ABC.vn</h3>
-            <p>Đây là thông tin miêu tả trang web này</p>
-          </div>
-        </div>
-        <p>
-          <a href="#">ĐĂNG KÝ NGAY</a>
-        </p>
-        <div className="px-10 py-10 grid-cols-2 md:grid-cols-4 hover:bg-red-300 bg-green-300 grid gap-4">
-          <div>01</div>
-          <div>01</div>
-          <div>09</div>
-          <div>01</div>
-          <div>01</div>
-          <div>01</div>
-          <div>01</div>
-        </div>
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
+      onDragOver={handleDragOver}
+    >
+      <div className="bg-green-200">
+        <SortableContext
+          id={'root'}
+          items={items.root}
+          strategy={verticalListSortingStrategy}
+        >
+          {items.root.map((id) => (
+            <SortableItem key={id} id={id} />
+          ))}
+        </SortableContext>
       </div>
 
-      <ReactDragListView nodeSelector=".draggable" onDragEnd={onDragEnd}>
-        <List
-          className="bg-red-200"
-          size="small"
-          bordered
-          dataSource={data.slice(0, 3)}
-          renderItem={(item) => {
-            return <p className="draggable">{item.title}</p>;
-          }}
-        />
-        <List
-          className="bg-green-200"
-          size="small"
-          bordered
-          dataSource={data.slice(3, data.length)}
-          renderItem={(item) => {
-            return <p className="draggable">{item.title}</p>;
-          }}
-        />
-      </ReactDragListView>
-    </div>
+      <SortableContext
+        id={'container1'}
+        items={items.container1}
+        strategy={verticalListSortingStrategy}
+      >
+        {items.container1.map((id) => (
+          <SortableItem key={id} id={id} />
+        ))}
+      </SortableContext>
+    </DndContext>
   );
+
+  function findContainer(id: UniqueIdentifier) {
+    if (id in items) {
+      return id;
+    }
+    type ItemsKey = keyof typeof items;
+
+    return Object.keys(items).find((key) =>
+      items[key as ItemsKey].includes(id as string)
+    );
+  }
+
+  function handleDragStart(event: DragStartEvent) {
+    const { active } = event;
+    const { id } = active;
+
+    setActiveId(id);
+  }
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+    const activeContainer = findContainer(active.id);
+    const overContainer = findContainer(over?.id as UniqueIdentifier);
+
+    if (
+      !activeContainer ||
+      !overContainer ||
+      activeContainer === overContainer
+    ) {
+      return;
+    }
+
+    type ItemsKey = keyof typeof items;
+
+    const activeIndex = items[activeContainer as ItemsKey].indexOf(
+      active.id as string
+    );
+    const overIndex = items[overContainer as ItemsKey].indexOf(
+      over?.id as string
+    );
+
+    console.log(activeIndex);
+    console.log(over);
+
+    if (activeIndex !== overIndex) {
+      setItems((items) => ({
+        ...items,
+        [overContainer]: arrayMove(
+          items[overContainer as ItemsKey],
+          activeIndex,
+          overIndex
+        ),
+      }));
+    }
+
+    setActiveId(null);
+
+    // if (active.id !== over?.id) {
+    //   setItems((items) => {
+    //     const oldIndex = items.indexOf(active.id as number);
+    //     const newIndex = items.indexOf(over?.id as number);
+
+    //     return arrayMove(items, oldIndex, newIndex);
+    //   });
+    // }
+  }
+
+  function handleDragOver(event: DragOverEvent) {
+    const { active, over } = event;
+
+    // Find the containers
+    const activeContainer = findContainer(active.id);
+    const overContainer = findContainer(over?.id as UniqueIdentifier);
+
+    if (
+      !activeContainer ||
+      !overContainer ||
+      activeContainer === overContainer
+    ) {
+      return;
+    }
+
+    type ItemsKey = keyof typeof items;
+
+    setItems((prev) => {
+      const activeItems = prev[activeContainer as ItemsKey];
+      const overItems = prev[overContainer as ItemsKey];
+
+      // Find the indexes for the items
+      const activeIndex = items[activeContainer as ItemsKey].indexOf(
+        active.id as string
+      );
+      const overIndex = items[overContainer as ItemsKey].indexOf(
+        over?.id as string
+      );
+
+      let newIndex = overItems.length + 1;
+      // if (overId in prev) {
+      //   // We're at the root droppable of a container
+      //   newIndex = overItems.length + 1;
+      // } else {
+      //   const isBelowLastItem =
+      //     over &&
+      //     overIndex === overItems.length - 1 &&
+      //     draggingRect.offsetTop > over.rect.offsetTop + over.rect.height;
+
+      //   const modifier = isBelowLastItem ? 1 : 0;
+
+      //   newIndex = overIndex >= 0 ? overIndex + modifier : overItems.length + 1;
+      // }
+
+      return {
+        ...prev,
+        [activeContainer]: [
+          ...prev[activeContainer as ItemsKey].filter(
+            (item) => item !== active.id
+          ),
+        ],
+        [overContainer]: [
+          ...prev[overContainer as ItemsKey].slice(0, newIndex),
+          items[activeContainer as ItemsKey][activeIndex],
+          ...prev[overContainer as ItemsKey].slice(
+            newIndex,
+            prev[overContainer as ItemsKey].length
+          ),
+        ],
+      };
+    });
+  }
 }

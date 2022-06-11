@@ -1,12 +1,14 @@
 /* IMPORTS */
-import React, { useEffect, useState, useRef } from 'react';
-import { Input } from 'antd';
+import React, { useEffect, useState } from 'react';
 
 import { useTestContext } from '../../context/test/TestContext';
 
 import Section from '../../interfaces/test/Section.interface';
 
 import shuffle from '../../utils/shuffleArray';
+
+import { Input, Select } from 'antd';
+const { Option } = Select;
 
 /* LOCAL INTERFACES */
 interface MatchingHeadingSectionProps {
@@ -47,12 +49,11 @@ export default function MatchingHeadingSection(
   // empty function if in review mode
   const handleChange = reviewMode
     ? () => {}
-    : (event: React.ChangeEvent<HTMLInputElement>) => {
+    : (value: string, index: number) => {
         let newChosenAnswers = [
           ...submitData.sections[props.sectionIndex - 1].answers,
         ];
-        newChosenAnswers[parseInt(event.target.name as string)] =
-          event.target.value;
+        newChosenAnswers[index] = value;
 
         let newSubmitDataSections = [...submitData.sections];
         newSubmitDataSections[props.sectionIndex - 1].answers =
@@ -71,6 +72,7 @@ export default function MatchingHeadingSection(
         dangerouslySetInnerHTML={{ __html: props.section.title }}
       />
 
+      {/* media (image) */}
       <div>
         <div>
           {props.section.media &&
@@ -81,41 +83,59 @@ export default function MatchingHeadingSection(
               </div>
             ))}
         </div>
-        {props.section.content &&
-          props.section.content.map((question, index) => {
-            if (question.q) {
-              return (
-                <div
-                  key={index}
-                  className={`grid grid-cols-4 flex items-center my-1 p-2 ${
-                    reviewMode
-                      ? submitData.sections[props.sectionIndex - 1].answers[
+
+        {/* questions and draggable answer list */}
+        <div>
+          {props.section.content &&
+            props.section.content.map((question, index) => {
+              if (question.q) {
+                return (
+                  <div
+                    key={index}
+                    className={`grid grid-cols-4 flex items-center my-1 p-2 ${
+                      reviewMode
+                        ? submitData.sections[props.sectionIndex - 1].answers[
+                            index
+                          ] === question.correct_ans
+                          ? 'bg-green-500'
+                          : 'bg-red-500'
+                        : ''
+                    }`}
+                  >
+                    <p className="col-span-3">
+                      <span className="font-bold">
+                        Câu {props.section.startIndex + index}:
+                      </span>{' '}
+                      {question.q}
+                    </p>
+                    <Select
+                      onChange={(value) => {
+                        handleChange(value, index);
+                      }}
+                      disabled={reviewMode}
+                      value={
+                        submitData.sections[props.sectionIndex - 1].answers[
                           index
-                        ] === question.correct_ans
-                        ? 'bg-green-500'
-                        : 'bg-red-500'
-                      : ''
-                  }`}
-                >
-                  <p className="col-span-3">
-                    <span className="font-bold">
-                      Câu {props.section.startIndex + index}:
-                    </span>{' '}
-                    {question.q}
-                  </p>
-                  <Input
-                    className="text-center ml-2"
-                    name={`${index}`}
-                    value={
-                      submitData.sections[props.sectionIndex - 1].answers[index]
-                    }
-                    onChange={handleChange}
-                    disabled={reviewMode}
-                  />
-                </div>
-              );
-            }
-          })}
+                        ]
+                      }
+                      className={`w-full py-1`}
+                    >
+                      {answers &&
+                        answers.map((answer, index) => (
+                          <Option value={answer}>
+                            <span className="font-bold pr-2">
+                              {String.fromCharCode(index + 65)}
+                            </span>{' '}
+                            {answer}
+                          </Option>
+                        ))}
+                    </Select>
+                  </div>
+                );
+              }
+            })}
+        </div>
+
         <div className="p-3 rounded-md border flex items-center place-content-center">
           <div className="">
             <h3 className="font-bold">
