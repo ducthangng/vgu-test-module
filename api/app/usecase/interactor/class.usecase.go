@@ -113,10 +113,9 @@ func (c *ClassUsecase) QueryClassTestResult(ctx context.Context, classId int, te
 
 	for _, item := range userId {
 		if item != 0 {
-			// query according to userid and testclassid
-			flag := 4
 			// date created will be ignored in this case
-			records, err := c.ClassRepository.QueryTestResultIndexScore(ctx, testClassId, item, time.Unix(0, 0), flag)
+			// query followed by userId and testClassId
+			records, err := c.ClassRepository.QueryTestResultIndexScore(ctx, testClassId, item, time.Unix(0, 0), 4)
 			if err != nil {
 				return results, err
 			}
