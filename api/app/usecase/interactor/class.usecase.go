@@ -2,6 +2,7 @@ package interactor
 
 import (
 	"context"
+	"fmt"
 	"server/app/domain/entity"
 	"server/app/domain/repository"
 	"server/app/usecase/usecase_dto"
@@ -134,38 +135,44 @@ func (c *ClassUsecase) RemoveMemberFromClass(ctx context.Context, classId int, u
 }
 
 // get all reults of corresponding class and test
-func (c *ClassUsecase) QueryClassTestResult(ctx context.Context, testResult usecase_dto.TestResult) (results []usecase_dto.TestResult, err error) {
+func (c *ClassUsecase) QueryClassTestResult(ctx context.Context, classId int, testId int) (results []usecase_dto.TestResult, err error) {
+	var testClassId int
 	var totalRecord []entity.TestResult
-	if testResult.TestClassID != 0 {
-		record, err := c.ClassRepository.QueryTestResultIndexScore(ctx, testResult.TestClassID, testResult.UserID, time.Unix(testResult.DateCreated, 0), 1)
-		if err != nil {
-			return results, err
-		}
-		totalRecord = append(totalRecord, record...)
-	}
-
-	if testResult.UserID != 0 {
-		record, err := c.ClassRepository.QueryTestResultIndexScore(ctx, testResult.TestClassID, testResult.UserID, time.Unix(testResult.DateCreated, 0), 1)
-		if err != nil {
-			return results, err
-		}
-		totalRecord = append(totalRecord, record...)
-	}
-
-	if testResult.DateCreated != 0 {
-		record, err := c.ClassRepository.QueryTestResultIndexScore(ctx, testResult.TestClassID, testResult.UserID, time.Unix(testResult.DateCreated, 0), 2)
-		if err != nil {
-			return results, err
-		}
-		totalRecord = append(totalRecord, record...)
-	}
-
-	err = copier.Copy(&results, &totalRecord) // copy to dto
+	classDoneTest, err := c.ClassRepository.QueryClassDoneTest(ctx, testId)
 	if err != nil {
 		return results, err
 	}
 
+	for _, item := range classDoneTest {
+		if item.ClassID == classId {
+			testClassId = item.ID
+		} else {
+			return nil, fmt.Errorf("this class has not taken this test yet")
+		}
+	}
+
+	userId, err := c.ClassRepository.QueryUserOfClass(ctx, classId) // list of UserId (int)
+	if err != nil {
+		return results, err
+	}
+
+	for _, item := range userId {
+		if item != 0 {
+			// date created will be ignored in this case
+			// query followed by userId and testClassId
+			records, err := c.ClassRepository.QueryTestResultIndexScore(ctx, testClassId, item, time.Unix(0, 0), 4)
+			if err != nil {
+				return results, err
+			}
+			totalRecord = append(totalRecord, records...)
+		}
+	}
+	err = copier.Copy(&results, &totalRecord)
+	if err != nil {
+		return results, err
+	}
 	return results, nil
+
 }
 
 // get all test within a class
