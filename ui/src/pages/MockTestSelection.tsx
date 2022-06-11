@@ -56,7 +56,7 @@ function MockTestSelection() {
     >
       <body>
         <Divider orientation="left">Choose the topic</Divider>
-        <Row gutter={[20, 20]} justify="space-around">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 max-w-md md:max-w-6xl mx-auto">
           {defaultData.map((item) => {
             return (
               <MockTest
@@ -66,7 +66,7 @@ function MockTestSelection() {
               />
             );
           })}
-        </Row>
+        </div>
         <br></br>
         <Row justify="center">
           <Pagination
