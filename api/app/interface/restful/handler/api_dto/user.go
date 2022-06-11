@@ -7,17 +7,17 @@ import (
 )
 
 type User struct {
-	ID            int    `json:"id"`
-	FullName      string `json:"fullname"`
-	Username      string `json:"username"`
-	Password      string `json:"password"`
-	Gender        string `json:"gender"`
-	Address       string `json:"address"`
-	Mail          string `json:"mail"`
-	Phone         string `json:"phone"`
-	Dob           int64  `json:"dob"`
-	Qualification string `json:"qualification"`
-	EntityCode    int    `json:"entity_code"`
+	ID       int    `json:"id"`
+	FullName string `json:"fullname"`
+	Username string `json:"username"`
+	Password string `json:"password"`
+	Gender   string `json:"gender"`
+	// Address  string `json:"address"`
+	// Mail          string `json:"mail"`
+	// Phone         string `json:"phone"`
+	// Dob           int64  `json:"dob"`
+	// Qualification string `json:"qualification"`
+	EntityCode int `json:"entity_code"`
 }
 
 type UserModel struct {
@@ -59,31 +59,6 @@ func BindAuthModel(c *gin.Context) (UserModel, error) {
 
 	if err := a.Validate(); err != nil {
 		return UserModel{}, err
-	}
-
-	return a, nil
-}
-
-type NumberModel struct {
-	Num int `json:"num"`
-}
-
-func (n NumberModel) Validate() error {
-	if n.Num == 0 {
-		return e.ErrorInputInvalid
-	}
-
-	return nil
-}
-
-func BindNumModel(c *gin.Context) (NumberModel, error) {
-	var a NumberModel
-	if err := c.ShouldBindJSON(&a); err != nil {
-		return NumberModel{}, err
-	}
-
-	if err := a.Validate(); err != nil {
-		return NumberModel{}, err
 	}
 
 	return a, nil

@@ -62,13 +62,16 @@ func refactorUserSelect(rows *sql.Rows, err error, HasPassword bool) (user []ent
 
 	for rows.Next() {
 		var u entity.User
-		var Dob, Mail, Phone sql.NullString
-		var Updated, Qualification sql.NullString
+		var Address, Dob, Mail, Phone, Updated, Qualification sql.NullString
 		var created string
 
-		if err := rows.Scan(&u.ID, &u.FullName, &u.Username, &u.Password, &u.Gender, &u.Address,
+		if err := rows.Scan(&u.ID, &u.FullName, &u.Username, &u.Password, &u.Gender, &Address,
 			&Mail, &Phone, &Dob, &Qualification, &u.EntityCode, &u.Active, &created, &Updated); err != nil {
 			return []entity.User{}, err
+		}
+
+		if Address.Valid {
+			u.Address = Address.String
 		}
 
 		if Mail.Valid {

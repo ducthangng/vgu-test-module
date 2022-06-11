@@ -41,8 +41,6 @@ func GetTestInfo(c *gin.Context) {
 			Despite many hardships, their program finally works before the D-Day. Thus, they received 1.0`,
 		Duration:     60,
 		Status:       "Happening",
-		IsPublished:  1,
-		IsCompleted:  0,
 		DateAssigned: 1585286400,
 		Deadline:     1585552000,
 	}
@@ -75,8 +73,6 @@ func GetTestResult(c *gin.Context) {
 			Despite many hardships, their program finally works before the D-Day. Thus, they received 1.0`,
 		Duration:     60,
 		Status:       "Happening",
-		IsPublished:  1,
-		IsCompleted:  0,
 		DateAssigned: 1585286400,
 		Deadline:     1585552000,
 	}
@@ -96,7 +92,7 @@ func DoTest(c *gin.Context) {
 		return
 	}
 
-	var sk api_dto.SkillStest
+	var sk api_dto.SkillTest
 	matchingHeadingContent := []api_dto.Content{
 		{
 			Q: "Hotel managers need to know what would encourage good staff to remain.",
@@ -157,7 +153,7 @@ func DoTest(c *gin.Context) {
 		},
 	}
 
-	sk = api_dto.SkillStest{
+	sk = api_dto.SkillTest{
 		ID:       "507362db-4212-4649-8068-a2ea9806082c",
 		MediaURL: "https://www.dropbox.com/s/edek16sfvwl4jsh/NocturneInAMinor.mp3?dl=1",
 		Title:    "Listen to everything and answer questions.",

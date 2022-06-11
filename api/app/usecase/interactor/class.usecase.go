@@ -14,15 +14,60 @@ type ClassUsecase struct {
 	ClassRepository repository.DataService
 }
 
-func NewClassUsecase(TestSkillRepository repository.DataService) *ClassUsecase {
+func NewClassUsecase(DataService repository.DataService) *ClassUsecase {
 	return &ClassUsecase{
-		ClassRepository: TestSkillRepository,
+		ClassRepository: DataService,
 	}
 }
 
+// @transaction
+// Delete all the test result from test from the class.
+// Delete all the test class id.
+// Delete all the user class id.
+// Delete the class id.
 func (c *ClassUsecase) DeleteClass(ctx context.Context, classId int) error {
-	// some logic
-	return nil
+	TestClassID, err := c.ClassRepository.QueryTestOfClass(ctx, classId)
+	if err != nil {
+		return err
+	}
+
+	UserClassID, err := c.ClassRepository.QueryUserOfClass(ctx, classId)
+	if err != nil {
+		return err
+	}
+
+	return c.ClassRepository.EnableTx(func() error {
+		for _, v := range TestClassID {
+			testResult, err := c.ClassRepository.QueryTestResultIndexScore(ctx, v.ID, 0, time.Now(), 1)
+			if err != nil {
+				return err
+			}
+
+			for _, r := range testResult {
+				err := c.ClassRepository.DeleteTestResult(ctx, r.ID)
+				if err != nil {
+					return err
+				}
+			}
+
+			err = c.ClassRepository.DeleteTestClass(ctx, v.TestID, v.ClassID)
+			if err != nil {
+				return err
+			}
+		}
+
+		for _, id := range UserClassID {
+			if err := c.ClassRepository.DeleteUserClass(ctx, classId, id); err != nil {
+				return err
+			}
+		}
+
+		if err := c.ClassRepository.DeleteClass(ctx, classId); err != nil {
+			return err
+		}
+
+		return nil
+	})
 }
 
 func (c *ClassUsecase) CreateClass(ctx context.Context, class usecase_dto.Class) error {
@@ -124,23 +169,27 @@ func (c *ClassUsecase) QueryClassTestResult(ctx context.Context, testResult usec
 }
 
 // get all test within a class
-func (c *ClassUsecase) GetClassTest(ctx context.Context, classId int, testName string) (tests []usecase_dto.Test, err error) {
-	var totalRecord []entity.Test
+func (c *ClassUsecase) GetClassTest(ctx context.Context, classId int) (tests []usecase_dto.Test, err error) {
+	var test usecase_dto.Test
 	records, err := c.ClassRepository.QueryTestOfClass(ctx, classId)
 	if err != nil {
 		return nil, err
 	}
 	for _, item := range records {
-		record_item, err := c.ClassRepository.QueryTestHeadline(ctx, item.TestID, testName)
+		record_item, err := c.ClassRepository.QueryTestHeadline(ctx, item.TestID, "")
 		if err != nil {
 			return nil, err
 		}
 
-		totalRecord = append(totalRecord, record_item...)
-	}
-	err = copier.Copy(&tests, &totalRecord)
-	if err != nil {
-		return nil, err
+		if len(record_item) == 0 {
+			continue
+		}
+
+		if err := copier.Copy(&test, &record_item[0]); err != nil {
+			return nil, err
+		}
+
+		tests = append(tests, test)
 	}
 
 	return tests, nil

@@ -41,7 +41,7 @@ type ClassService interface {
 
 	QueryClassTestResult(ctx context.Context, testResult usecase_dto.TestResult) (results []usecase_dto.TestResult, err error)
 
-	GetClassTest(ctx context.Context, classId int, testName string) (tests []usecase_dto.Test, err error)
+	GetClassTest(ctx context.Context, classId int) (tests []usecase_dto.Test, err error)
 }
 
 type TestService interface {

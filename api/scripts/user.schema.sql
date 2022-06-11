@@ -11,7 +11,7 @@ create table users (
 	address VARCHAR(255),
 	mail VARCHAR(255),
 	phone VARCHAR(255),
-	dob DATETIME NOT NULL,
+	dob DATETIME,
 	qualification VARCHAR(255),
 	entity_code INT NOT NULL,
 	active INT NOT NULL,
