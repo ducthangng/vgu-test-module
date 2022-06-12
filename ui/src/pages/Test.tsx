@@ -6,6 +6,7 @@ import TestHeader from '../components/test/TestHeader';
 import ListeningTest from '../components/test/ListeningTest';
 import ReadingTest from '../components/test/ReadingTest';
 import RetakeTestModal from '../components/test/RetakeTestModal';
+import ResultModal from '../components/test/ResultModal';
 // interfaces
 import SectionAnswer from '../interfaces/test/SectionAnswer.interface';
 import SubmitData from '../interfaces/test/SubmitData.interface';
@@ -38,6 +39,7 @@ export default function Test(props: { reviewMode: boolean }) {
 
   // test data
   let totalTime: number | undefined = undefined;
+  const [submitted, setSubmitted] = useState(false);
   const [isDone, setIsDone] = useState(true);
   const [timeLeft, setTimeLeft] = useState<string>('');
   const [intervalId, setIntervalId] = useState<number | undefined>(undefined);
@@ -83,6 +85,7 @@ export default function Test(props: { reviewMode: boolean }) {
     setIsLoading(true);
   }, []);
 
+  // update waitModalRef when waitModal changes
   useEffect(() => {
     waitModalRef.current = waitModal;
   }, [waitModal]);
@@ -133,8 +136,9 @@ export default function Test(props: { reviewMode: boolean }) {
         setIsLoading(false);
         console.log('submit!');
         console.log(submitDataRef.current);
-        setReviewMode(true);
-        navigate('../test/review/1');
+        // send submitted data to server here, instead of just console log
+        setSubmitted(true);
+        setWaitModal(true);
       };
 
   // intialize userAnswer
@@ -163,6 +167,7 @@ export default function Test(props: { reviewMode: boolean }) {
               text="Your test is loading. Please be patient..."
             >
               <div>
+                {submitted && !reviewMode && <ResultModal />}
                 {isDone && !reviewMode && <RetakeTestModal />}
                 <TestHeader timeLeft={timeLeft} handleSubmit={handleSubmit} />
                 {testData.type === 'listening' && (
