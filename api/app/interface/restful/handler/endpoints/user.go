@@ -29,18 +29,13 @@ func GetUserInfo(c *gin.Context) {
 	app := gctx.Gin{C: c}
 	ctx := context.Background()
 
-	userID := c.Query("user_id")
-	if userID == "" {
+	username := c.Query("user_name")
+	if username == "" {
 		app.Response(http.StatusOK, 0, e.ErrorInputInvalid)
 		return
 	}
 
-	ID, err := strconv.Atoi(userID)
-	if err != nil {
-		app.Response(http.StatusInternalServerError, 0, err)
-		return
-	}
-	user_record := usecase_dto.User{ID: ID}
+	user_record := usecase_dto.User{Username: username}
 	access := registry.BuildUserAccessPoint(false, sqlconnection.DBConn)
 	user, err := access.Service.FindUser(ctx, user_record, true)
 	if err != nil {
