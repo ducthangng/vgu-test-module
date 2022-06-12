@@ -6,6 +6,8 @@ import './configs/antd/customized.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { TestProvider } from './context/test/TestContext';
 import MockTestSelection from './pages/MockTestSelection';
+import TestCardPage from './pages/TestSelection';
+import AppRoutes from './routes/routes';
 
 function App() {
   return (
@@ -24,7 +26,7 @@ function App() {
     //   </BrowserRouter>
     // </div>
 
-    <MockTestSelection />
+    <AppRoutes />
   );
 }
 
