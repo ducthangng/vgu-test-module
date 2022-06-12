@@ -53,7 +53,7 @@ const TestTable: React.FC<TestInformation> = () => {
   ];
 
   return (
-    <div style={{ padding: 24, background: '#fff', minHeight: '360' }}>
+    <div style={{ padding: 200, background: '#fff', minHeight: '360' }}>
       <span>
         <Table columns={columns}></Table>
       </span>

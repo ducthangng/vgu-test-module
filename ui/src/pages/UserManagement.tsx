@@ -39,8 +39,14 @@ function AdminManagement() {
       }}
     >
       <body>
-        <Divider orientation="left"> User Management </Divider>
-        <Row gutter={[20, 20]} justify="space-around">
+        <Divider
+          orientation="left"
+          style={{ fontSize: '26px', fontFamily: 'Roboto' }}
+        >
+          User Management
+        </Divider>
+
+        <Divider orientation="center">
           {defaultData.map((items) => {
             return (
               <UserTable
@@ -52,7 +58,7 @@ function AdminManagement() {
               />
             );
           })}
-        </Row>
+        </Divider>
         <br></br>
         <Row justify="center">
           <Pagination

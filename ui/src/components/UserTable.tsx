@@ -6,6 +6,10 @@ import { isEmpty } from 'lodash';
 import { Table, Button, Popconfirm } from 'antd';
 // import { RouterComponentProps } from "react-router";
 
+//fake data
+//import data from '..';
+//import data from '../api/UserData.json';
+
 // create interface for UserTable
 type Props = {
   name: string;
@@ -15,19 +19,13 @@ type Props = {
 };
 
 const UserTable: React.FC<Props> = () => {
-  const [gridData, setGridData] = React.useState([]);
-  const [loading, setLoading] = React.useState(false);
+  const [data, setData] = React.useState<any>([]);
 
   useEffect(() => {
-    loadData();
+    fetch('http://localhost:8080/api/users')
+      .then((response) => response.json())
+      .then((json) => setData(json));
   }, []);
-
-  const loadData = async () => {
-    setLoading(true);
-    const response = await axios.get('http://localhost:3000/users');
-    setGridData(response.data);
-    setLoading(false);
-  };
 
   //GOTO: Call to delete user information from database
   const onDelete = (userId: number) => {
