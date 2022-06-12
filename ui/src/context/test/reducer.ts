@@ -8,6 +8,7 @@ const reducer = (
   state: {
     reviewMode: boolean;
     isLoading: boolean;
+    waitModal: boolean;
     testData: TestData;
     submitData: SubmitData;
   },
@@ -24,6 +25,12 @@ const reducer = (
       return {
         ...state,
         reviewMode: payload,
+      };
+    }
+    case types.SET_WAIT_MODAL: {
+      return {
+        ...state,
+        waitModal: payload,
       };
     }
     case types.SET_TEST_DATA: {

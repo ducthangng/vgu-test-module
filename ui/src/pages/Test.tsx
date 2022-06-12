@@ -5,6 +5,7 @@ import LoadingOverlay from 'react-loading-overlay-ts';
 import TestHeader from '../components/test/TestHeader';
 import ListeningTest from '../components/test/ListeningTest';
 import ReadingTest from '../components/test/ReadingTest';
+import RetakeTestModal from '../components/test/RetakeTestModal';
 // interfaces
 import SectionAnswer from '../interfaces/test/SectionAnswer.interface';
 import SubmitData from '../interfaces/test/SubmitData.interface';
@@ -15,6 +16,7 @@ import { useTestContext } from '../context/test/TestContext';
 // fake data
 // import data from '../api/mockListeningData.json';
 import data from '../api/mockReadingData.json';
+import mockPreTestData from '../api/mockPreTestData.json';
 
 /* COMPONENT */
 export default function Test(props: { reviewMode: boolean }) {
@@ -26,6 +28,8 @@ export default function Test(props: { reviewMode: boolean }) {
     setReviewMode,
     isLoading,
     setIsLoading,
+    waitModal,
+    setWaitModal,
     testData,
     submitData,
     setTestData,
@@ -34,10 +38,12 @@ export default function Test(props: { reviewMode: boolean }) {
 
   // test data
   let totalTime: number | undefined = undefined;
+  const [isDone, setIsDone] = useState(true);
   const [timeLeft, setTimeLeft] = useState<string>('');
   const [intervalId, setIntervalId] = useState<number | undefined>(undefined);
   const [userAnswers, setUserAnswers] = useState<SectionAnswer[]>([]);
   const submitDataRef = useRef<SubmitData>();
+  const waitModalRef = useRef(waitModal);
 
   //fetch data function, currently it only sets mock data
   const fetchData = () => {
@@ -65,6 +71,8 @@ export default function Test(props: { reviewMode: boolean }) {
       id: data.id,
       sections: newSections,
     });
+    setIsDone(mockPreTestData.isDone);
+    setWaitModal(isDone);
     // somehow totalTime only works as a normal variable, rather than a state or context state
     totalTime = reviewMode ? 0 : 60;
   };
@@ -75,6 +83,10 @@ export default function Test(props: { reviewMode: boolean }) {
     setIsLoading(true);
   }, []);
 
+  useEffect(() => {
+    waitModalRef.current = waitModal;
+  }, [waitModal]);
+
   // update submitDataRef when submitData changes
   useEffect(() => {
     submitDataRef.current = submitData;
@@ -82,7 +94,7 @@ export default function Test(props: { reviewMode: boolean }) {
 
   //countdown function
   const countdown = () => {
-    if (totalTime == undefined || isLoading) {
+    if (totalTime == undefined || isLoading || waitModalRef.current) {
       return;
     }
 
@@ -151,6 +163,7 @@ export default function Test(props: { reviewMode: boolean }) {
               text="Your test is loading. Please be patient..."
             >
               <div>
+                {isDone && !reviewMode && <RetakeTestModal />}
                 <TestHeader timeLeft={timeLeft} handleSubmit={handleSubmit} />
                 {testData.type === 'listening' && (
                   <ListeningTest

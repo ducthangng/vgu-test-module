@@ -2,3 +2,4 @@ export const SET_TEST_DATA = 'SET_TEST_DATA';
 export const SET_SUBMIT_DATA = 'SET_SUBMIT_DATA';
 export const SET_IS_LOADING = 'SET_IS_LOADING';
 export const SET_REVIEW_MODE = 'SET_REVIEW_MODE';
+export const SET_WAIT_MODAL = 'SET_WAIT_MODAL';
