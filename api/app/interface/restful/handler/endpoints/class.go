@@ -106,7 +106,7 @@ func DeleteClass(c *gin.Context) {
 
 	ClassID := c.Query("class_id")
 	if ClassID == "" {
-		app.Response(http.StatusOK, 0, errors.New("No ClassId provided"))
+		app.Response(http.StatusOK, 0, errors.New("no classId provided"))
 		return
 	}
 

@@ -89,15 +89,15 @@ func (m *MockClassUseCaseMockRecorder) RemoveMemberFromClass(ctx context.Context
 	return m.mock.ctrl.RecordCallWithMethodType(m.mock, "RemoveMemberFromClass", reflect.TypeOf((*MockClassUseCase)(nil).RemoveMemberFromClass), ctx, classId, userId)
 }
 
-func (m *MockClassUseCase) QueryClassTestResult(ctx context.Context, testResults []usecase_dto.TestResult) (results []usecase_dto.TestResult, err error) {
-	ret := m.ctrl.Call(m, "QueryClassTestResult", ctx, testResults)
+func (m *MockClassUseCase) QueryClassTestResult(ctx context.Context, classId int, testId int) (results []usecase_dto.TestResult, err error) {
+	ret := m.ctrl.Call(m, "QueryClassTestResult", ctx, classId, testId)
 	ret0, _ := ret[0].([]usecase_dto.TestResult)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-func (m *MockClassUseCaseMockRecorder) QueryClassTestResult(ctx context.Context, testResults interface{}) *gomock.Call {
-	return m.mock.ctrl.RecordCallWithMethodType(m.mock, "QueryClassTestResult", reflect.TypeOf((*MockClassUseCase)(nil).QueryClassTestResult), ctx, testResults)
+func (m *MockClassUseCaseMockRecorder) QueryClassTestResult(ctx context.Context, classId interface{}, testId interface{}) *gomock.Call {
+	return m.mock.ctrl.RecordCallWithMethodType(m.mock, "QueryClassTestResult", reflect.TypeOf((*MockClassUseCase)(nil).QueryClassTestResult), ctx, classId, testId)
 }
 
 func (m *MockClassUseCase) GetClassTest(ctx context.Context, classId int, testName string) (tests []usecase_dto.Test, err error) {
