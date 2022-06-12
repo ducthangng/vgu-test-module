@@ -45,18 +45,7 @@ function TestInformation() {
         >
           Test Management
         </Divider>
-        <Table>
-          {defaultData.map((items) => {
-            return (
-              <TestTable
-                key={items.key}
-                nameTest={items.nameTest}
-                testId={items.testId}
-                testDate={items.testDate}
-              />
-            );
-          })}
-        </Table>
+        <Table></Table>
         <br></br>
         <Row justify="center">
           <Pagination

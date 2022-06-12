@@ -7,30 +7,6 @@ import { Pagination } from 'antd';
 // import Component from components
 import UserTable from '../components/UserTable';
 
-// create a default data for user table
-const defaultData = [
-  {
-    key: '1',
-    name: 'Hai',
-    Email: 'hai@gmail.com',
-    userId: 1,
-    action: 'action',
-  },
-  {
-    key: '2',
-    name: 'John',
-    Email: 'john@gmail.com',
-    userId: 2,
-    action: 'action',
-  },
-  {
-    key: '3',
-    name: 'John',
-    Email: 'john@gmail.com',
-    userId: 3,
-  },
-];
-
 function AdminManagement() {
   return (
     <div
@@ -45,20 +21,13 @@ function AdminManagement() {
         >
           User Management
         </Divider>
+        <UserTable
+          name={''}
+          Email={''}
+          userId={0}
+          action={undefined}
+        ></UserTable>
 
-        <Divider orientation="center">
-          {defaultData.map((items) => {
-            return (
-              <UserTable
-                key={items.key}
-                name={items.name}
-                Email={items.Email}
-                userId={items.userId}
-                action={items.action}
-              />
-            );
-          })}
-        </Divider>
         <br></br>
         <Row justify="center">
           <Pagination
