@@ -97,14 +97,14 @@ export default function MatchingHeadingSection(
                         ? submitData.sections[props.sectionIndex - 1].answers[
                             index
                           ] === question.correct_ans
-                          ? 'bg-green-500'
-                          : 'bg-red-500'
+                          ? 'bg-green-300'
+                          : 'bg-red-300'
                         : ''
                     }`}
                   >
                     <p className="col-span-3">
                       <span className="font-bold">
-                        Câu {props.section.startIndex + index}:
+                        Question {props.section.startIndex + index}:
                       </span>{' '}
                       {question.q}
                     </p>

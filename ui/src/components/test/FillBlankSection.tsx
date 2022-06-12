@@ -35,9 +35,9 @@ export default function FillBlankSection(props: FillBlankSectionProps) {
           inputList[i].setAttribute('disabled', '');
           // if correct, color green, otherwise red
           if (inputList[i].value == props.section.content[i].correct_ans) {
-            inputList[i].classList.add('bg-green-500');
+            inputList[i].classList.add('bg-green-300');
           } else {
-            inputList[i].classList.add('bg-red-500');
+            inputList[i].classList.add('bg-red-300');
           }
         }
       }

@@ -15,8 +15,8 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 // context
 import { useTestContext } from '../context/test/TestContext';
 // fake data
-// import data from '../api/mockListeningData.json';
-import data from '../api/mockReadingData.json';
+import data from '../api/mockListeningData.json';
+// import data from '../api/mockReadingData.json';
 import mockPreTestData from '../api/mockPreTestData.json';
 
 /* COMPONENT */

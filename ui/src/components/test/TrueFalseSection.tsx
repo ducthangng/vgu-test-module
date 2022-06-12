@@ -63,14 +63,14 @@ export default function TrueFalseSection(props: TrueFalseSectionProps) {
                     ? submitData.sections[props.sectionIndex - 1].answers[
                         index
                       ] == question.correct_ans
-                      ? 'bg-green-500'
-                      : 'bg-red-500'
+                      ? 'bg-green-300'
+                      : 'bg-red-300'
                     : 'bg-white'
                 }`}
               >
                 <p className="col-span-3 md:col-span-4">
                   <span className="font-bold">
-                    Câu {props.section.startIndex + index}:
+                    Question {props.section.startIndex + index}:
                   </span>{' '}
                   {question.q}
                 </p>
