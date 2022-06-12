@@ -29,18 +29,18 @@ func GetUserInfo(c *gin.Context) {
 	app := gctx.Gin{C: c}
 	ctx := context.Background()
 
-	data, err := api_dto.BindUserModel(c, true)
-	if err != nil {
-		app.Response(http.StatusInternalServerError, 0, err)
+	userID := c.Query("user_id")
+	if userID == "" {
+		app.Response(http.StatusOK, 0, e.ErrorInputInvalid)
 		return
 	}
 
-	var user_record usecase_dto.User
-	err = copier.Copy(&user_record, data)
+	ID, err := strconv.Atoi(userID)
 	if err != nil {
 		app.Response(http.StatusInternalServerError, 0, err)
 		return
 	}
+	user_record := usecase_dto.User{ID: ID}
 	access := registry.BuildUserAccessPoint(false, sqlconnection.DBConn)
 	user, err := access.Service.FindUser(ctx, user_record, true)
 	if err != nil {
