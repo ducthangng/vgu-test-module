@@ -26,16 +26,27 @@ func UserHandler(c *gin.RouterGroup) {
 }
 
 func GetUserInfo(c *gin.Context) {
+	var user_record usecase_dto.User
 	app := gctx.Gin{C: c}
 	ctx := context.Background()
 
 	username := c.Query("user_name")
-	if username == "" {
+	fullname := c.Query("fullname")
+	userId := c.Query("user_id")
+	if username == "" && fullname == "" && userId != "" {
 		app.Response(http.StatusOK, 0, e.ErrorInputInvalid)
 		return
 	}
 
-	user_record := usecase_dto.User{Username: username}
+	ID, err := strconv.Atoi(userId)
+	if err != nil {
+		app.Response(http.StatusInternalServerError, 0, err)
+		return
+	}
+
+	if username != "" || fullname != "" || ID != 0 {
+		user_record = usecase_dto.User{ID: ID, Username: username, FullName: fullname}
+	}
 	access := registry.BuildUserAccessPoint(false, sqlconnection.DBConn)
 	user, err := access.Service.FindUser(ctx, user_record, true)
 	if err != nil {
