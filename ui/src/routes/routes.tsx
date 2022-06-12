@@ -9,6 +9,7 @@ import ClassroomLayout from '../pages/Layout/ClassroomLayout';
 import TestCardPage from '../pages/TestSelection';
 import GroupSelection from '../pages/GroupSelection';
 import Test from '../pages/Test';
+import NotFound404 from '../pages/NotFound404';
 import MockTestSelection from '../pages/MockTestSelection';
 import { AdminEC, StudentEC } from '../utils/models/Guard';
 
@@ -100,6 +101,9 @@ export default function AppRoute() {
               </TestProvider>
             }
           />
+
+          {/* 404 Not Found */}
+          <Route path="*" element={<NotFound404 />} />
         </Routes>
       </CookiesProvider>
     </BrowserRouter>
