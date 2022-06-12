@@ -62,7 +62,7 @@ export default function TrueFalseSection(props: TrueFalseSectionProps) {
                   reviewMode
                     ? submitData.sections[props.sectionIndex - 1].answers[
                         index
-                      ] === question.correct_ans
+                      ] == question.correct_ans
                       ? 'bg-green-500'
                       : 'bg-red-500'
                     : 'bg-white'
@@ -85,9 +85,9 @@ export default function TrueFalseSection(props: TrueFalseSectionProps) {
                   className={`w-full text-center py-1`}
                   dropdownClassName="text-center"
                 >
-                  <Option value={1}>T</Option>
-                  <Option value={0}>F</Option>
-                  <Option value={2}>NG</Option>
+                  <Option value={'1'}>T</Option>
+                  <Option value={'0'}>F</Option>
+                  <Option value={'2'}>NG</Option>
                 </Select>
               </div>
             );

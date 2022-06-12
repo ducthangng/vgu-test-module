@@ -1,13 +1,14 @@
 import { Button, Modal } from 'antd';
 import React, { useState } from 'react';
-import { WarningOutlined } from '@ant-design/icons';
 // context
 import { useTestContext } from '../../context/test/TestContext';
+// mock data
+import mockAnswerData from '../../api/mockFilledAnswerData.json';
 
 export default function RetakeTestModal() {
   const [visible, setVisible] = useState(true);
 
-  const { waitModal, setWaitModal, setReviewMode } = useTestContext();
+  const { setWaitModal, setReviewMode, setSubmitData } = useTestContext();
 
   const handleRetake = () => {
     setWaitModal(false);
@@ -16,6 +17,7 @@ export default function RetakeTestModal() {
 
   const handleReview = () => {
     setReviewMode(true);
+    setSubmitData(mockAnswerData);
     setVisible(false);
   };
 
