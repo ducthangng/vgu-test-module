@@ -38,13 +38,14 @@ type (
 		Title       string    `db:"title"`
 		Content     string    `db:"content"`
 		Description string    `db:"description"`
-		Section     []Section `db:"section"`
+		Type        string    `db:"type"`
+		Section     []Section `db:"sections"`
 	}
 
 	Section struct {
 		StartIndex int              `json:"startIndex"`
 		EndIndex   int              `json:"endIndex"`
-		Media      SectionMedia     `json:"media"`
+		Media      []SectionMedia   `json:"media"`
 		Title      string           `json:"title"`
 		Type       string           `json:"type"`
 		Content    []SectionContent `json:"content"`
@@ -56,8 +57,9 @@ type (
 	SectionContent struct {
 		Q          string   `json:"q"`
 		A          []string `json:"a"`
-		CorrectAns string   `json:"correct_ans"`
-		ChosenAns  string   `json:"chosen_ans"`
+		CorrectAns string   `json:"correctAns"`
+		ChosenAns  string   `json:"chosenAns"`
+		// Explaination string   `json:"explaination"`
 	}
 
 	SectionMedia struct {

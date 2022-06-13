@@ -48,7 +48,7 @@ create table testresults (
 	UNIQUE KEY (test_class_id, user_id, datecreated)
 );
 
-create table testskill (
+create table skilltests (
 	id INT NOT NULL AUTO_INCREMENT,
 	media_url VARCHAR(200),
 	title VARCHAR(200) NOT NULL,
@@ -56,7 +56,7 @@ create table testskill (
 	description VARCHAR(200) NOT NULL,
 	section MEDIUMTEXT NOT NULL,
 	datecreated DATETIME NOT NULL,
-	dateupdated DATETIME NOT NULL,
+	dateupdated DATETIME,
 	PRIMARY KEY (id),
 	UNIQUE(title)
 );
@@ -75,7 +75,7 @@ create table skilltest_test (
 	stid INT NOT NULL,
 	PRIMARY KEY (tid, stid),
 	FOREIGN KEY (tid) REFERENCES testbank (id),
-	FOREIGN KEY (stid) REFERENCES testskill (id)
+	FOREIGN KEY (stid) REFERENCES skilltests (id)
 );
 
 insert into
