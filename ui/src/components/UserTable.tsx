@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
-import axios from 'axios';
-import { isEmpty } from 'lodash';
+import { useState } from 'react';
+//import { isEmpty } from 'lodash';
 
 //import library from antd
 import { Table, Button, Popconfirm } from 'antd';
-// import { RouterComponentProps } from "react-router";
+
+//import data from '..';
+//import data from '../api/UserData.json';
 
 // create interface for UserTable
 type Props = {
@@ -15,23 +17,25 @@ type Props = {
 };
 
 const UserTable: React.FC<Props> = () => {
-  const [gridData, setGridData] = React.useState([]);
-  const [loading, setLoading] = React.useState(false);
+  const [dataSource, setDataSource] = React.useState<any>([]);
 
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  const loadData = async () => {
-    setLoading(true);
-    const response = await axios.get('http://localhost:3000/users');
-    setGridData(response.data);
-    setLoading(false);
+  const fetchData = async () => {
+    const response = await fetch('http://localhost:8080/api/users');
+    const json = await response.json();
+    setDataSource(json);
   };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   //GOTO: Call to delete user information from database
-  const onDelete = (userId: number) => {
-    console.log('Delete Test:', userId);
+  const onDelete = (record: any) => {
+    setDataSource((pre: any) => {
+      return pre.filter(
+        (user: { userId: any }) => user.userId !== record.userId
+      );
+    });
   };
 
   //create title of columns in user table information
@@ -56,10 +60,10 @@ const UserTable: React.FC<Props> = () => {
       dataIndex: 'action',
       key: 'action',
       // Button to delete user information
-      render: (userId: number) => (
+      render: (record: any) => (
         <Popconfirm
           title=" You want to delete this user?"
-          onConfirm={() => onDelete(userId)}
+          onConfirm={() => onDelete(record)}
         >
           <Button type="primary" icon="DeleteOutlined">
             Delete
@@ -70,9 +74,9 @@ const UserTable: React.FC<Props> = () => {
   ];
 
   return (
-    <div style={{ padding: 24, background: '#fff', minHeight: '360' }}>
+    <div style={{ padding: 20, background: '#fff', minHeight: '360' }}>
       <span>
-        <Table columns={columns}></Table>
+        <Table columns={columns}> dataSource={dataSource}</Table>
       </span>
     </div>
   );

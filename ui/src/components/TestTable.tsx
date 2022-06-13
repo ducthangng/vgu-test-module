@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 
 //import library from antd
 import { Table, Button, Popconfirm } from 'antd';
@@ -7,9 +8,25 @@ import { Table, Button, Popconfirm } from 'antd';
 import { TestInformation } from '../utils/models/TestInformation';
 
 const TestTable: React.FC<TestInformation> = () => {
+  const [dataSource, setDataSource] = React.useState<any>([]);
+
+  const fetchData = async () => {
+    const response = await fetch('http://localhost:8080/api/users');
+    const json = await response.json();
+    setDataSource(json);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   //GOTO: Call to delete test information from database
-  const onDelete = (testId: number) => {
-    console.log('Delete Test:', testId);
+  const onDelete = (record: any) => {
+    setDataSource((pre: any) => {
+      return pre.filter(
+        (user: { userId: any }) => user.userId !== record.userId
+      );
+    });
   };
 
   //create title of columns in test table information
@@ -39,10 +56,10 @@ const TestTable: React.FC<TestInformation> = () => {
       dataIndex: 'action',
       key: 'action',
       // Button to delete test information
-      render: (testId: number) => (
+      render: (record: any) => (
         <Popconfirm
           title=" You want to delete this test?"
-          onConfirm={() => onDelete(testId)}
+          onConfirm={() => onDelete(record)}
         >
           <Button type="primary" icon="DeleteOutlined">
             Delete
@@ -53,9 +70,9 @@ const TestTable: React.FC<TestInformation> = () => {
   ];
 
   return (
-    <div style={{ padding: 24, background: '#fff', minHeight: '360' }}>
+    <div style={{ padding: 20, background: '#fff', minHeight: '360' }}>
       <span>
-        <Table columns={columns}></Table>
+        <Table columns={columns}> dataSource={dataSource}</Table>
       </span>
     </div>
   );

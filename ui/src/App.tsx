@@ -8,6 +8,7 @@ import { TestProvider } from './context/test/TestContext';
 import MockTestSelection from './pages/MockTestSelection';
 import TestCardPage from './pages/TestSelection';
 import AppRoutes from './routes/routes';
+import UserManagement from './pages/UserManagement';
 
 function App() {
   return (
