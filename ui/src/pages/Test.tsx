@@ -8,8 +8,8 @@ import ReadingTest from '../components/test/ReadingTest';
 import RetakeTestModal from '../components/test/RetakeTestModal';
 import ResultModal from '../components/test/ResultModal';
 // interfaces
-import SectionAnswer from '../interfaces/test/SectionAnswer.interface';
-import SubmitData from '../interfaces/test/SubmitData.interface';
+import SectionAnswer from '../models/test/SectionAnswer.interface';
+import SubmitData from '../models/test/SubmitData.interface';
 // routing
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 // context

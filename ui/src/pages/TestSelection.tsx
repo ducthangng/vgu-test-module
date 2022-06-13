@@ -3,7 +3,7 @@ import TestCard from '../components/TestCard';
 import { Row, Divider } from 'antd';
 
 import { Pagination } from 'antd';
-import { TestCardData } from '../utils/models/TestCardData';
+import { TestCardData } from '../models/TestCardData';
 
 const defaultData: TestCardData[] = [
   {

@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { useTestContext } from '../../context/test/TestContext';
-import Section from '../../interfaces/test/Section.interface';
+import Section from '../../models/test/Section.interface';
 
 interface FillBlankSectionProps {
   sectionIndex: number;
@@ -89,6 +89,7 @@ export default function FillBlankSection(props: FillBlankSectionProps) {
           ))}
       </div>
       <div
+        className="whitespace-pre-line"
         onInput={handleInput}
         ref={htmlContentRef}
         dangerouslySetInnerHTML={{ __html: props.section.content[0].q }}

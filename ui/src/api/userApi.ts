@@ -2,12 +2,12 @@ import { AppError } from '../models/Error';
 import { User } from '../models/User';
 
 const BASE_API = process.env.REACT_APP_BASE_API || 'http://localhost:8080';
-const apiUrl = `${BASE_API}`;
+const apiUrl = `${BASE_API}/api/v1/`;
 
 /**
  * functions that related to authentication/authorization.
  */
-export const authApi = {
+export const userApi = {
   /**
    * Login Function.
    *
@@ -16,19 +16,17 @@ export const authApi = {
    *
    * @returns userIndentity when success & Error otherwise.
    */
-  login: async (parameter: { username: string; password: string }) => {
-    const payload = {
-      username: parameter.username,
-      password: parameter.password,
-    };
-
+  getInfo: async (parameter: {
+    fullname?: string;
+    username?: string;
+    id?: number;
+  }) => {
     const response = await fetch(`${apiUrl}/login`, {
-      method: 'POST',
+      method: 'GET',
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(payload),
     })
       .then((res) => {
         if (res.ok) {

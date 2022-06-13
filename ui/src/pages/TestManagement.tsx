@@ -6,7 +6,7 @@ import { Pagination } from 'antd';
 
 //import Component from components
 import TestTable from '../components/TestTable';
-import { TestInformation } from '../utils/models/TestInformation';
+import { TestInformation } from '../models/TestInformation';
 
 // Language: typescript
 // Path: ui\src\pages\TestManagement.tsx

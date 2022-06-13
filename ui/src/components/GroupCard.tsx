@@ -1,7 +1,7 @@
 import { Card, Form, Button } from 'antd';
 import React from 'react';
 import styles from '../assets/css/GroupCard.module.css';
-import { GroupCardData } from '../utils/models/GroupCardData';
+import { GroupCardData } from '../models/GroupCardData';
 const { Meta } = Card;
 
 const GroupCard: React.FC<GroupCardData> = ({ title, description }) => {
