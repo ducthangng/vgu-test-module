@@ -85,7 +85,7 @@ export default function AppRoute() {
           {/* test routes */}
           <Route path="test">
             <Route
-              path=":testId/*"
+              path="do/*"
               element={
                 <TestProvider>
                   <Test reviewMode={false} />
