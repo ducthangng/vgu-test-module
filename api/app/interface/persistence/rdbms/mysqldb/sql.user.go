@@ -23,7 +23,12 @@ var (
 
 func insertUser(q *Querier, ctx context.Context, user entity.User) (int, error) {
 	date := conversion.ConvertUnixTimeMySqlTime(time.Now().Unix())
-	birthday := conversion.ConvertUnixTimeMySqlTime(user.Dob)
+	birthday := ""
+	if user.Dob != 0 {
+		birthday = conversion.ConvertUnixTimeMySqlTime(user.Dob)
+	} else {
+		birthday = conversion.ConvertUnixTimeMySqlTime(time.Now().Unix())
+	}
 
 	results, err := q.DB.ExecContext(ctx, sql_insert, user.FullName, user.Username, user.Password, user.Gender, user.Address, user.Mail, user.Phone, birthday, user.Qualification, user.EntityCode, 1, date)
 	if err != nil {

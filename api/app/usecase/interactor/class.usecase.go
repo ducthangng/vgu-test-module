@@ -107,9 +107,19 @@ func (c *ClassUsecase) QueryClassMembers(ctx context.Context, classId int) (user
 	if err != nil {
 		return nil, err
 	}
+
 	for _, record_id := range records_id {
 		var user usecase_dto.User
-		err = copier.Copy(&user, &record_id)
+		userDB, err := c.ClassRepository.QueryUser(ctx, "", "", record_id, 2, false)
+		if err != nil {
+			return nil, err
+		}
+
+		if len(userDB) == 0 {
+			continue
+		}
+
+		err = copier.Copy(&user, &userDB[0])
 		if err != nil {
 			return nil, err
 		}
@@ -120,11 +130,27 @@ func (c *ClassUsecase) QueryClassMembers(ctx context.Context, classId int) (user
 }
 
 func (c *ClassUsecase) AddMember2Class(ctx context.Context, classId int, userId int) (err error) {
-	err = c.ClassRepository.AddUserClass(ctx, classId, userId)
+	existed, err := c.ClassRepository.CheckExistedUserClass(ctx, userId, classId)
 	if err != nil {
 		return err
 	}
-	return nil
+
+	switch existed {
+	case true:
+		err = c.ClassRepository.UnarchieveUserClass(ctx, userId, classId)
+		if err != nil {
+			return err
+		}
+
+		return
+	default:
+		err = c.ClassRepository.AddUserClass(ctx, classId, userId)
+		if err != nil {
+			return err
+		}
+
+		return
+	}
 }
 
 func (c *ClassUsecase) RemoveMemberFromClass(ctx context.Context, classId int, userId int) (err error) {

@@ -7,6 +7,7 @@ import (
 	"server/app/interface/persistence/rdbms/sqlconnection"
 	"server/app/interface/restful/handler/api_dto"
 	"server/app/interface/restful/handler/gctx"
+	"server/app/interface/restful/handler/middleware"
 	"server/app/registry"
 	"server/app/usecase/usecase_dto"
 	"server/utils/e"
@@ -20,8 +21,6 @@ func UserHandler(c *gin.RouterGroup) {
 	c.GET("/", GetUserInfo)
 	c.GET("/class", GetUserClass)
 	c.GET("/test_result", ReviewTestResult)
-
-	c.POST("/register", CreateUser)
 
 	c.PUT("/", UpdateUser)
 }
@@ -140,7 +139,7 @@ func UpdateUser(c *gin.Context) {
 		return
 	}
 
-	app.Response(http.StatusOK, nil, nil)
+	app.Response(http.StatusOK, 1, nil)
 }
 
 func CreateUser(c *gin.Context) {
@@ -159,6 +158,15 @@ func CreateUser(c *gin.Context) {
 		app.Response(http.StatusInternalServerError, 0, err)
 		return
 	}
+
+	password, err := middleware.HashPassword(user_record.Password)
+	if err != nil {
+		app.Response(http.StatusInternalServerError, 0, err)
+		return
+	}
+
+	user_record.Password = password
+	user_record.EntityCode = 2
 
 	access := registry.BuildUserAccessPoint(false, sqlconnection.DBConn)
 	IDs, err := access.Service.CreateUser(ctx, user_record)

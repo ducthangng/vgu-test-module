@@ -31,6 +31,7 @@ func Routing() *gin.Engine {
 	r.Use(middleware.Tracer())
 
 	r.POST("/api/login", endpoints.Login)
+	r.POST("/api/register", endpoints.CreateUser)
 	r.POST("/api/logout", middleware.ValidateToken(), endpoints.Logout)
 
 	v1 := r.Group("/api/v1")

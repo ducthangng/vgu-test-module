@@ -117,7 +117,7 @@ func (q *Querier) ArchiveClass(ctx context.Context, ID int) error {
 
 // ArchiveClass changes the active status to 0.
 func (q *Querier) DeleteClass(ctx context.Context, ID int) error {
-	_, err := q.DB.ExecContext(ctx, "DELETE FROM classes where id = ?", ID)
+	_, err := q.DB.ExecContext(ctx, "UPDATE classes SET active = ? where id = ?", 0, ID)
 	if err != nil {
 		return err
 	}

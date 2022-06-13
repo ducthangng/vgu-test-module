@@ -21,3 +21,12 @@ create table users (
 	PRIMARY KEY (id),
 	CONSTRAINT valid_role_check CHECK (entity_code IN (1, 2, 3, 4))
 );
+
+create table user_class (
+	uid INT NOT NULL,
+	cid INT NOT NULL,
+	active TINYINT NOT NULL,
+	FOREIGN KEY (cid) REFERENCES classes (id),
+	FOREIGN KEY (uid) REFERENCES users (id),
+	PRIMARY KEY (uid, cid)
+);
