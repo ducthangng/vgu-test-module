@@ -65,7 +65,7 @@ export default function ListeningTest(props: ListeningTestProps) {
     <>
       <div style={{ padding: 30, backgroundColor: '#E5E5E5' }}>
         <div className="flex content-center place-content-center">
-          <div className="p-5 md:p-10 rounded-lg w-full md:px-50 bg-white overflow-hidden shadow-lg">
+          <div className="p-5 md:p-10 rounded-lg w-full lg:w-1/2 md:px-50 bg-white overflow-hidden shadow-lg">
             <Form form={form} layout="vertical" autoComplete="off">
               {sectionComponent}
             </Form>

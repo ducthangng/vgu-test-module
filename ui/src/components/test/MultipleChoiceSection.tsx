@@ -56,50 +56,47 @@ export default function MultipleChoiceSection(
 
       {props.section.content &&
         props.section.content.map((question, questionIndex) => (
-          <Form.Item
-            key={props.section.startIndex + questionIndex}
-            label={
-              <h3 className="font-bold">
-                Câu {props.section.startIndex + questionIndex}: {question.q}
-              </h3>
-            }
+          <div
+            className={`${
+              reviewMode &&
+              (submitData.sections[props.sectionIndex - 1].answers[
+                questionIndex
+              ] === question.correct_ans
+                ? 'bg-green-300'
+                : 'bg-red-300')
+            } p-3 my-3`}
           >
-            <Radio.Group
-              style={{ paddingLeft: 15 }}
-              name={`${questionIndex}`}
-              onChange={handleChange}
-              disabled={reviewMode}
-              value={
-                submitData.sections[props.sectionIndex - 1].answers[
-                  questionIndex
-                ]
+            <Form.Item
+              key={props.section.startIndex + questionIndex}
+              label={
+                <h3 className="font-bold">
+                  Question {props.section.startIndex + questionIndex}:{' '}
+                  {question.q}
+                </h3>
               }
             >
-              <Space direction="vertical">
-                {question.a &&
-                  question.a.map((choice, answerIndex) => (
-                    <Radio
-                      value={answerIndex + 1}
-                      className={`${
-                        reviewMode &&
-                        (answerIndex + 1).toString() ==
-                          submitData.sections[props.sectionIndex - 1].answers[
-                            questionIndex
-                          ]
-                          ? submitData.sections[props.sectionIndex - 1].answers[
-                              questionIndex
-                            ] === question.correct_ans
-                            ? 'bg-green-500'
-                            : 'bg-red-500'
-                          : ''
-                      }`}
-                    >
-                      {choice}
-                    </Radio>
-                  ))}
-              </Space>
-            </Radio.Group>
-          </Form.Item>
+              <Radio.Group
+                style={{ paddingLeft: 15 }}
+                name={`${questionIndex}`}
+                onChange={handleChange}
+                disabled={reviewMode}
+                value={
+                  submitData.sections[props.sectionIndex - 1].answers[
+                    questionIndex
+                  ]
+                }
+              >
+                <Space direction="vertical">
+                  {question.a &&
+                    question.a.map((choice, answerIndex) => (
+                      <Radio value={(answerIndex + 1).toString()}>
+                        {choice}
+                      </Radio>
+                    ))}
+                </Space>
+              </Radio.Group>
+            </Form.Item>
+          </div>
         ))}
 
       {reviewMode && (
