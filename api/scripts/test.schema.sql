@@ -87,3 +87,8 @@ insert into skill_test values (1, 3);
 insert into skill_test values (1, 4);
 insert into skill_test values (1, 5);
 
+insert into testbank values (1, 1, 'test1', 1, 1, 'test1', 'test1', 0, '2015-01-01', '2015-01-01', 1, '2015-01-01', '2015-01-01');
+insert into testbank values (2, 1, 'test2', 1, 1, 'test2', 'test2', 0, '2015-01-01', '2015-01-01', 1, '2015-01-01', '2015-01-01');
+insert into testbank values (3, 1, 'test3', 1, 1, 'test3', 'test3', 0, '2015-01-01', '2015-01-01', 1, '2015-01-01', '2015-01-01');
+insert into testbank values (4, 1, 'test4', 1, 1, 'test4', 'test4', 0, '2015-01-01', '2015-01-01', 1, '2015-01-01', '2015-01-01');
+insert into testbank values (5, 1, 'test5', 1, 1, 'test5', 'test5', 0, '2015-01-01', '2015-01-01', 1, '2015-01-01', '2015-01-01');
