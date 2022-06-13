@@ -30,13 +30,14 @@ func Routing() *gin.Engine {
 	r.Use(middleware.RateLimit(2, 5))
 	r.Use(middleware.Tracer())
 
-	r.POST(`/api/login`, endpoints.Login)
+	r.POST("/api/login", endpoints.Login)
 	r.POST("/api/logout", middleware.ValidateToken(), endpoints.Logout)
 	r.GET("/api/validateRole", middleware.ValidateToken(), endpoints.ValidateRole)
 
 	v1 := r.Group("/api/v1")
 
 	v1.Use(middleware.ValidateToken())
+
 	v1.GET("/ID", endpoints.GetID)
 	endpoints.UserHandler(v1.Group("/user"))
 	endpoints.TestHandler(v1.Group("/test"))
