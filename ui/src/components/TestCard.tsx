@@ -3,7 +3,7 @@ import React from 'react';
 import test from '../assets/images/pexels-photo-1036644.png';
 import mail from '../assets/images/ic_contact_mail_24px.png';
 import calendar from '../assets/images/ic_event_available_24px.png';
-import { TestCardData } from '../utils/models/TestCardData';
+import { TestCardData } from '../models/TestCardData';
 import styles from '../assets/css/TestCard.module.css';
 
 // TODO: CSS need to be changed to /src/assets/css.

@@ -1,5 +1,5 @@
-import { AppError } from '../utils/models/Error';
-import { User } from '../utils/models/User';
+import { AppError } from '../models/Error';
+import { User } from '../models/User';
 
 const BASE_API = process.env.REACT_APP_BASE_API || 'http://localhost:8080';
 const apiUrl = `${BASE_API}`;
