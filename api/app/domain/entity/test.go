@@ -33,13 +33,14 @@ type (
 		Title       string    `db:"title"`
 		Content     string    `db:"content"`
 		Description string    `db:"description"`
-		Sections    []Section `db:"sections"`
+		Type        string    `db:"type"`
+		Section     []Section `db:"sections"`
 	}
 
 	Section struct {
 		StartIndex int              `json:"startIndex"`
 		EndIndex   int              `json:"endIndex"`
-		Media      SectionMedia     `json:"media"`
+		Media      []SectionMedia   `json:"media"`
 		Title      string           `json:"title"`
 		Type       string           `json:"type"`
 		Content    []SectionContent `json:"content"`

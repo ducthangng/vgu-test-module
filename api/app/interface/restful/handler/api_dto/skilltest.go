@@ -14,15 +14,15 @@ type (
 		Content     string    `json:"content"`
 		Description string    `json:"description"`
 		Type        string    `json:"type"`
-		Sections    []Section `json:"sections"`
+		Section     []Section `json:"sections"`
 	}
 
 	Content struct {
-		Q            string   `json:"q"`
-		A            []string `json:"a"`
-		CorrectAns   string   `json:"correctAns"`
-		ChosenAns    string   `json:"chosenAns"`
-		Explaination string   `json:"explaination"`
+		Q          string   `json:"q"`
+		A          []string `json:"a"`
+		CorrectAns string   `json:"correctAns"`
+		ChosenAns  string   `json:"chosenAns"`
+		// Explaination string   `json:"explaination"`
 	}
 
 	Media struct {

@@ -4,13 +4,14 @@ import (
 	"context"
 	"database/sql"
 	"encoding/json"
+	"log"
 	"server/app/domain/entity"
 	"server/utils/conversion"
 	"time"
 )
 
 func (q *Querier) CreateSkillTest(ctx context.Context, st entity.SkillTest) (id int, err error) {
-	stmt, err := q.DB.PrepareContext(ctx, "INSERT skill_tests SET media_url = ?, title = ?, content = ?, description = ?, sections = ?, datecreated = ?")
+	stmt, err := q.DB.PrepareContext(ctx, "INSERT skill_tests SET media_url = ?, title = ?, content = ?, description = ?, type = ?, sections = ?, datecreated = ?")
 	if err != nil {
 		return 0, err
 	}
@@ -21,7 +22,7 @@ func (q *Querier) CreateSkillTest(ctx context.Context, st entity.SkillTest) (id 
 		return 0, err
 	}
 
-	result, err := stmt.ExecContext(ctx, st.MediaURL, st.Title, st.Content, st.Description, string(byteRes), date)
+	result, err := stmt.ExecContext(ctx, st.MediaURL, st.Title, st.Content, st.Description, st.Type, (byteRes), date)
 	if err != nil {
 		return 0, err
 	}
@@ -40,13 +41,15 @@ func (q *Querier) QuerySkillTest(ctx context.Context, id int) (st entity.SkillTe
 	var created, jsonSection string
 	var update sql.NullString
 	err = q.DB.QueryRowContext(ctx, "SELECT * FROM skilltests WHERE id = ?", id).
-		Scan(&st.Id, &st.MediaURL, &st.Title, &st.Content,
-			&st.Description, &jsonSection, &created, &update)
+		Scan(&st.Id, &st.MediaURL, &st.Title, &st.Content, &st.Description, &jsonSection, &created, &update)
 	if err != nil {
 		return st, err
 	}
 
-	if err = json.Unmarshal([]byte(jsonSection), &st.Sections); err != nil {
+	log.Printf("%s", jsonSection)
+
+	if err = json.Unmarshal([]byte(jsonSection), &st.Section); err != nil {
+		// panic(err)
 		return st, err
 	}
 
@@ -54,7 +57,7 @@ func (q *Querier) QuerySkillTest(ctx context.Context, id int) (st entity.SkillTe
 }
 
 func (q *Querier) UpdateSkillTest(ctx context.Context, st entity.SkillTest) (err error) {
-	stmt, err := q.DB.PrepareContext(ctx, "INSERT skill_tests SET media_url = ?, title = ?, content = ?, description = ?, sections = ?, dateupdated = ?")
+	stmt, err := q.DB.PrepareContext(ctx, "INSERT skill_tests SET media_url = ?, title = ?, content = ?, description = ?, type = ?, sections = ?, dateupdated = ?")
 	if err != nil {
 		return err
 	}
@@ -65,7 +68,7 @@ func (q *Querier) UpdateSkillTest(ctx context.Context, st entity.SkillTest) (err
 		return err
 	}
 
-	_, err = stmt.ExecContext(ctx, st.MediaURL, st.Title, st.Content, st.Description, string(byteRes), date)
+	_, err = stmt.ExecContext(ctx, st.MediaURL, st.Title, st.Content, st.Description, st.Type, (byteRes), date)
 	if err != nil {
 		return err
 	}

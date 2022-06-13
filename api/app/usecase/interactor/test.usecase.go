@@ -3,6 +3,7 @@ package interactor
 import (
 	"context"
 	"fmt"
+	"log"
 	"server/app/domain/entity"
 	"server/app/domain/repository"
 	"server/app/usecase/usecase_dto"
@@ -27,9 +28,15 @@ func (t *TestUsecase) QueryTestInfo(ctx context.Context, testId int) (test useca
 		return
 	}
 
-	if err := copier.Copy(&test, record); err != nil {
+	if len(record) == 0 {
+		return
+	}
+
+	if err := copier.Copy(&test, &record[0]); err != nil {
 		return test, err
 	}
+
+	log.Println(test)
 
 	return
 }
@@ -64,14 +71,14 @@ func (t *TestUsecase) SubmitTest(ctx context.Context, data usecase_dto.SubmitDat
 		return testResultId, err
 	}
 
-	if len(data.Sections) != len(sk.Sections) {
+	if len(data.Sections) != len(sk.Section) {
 		return testResultId, fmt.Errorf("The number of sections is not equal")
 
 	}
 
 	correctAns := 0
 	totalAns := 0
-	for i, section := range sk.Sections {
+	for i, section := range sk.Section {
 		// @1. Compare result to the database answer to produce the test result.
 		// @2. Save-up user's answer.
 		if len(section.Content) != len(data.Sections[i].Answers) {
