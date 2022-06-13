@@ -81,6 +81,38 @@ func (q *Querier) QueryClassOfUser(ctx context.Context, UserID int) ([]int, erro
 	return result, nil
 }
 
+func (q *Querier) CheckExistedUserClass(ctx context.Context, UserID int, ClassID int) (existed bool, err error) {
+	active := -1
+	err = q.DB.QueryRowContext(ctx, "SELECT active FROM user_class WHERE uid = ? and cid = ?", UserID, ClassID).Scan(&active)
+	if err == sql.ErrNoRows {
+		return false, nil
+	}
+
+	if err != nil {
+		return false, err
+	}
+
+	if active == 0 {
+		return true, nil
+	}
+
+	return false, nil
+}
+
+func (q *Querier) UnarchieveUserClass(ctx context.Context, UserID int, ClassID int) (err error) {
+	stmt, err := q.DB.PrepareContext(ctx, "UPDATE user_class SET active = ? WHERE uid = ? AND cid = ?")
+	if err != nil {
+		return err
+	}
+
+	_, err = stmt.ExecContext(ctx, 1, UserID, ClassID)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // DeleteStudentClass delete a sid-cid pair in the db, which means the student is not in the class from now.
 func (q *Querier) DeleteUserClass(ctx context.Context, ClassID int, StudentID int) error {
 	stmt, err := q.DB.PrepareContext(ctx, "UPDATE user_class SET active = ? WHERE uid = ? AND cid = ?")

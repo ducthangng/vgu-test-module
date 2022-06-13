@@ -1,15 +1,19 @@
 import React from 'react';
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { GuardEC } from '../utils/models/Guard';
+import { GuardEC } from '../models/Guard';
 import Guard from '../guards/AuthGuard';
 import { CookiesProvider } from 'react-cookie';
 import UserLayout from '../pages/Layout/UserLayout';
 import ClassroomLayout from '../pages/Layout/ClassroomLayout';
 import TestCardPage from '../pages/TestSelection';
 import GroupSelection from '../pages/GroupSelection';
+import Test from '../pages/Test';
+import NotFound404 from '../pages/NotFound404';
 import MockTestSelection from '../pages/MockTestSelection';
-import { AdminEC, StudentEC } from '../utils/models/Guard';
+import { AdminEC, StudentEC } from '../models/Guard';
+
+import { TestProvider } from '../context/test/TestContext';
 
 export default function AppRoute() {
   const AdminGuard: GuardEC = {
@@ -47,6 +51,7 @@ export default function AppRoute() {
 
                 <Route path="*" element={<Navigate to="" replace />} />
               </Route>
+
               {/* <Route path="account/*" element={<Account />} /> */}
             </Route>
 
@@ -77,8 +82,20 @@ export default function AppRoute() {
             </Route>
           </Route>
 
-          {/* not found */}
-          {/* <Route path="*" element={<NotFound />} /> */}
+          {/* test routes */}
+          <Route path="test">
+            <Route
+              path="do/*"
+              element={
+                <TestProvider>
+                  <Test reviewMode={false} />
+                </TestProvider>
+              }
+            />
+          </Route>
+
+          {/* 404 Not Found */}
+          <Route path="*" element={<NotFound404 />} />
         </Routes>
       </CookiesProvider>
     </BrowserRouter>

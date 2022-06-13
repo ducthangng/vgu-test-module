@@ -1,0 +1,144 @@
+package endpoints
+
+import (
+	"context"
+	"errors"
+	"net/http"
+	"server/app/interface/persistence/rdbms/sqlconnection"
+	"server/app/interface/restful/handler/api_dto"
+	"server/app/interface/restful/handler/gctx"
+	"server/app/registry"
+	"server/app/usecase/usecase_dto"
+	"strconv"
+
+	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/copier"
+)
+
+func TestHandler(c *gin.RouterGroup) {
+	c.GET("/", GetTestInfo)
+	c.GET("/result", GetTestResult)
+	c.GET("/do", DoTest)
+
+	c.POST("/submit", SubmitTest)
+}
+
+// Returns the title,
+func GetTestInfo(c *gin.Context) {
+	ctx := context.Background()
+	app := gctx.Gin{C: c}
+
+	testID := c.Query("test_id")
+	if len(testID) == 0 {
+		app.Response(http.StatusInternalServerError, nil, errors.New("test_id is required, but empty."))
+		return
+	}
+
+	ID, err := strconv.Atoi(testID)
+	if err != nil {
+		app.Response(http.StatusInternalServerError, nil, err)
+		return
+	}
+
+	access := registry.BuildTestAccessPoint(false, sqlconnection.DBConn)
+	test, err := access.Service.QueryTestInfo(ctx, ID)
+	if err != nil {
+		app.Response(http.StatusInternalServerError, nil, err)
+		return
+	}
+
+	app.Response(http.StatusOK, test, nil)
+
+}
+
+func GetTestResult(c *gin.Context) {
+	ctx := context.Background()
+	app := gctx.Gin{C: c}
+
+	testResultID := c.Query("test_result_id")
+	if len(testResultID) == 0 {
+		app.Response(http.StatusInternalServerError, nil, errors.New("test_result_id is required, but empty."))
+		return
+	}
+
+	ID, err := strconv.Atoi(testResultID)
+	if err != nil {
+		app.Response(http.StatusInternalServerError, nil, err)
+		return
+	}
+
+	access := registry.BuildTestResultAccessPoint(false, sqlconnection.DBConn)
+	test, err := access.Service.GetUserTestResults(ctx, ID)
+	if err != nil {
+		app.Response(http.StatusInternalServerError, nil, err)
+		return
+	}
+
+	app.Response(http.StatusOK, test, nil)
+}
+
+func DoTest(c *gin.Context) {
+	app := gctx.Gin{C: c}
+
+	testId := c.Query("test_id")
+	if len(testId) == 0 {
+		app.Response(http.StatusInternalServerError, nil, errors.New("test_id is required, but empty."))
+		return
+	}
+
+	ID, err := strconv.Atoi(testId)
+	if err != nil {
+		app.Response(http.StatusInternalServerError, 0, err)
+		return
+	}
+
+	access := registry.BuildTestAccessPoint(false, sqlconnection.DBConn)
+	test, err := access.Service.QuerySkillTest(context.Background(), ID)
+	if err != nil {
+		app.Response(http.StatusInternalServerError, nil, err)
+		return
+	}
+
+	app.Response(http.StatusOK, test, nil)
+}
+
+func SubmitTest(c *gin.Context) {
+	ctx := context.Background()
+	app := gctx.Gin{C: c}
+
+	data, err := api_dto.BindSubmitData(c)
+	if err != nil {
+		app.Response(http.StatusInternalServerError, nil, err)
+		return
+	}
+
+	var submitTest usecase_dto.SubmitData
+	if err := copier.Copy(&submitTest, &data); err != nil {
+		app.Response(http.StatusInternalServerError, nil, err)
+		return
+	}
+
+	ID := c.GetInt("ID")
+	EntityCode := c.GetInt("ID")
+
+	TestClassID := c.Query("test_class_id")
+	if len(TestClassID) == 0 {
+		app.Response(http.StatusInternalServerError, nil, errors.New("test_class_id is required, but empty."))
+		return
+	}
+
+	TCID, err := strconv.Atoi(TestClassID)
+	if err != nil {
+		app.Response(http.StatusInternalServerError, nil, err)
+		return
+	}
+
+	access := registry.BuildTestAccessPoint(false, sqlconnection.DBConn)
+	resultID, err := access.Service.SubmitTest(ctx, submitTest, ID, EntityCode, TCID)
+	if err != nil {
+		app.Response(http.StatusInternalServerError, nil, err)
+		return
+	}
+
+	app.Response(http.StatusOK, resultID, nil)
+}

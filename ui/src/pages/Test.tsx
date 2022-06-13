@@ -1,33 +1,55 @@
+/* IMPORTS */
 import React, { useEffect, useState, useRef } from 'react';
+// components
+import LoadingOverlay from 'react-loading-overlay-ts';
 import TestHeader from '../components/test/TestHeader';
 import ListeningTest from '../components/test/ListeningTest';
 import ReadingTest from '../components/test/ReadingTest';
-import SectionAnswer from '../interfaces/test/SectionAnswer.interface';
-import SubmitData from '../interfaces/test/SubmitData.interface';
-
-import { Routes, Route } from 'react-router-dom';
-
+import RetakeTestModal from '../components/test/RetakeTestModal';
+import ResultModal from '../components/test/ResultModal';
+// interfaces
+import SectionAnswer from '../models/test/SectionAnswer.interface';
+import SubmitData from '../models/test/SubmitData.interface';
+// routing
+import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
+// context
 import { useTestContext } from '../context/test/TestContext';
-
 // fake data
-// import data from '../api/mockListeningData.json';
-import data from '../api/mockReadingData.json';
+import data from '../api/mockListeningData.json';
+// import data from '../api/mockReadingData.json';
+import mockPreTestData from '../api/mockPreTestData.json';
 
-export default function Test() {
+/* COMPONENT */
+export default function Test(props: { reviewMode: boolean }) {
+  // routing
+  const navigate = useNavigate();
   // context
-  const { testData, submitData, setTestData, setSubmitData } = useTestContext();
+  const {
+    reviewMode,
+    setReviewMode,
+    isLoading,
+    setIsLoading,
+    waitModal,
+    setWaitModal,
+    testData,
+    submitData,
+    setTestData,
+    setSubmitData,
+  } = useTestContext();
 
   // test data
   let totalTime: number | undefined = undefined;
+  const [submitted, setSubmitted] = useState(false);
+  const [isDone, setIsDone] = useState(true);
   const [timeLeft, setTimeLeft] = useState<string>('');
   const [intervalId, setIntervalId] = useState<number | undefined>(undefined);
   const [userAnswers, setUserAnswers] = useState<SectionAnswer[]>([]);
   const submitDataRef = useRef<SubmitData>();
+  const waitModalRef = useRef(waitModal);
 
   //fetch data function, currently it only sets mock data
   const fetchData = () => {
     let newTestData = {
-      totalTime: 10,
       mediaURL: data.mediaURL,
       title: data.title,
       content: data.content,
@@ -39,8 +61,8 @@ export default function Test() {
     let newSections = [];
     for (let i = 0; i < data.sections.length; i++) {
       let newSection = {
-        start_index: data.sections[i]?.start_index,
-        end_index: data.sections[i]?.end_index,
+        startIndex: data.sections[i]?.startIndex,
+        endIndex: data.sections[i]?.endIndex,
         answers: [],
       };
       newSections.push(newSection);
@@ -51,13 +73,22 @@ export default function Test() {
       id: data.id,
       sections: newSections,
     });
+    setIsDone(mockPreTestData.isDone);
+    setWaitModal(isDone);
     // somehow totalTime only works as a normal variable, rather than a state or context state
-    totalTime = 10;
+    totalTime = reviewMode ? 0 : 60;
   };
 
   useEffect(() => {
+    setReviewMode(props.reviewMode);
     fetchData();
+    setIsLoading(true);
   }, []);
+
+  // update waitModalRef when waitModal changes
+  useEffect(() => {
+    waitModalRef.current = waitModal;
+  }, [waitModal]);
 
   // update submitDataRef when submitData changes
   useEffect(() => {
@@ -66,7 +97,7 @@ export default function Test() {
 
   //countdown function
   const countdown = () => {
-    if (totalTime == undefined) {
+    if (totalTime == undefined || isLoading || waitModalRef.current) {
       return;
     }
 
@@ -95,22 +126,28 @@ export default function Test() {
       }, 1000)
     );
     return () => clearInterval(intervalId);
-  }, [timeLeft, totalTime]);
+  }, [isLoading, timeLeft, totalTime]);
 
   //submit test function
-  const handleSubmit = (event?: React.MouseEvent<HTMLElement>) => {
-    event?.preventDefault();
-    console.log('submit!');
-    console.log(submitDataRef.current);
-  };
+  const handleSubmit = reviewMode
+    ? (event?: React.MouseEvent<HTMLElement>) => {}
+    : (event?: React.MouseEvent<HTMLElement>) => {
+        event?.preventDefault();
+        setIsLoading(false);
+        console.log('submit!');
+        console.log(submitDataRef.current);
+        // send submitted data to server here, instead of just console log
+        setSubmitted(true);
+        setWaitModal(true);
+      };
 
   // intialize userAnswer
   useEffect(() => {
     let newUserAnswers = [...userAnswers];
     testData.sections.forEach((section) => {
       let newAnswerSection: SectionAnswer = {
-        start_index: section.start_index,
-        end_index: section.end_index,
+        startIndex: section.startIndex,
+        endIndex: section.endIndex,
         answers: [],
       };
       newUserAnswers.push(newAnswerSection);
@@ -121,27 +158,36 @@ export default function Test() {
   return (
     <div>
       <Routes>
+        <Route index element={<Navigate to="1" replace={true} />} />
         <Route
           path=":id"
           element={
-            <div>
-              <TestHeader timeLeft={timeLeft} handleSubmit={handleSubmit} />
-              {testData.type === 'listening' && (
-                <ListeningTest
-                  sections={testData.sections}
-                  audioSource={testData.mediaURL}
-                />
-              )}
-              {testData.type === 'reading' && (
-                <ReadingTest
-                  sections={testData.sections}
-                  title={testData.title}
-                  passage={testData.content}
-                  illustration={testData.mediaURL}
-                  handleSubmit={handleSubmit}
-                />
-              )}
-            </div>
+            <LoadingOverlay
+              active={isLoading}
+              spinner
+              text="Your test is loading. Please be patient..."
+            >
+              <div>
+                {submitted && !reviewMode && <ResultModal />}
+                {isDone && !reviewMode && <RetakeTestModal />}
+                <TestHeader timeLeft={timeLeft} handleSubmit={handleSubmit} />
+                {testData.type === 'listening' && (
+                  <ListeningTest
+                    sections={testData.sections}
+                    audioSource={testData.mediaURL}
+                  />
+                )}
+                {testData.type === 'reading' && (
+                  <ReadingTest
+                    sections={testData.sections}
+                    title={testData.title}
+                    passage={testData.content}
+                    illustration={testData.mediaURL}
+                    handleSubmit={handleSubmit}
+                  />
+                )}
+              </div>
+            </LoadingOverlay>
           }
         />
       </Routes>

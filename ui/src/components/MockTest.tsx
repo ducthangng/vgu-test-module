@@ -3,7 +3,7 @@ import React from 'react';
 import './MockTest.css';
 import mocktest from '../assets/images/Rectangle 6295.png';
 import peopleGroup from '../assets/images/Vector.png';
-import { MockTestData } from '../utils/models/MockTestData';
+import { MockTestData } from '../models/MockTestData';
 
 const MockTest: React.FC<MockTestData> = ({ groupId, description, title }) => {
   return (

@@ -5,12 +5,17 @@ import {
   ForwardFilled,
   BackwardFilled,
 } from '@ant-design/icons';
+// context
+import { useTestContext } from '../../context/test/TestContext';
 
 interface AudioPlayerProps {
   audioSource: string;
 }
 
 export default function AudioPlayer(props: AudioPlayerProps) {
+  // context
+  const { setIsLoading } = useTestContext();
+
   // states
   const [trackProgress, setTrackProgress] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -83,7 +88,11 @@ export default function AudioPlayer(props: AudioPlayerProps) {
   useEffect(() => {
     if (audioRef.current.readyState) {
       isReady.current = true;
+      setIsLoading(false);
       console.log('audio is ready!');
+    } else {
+      console.log(audioRef.current.readyState);
+      audioRef.current.load();
     }
   }, [audioRef.current.readyState]);
 
@@ -116,6 +125,7 @@ export default function AudioPlayer(props: AudioPlayerProps) {
   }, [audioRef.current.duration]);
 
   useEffect(() => {
+    console.log('audio player is mounted');
     // Pause and clean up on unmount
     return () => {
       audioRef.current.pause();
@@ -127,11 +137,10 @@ export default function AudioPlayer(props: AudioPlayerProps) {
     <div className="w-screen text-center text-md-left sticky bottom-0 py-2 bg-primary text-white">
       <div className="grid-rows-2">
         <div className="flex place-content-center items-center">
-          <BackwardFilled
-            style={{ color: 'white' }}
-            className="text-4xl"
-            onClick={onBackwardClick}
-          />
+          <button onClick={onBackwardClick} className="text-xl">
+            - 15
+          </button>
+
           {isPlaying ? (
             <PauseCircleFilled
               style={{ color: 'white' }}
@@ -145,11 +154,10 @@ export default function AudioPlayer(props: AudioPlayerProps) {
               onClick={onPlayPauseClick}
             />
           )}
-          <ForwardFilled
-            style={{ color: 'white' }}
-            className="text-4xl"
-            onClick={onForwardClick}
-          />
+
+          <button onClick={onForwardClick} className="text-xl">
+            15 +
+          </button>
         </div>
         <div className="flex place-content-center items-center">
           {currentTime}

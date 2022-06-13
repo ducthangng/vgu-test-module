@@ -13,3 +13,12 @@ create table classes (
 	primary key (id),
 	UNIQUE(class_name)
 );
+
+create table test_class (
+	id INT NOT NULL AUTO_INCREMENT,
+	cid INT NOT NULL,
+	tid INT NOT NULL,
+	primary key (id),
+	FOREIGN KEY (cid) REFERENCES classes (id),
+	FOREIGN KEY (tid) REFERENCES testbank (id)
+);

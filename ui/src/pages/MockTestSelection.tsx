@@ -2,7 +2,7 @@ import React from 'react';
 import MockTest from '../components/MockTest';
 import { Row, Divider } from 'antd';
 import { Pagination } from 'antd';
-import { MockTestData } from '../utils/models/MockTestData';
+import { MockTestData } from '..//models/MockTestData';
 
 const defaultData: MockTestData[] = [
   {
