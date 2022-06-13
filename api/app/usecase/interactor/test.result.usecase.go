@@ -20,7 +20,7 @@ func NewTestResultUsecase(TestSkillRepository repository.DataService) *TestResul
 }
 
 // Only return the score of each test result.
-func (s *TestResultUsecase) GetUserTestResultsAll(ctx context.Context, userID int) (results []usecase_dto.TestResult, err error) {
+func (s *TestResultUsecase) GetUserTestResults(ctx context.Context, userID int) (results []usecase_dto.TestResult, err error) {
 	classes, err := s.TestResultRepository.QueryClassOfUser(ctx, userID)
 	if err != nil {
 		return

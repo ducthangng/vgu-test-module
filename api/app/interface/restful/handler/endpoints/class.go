@@ -2,7 +2,6 @@ package endpoints
 
 import (
 	"context"
-	"errors"
 	"net/http"
 	"server/app/interface/persistence/rdbms/sqlconnection"
 	"server/app/interface/restful/handler/api_dto"
@@ -24,7 +23,6 @@ func ClassHandler(c *gin.RouterGroup) {
 	c.POST("/add_member", AddMember)
 	c.POST("/", CreateClass)
 
-	c.DELETE("/", DeleteClass)
 	c.DELETE("/remove_member", RemoveMember)
 }
 
@@ -85,45 +83,13 @@ func CreateClass(c *gin.Context) {
 	}
 
 	access := registry.BuildClassAccessPoint(false, sqlconnection.DBConn)
-	err = access.Service.CreateClass(ctx, class)
+	id, err := access.Service.CreateClass(ctx, class)
 	if err != nil {
 		app.Response(http.StatusInternalServerError, 0, err)
 		return
 	}
 
-	app.Response(http.StatusOK, 1, nil)
-}
-
-func DeleteClass(c *gin.Context) {
-	app := gctx.Gin{C: c}
-	ctx := context.Background()
-
-	EntityCode := c.GetInt("EntityCode")
-	if EntityCode != 1 {
-		app.Response(http.StatusOK, 0, e.ErrorNotAuthorized)
-		return
-	}
-
-	ClassID := c.Query("class_id")
-	if ClassID == "" {
-		app.Response(http.StatusOK, 0, errors.New("no classId provided"))
-		return
-	}
-
-	ID, err := strconv.Atoi(ClassID)
-	if err != nil {
-		app.Response(http.StatusInternalServerError, 0, err)
-		return
-	}
-
-	access := registry.BuildClassAccessPoint(true, sqlconnection.DBConn)
-	err = access.Service.DeleteClass(ctx, ID)
-	if err != nil {
-		app.Response(http.StatusInternalServerError, 0, err)
-		return
-	}
-
-	app.Response(http.StatusOK, 1, nil)
+	app.Response(http.StatusOK, id, nil)
 }
 
 func GetClassMembers(c *gin.Context) {

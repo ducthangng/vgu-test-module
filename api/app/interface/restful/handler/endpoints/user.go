@@ -2,10 +2,12 @@ package endpoints
 
 import (
 	"context"
+	"log"
 	"net/http"
 	"server/app/interface/persistence/rdbms/sqlconnection"
 	"server/app/interface/restful/handler/api_dto"
 	"server/app/interface/restful/handler/gctx"
+	"server/app/interface/restful/handler/middleware"
 	"server/app/registry"
 	"server/app/usecase/usecase_dto"
 	"server/utils/e"
@@ -20,8 +22,6 @@ func UserHandler(c *gin.RouterGroup) {
 	c.GET("/class", GetUserClass)
 	c.GET("/test_result", ReviewTestResult)
 
-	c.POST("/register", CreateUser)
-
 	c.PUT("/", UpdateUser)
 }
 
@@ -30,23 +30,30 @@ func GetUserInfo(c *gin.Context) {
 	app := gctx.Gin{C: c}
 	ctx := context.Background()
 
-	username := c.Query("user_name")
+	username := c.Query("username")
 	fullname := c.Query("fullname")
 	userId := c.Query("user_id")
-	if username == "" && fullname == "" && userId != "" {
+	log.Println(username, " ", fullname, " ", userId)
+	if len(username) == 0 && len(fullname) == 0 && len(userId) == 0 {
 		app.Response(http.StatusOK, 0, e.ErrorInputInvalid)
 		return
 	}
 
-	ID, err := strconv.Atoi(userId)
-	if err != nil {
-		app.Response(http.StatusInternalServerError, 0, err)
-		return
+	var ID int
+	var err error
+
+	if len(userId) != 0 {
+		ID, err = strconv.Atoi(userId)
+		if err != nil {
+			app.Response(http.StatusInternalServerError, 0, err)
+			return
+		}
 	}
 
 	if username != "" || fullname != "" || ID != 0 {
 		user_record = usecase_dto.User{ID: ID, Username: username, FullName: fullname}
 	}
+
 	access := registry.BuildUserAccessPoint(false, sqlconnection.DBConn)
 	user, err := access.Service.FindUser(ctx, user_record, true)
 	if err != nil {
@@ -132,7 +139,7 @@ func UpdateUser(c *gin.Context) {
 		return
 	}
 
-	app.Response(http.StatusOK, nil, nil)
+	app.Response(http.StatusOK, 1, nil)
 }
 
 func CreateUser(c *gin.Context) {
@@ -151,6 +158,15 @@ func CreateUser(c *gin.Context) {
 		app.Response(http.StatusInternalServerError, 0, err)
 		return
 	}
+
+	password, err := middleware.HashPassword(user_record.Password)
+	if err != nil {
+		app.Response(http.StatusInternalServerError, 0, err)
+		return
+	}
+
+	user_record.Password = password
+	user_record.EntityCode = 2
 
 	access := registry.BuildUserAccessPoint(false, sqlconnection.DBConn)
 	IDs, err := access.Service.CreateUser(ctx, user_record)

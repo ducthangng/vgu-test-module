@@ -45,6 +45,8 @@ type TestRepository interface {
 	QueryClassDoneTest(ctx context.Context, TestID int) (result []entity.TestClassRelation, err error)
 	DeleteTestClass(ctx context.Context, TestID int, ClassID int) error
 
+	UnarchieveUserClass(ctx context.Context, UserID int, ClassID int) (err error)
+	CheckExistedUserClass(ctx context.Context, UserID int, ClassID int) (existed bool, err error)
 	AddUserClass(ctx context.Context, ClassID int, UserID int) error
 	QueryUserOfClass(ctx context.Context, ClassID int) ([]int, error)
 	QueryClassOfUser(ctx context.Context, UserID int) ([]int, error)

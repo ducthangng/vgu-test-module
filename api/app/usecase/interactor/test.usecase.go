@@ -34,10 +34,6 @@ func (t *TestUsecase) QueryTestInfo(ctx context.Context, testId int) (test useca
 	return
 }
 
-func (t *TestUsecase) QueryTestDetails(ctx context.Context, testId int) (test usecase_dto.SkillTest, err error) {
-	return
-}
-
 func (t *TestUsecase) QuerySkillTest(ctx context.Context, testId int) (test usecase_dto.SkillTest, err error) {
 	skID, err := t.TestRepository.QuerySkillTestOfTest(ctx, testId)
 	if err != nil {
@@ -62,8 +58,8 @@ func (t *TestUsecase) QuerySkillTest(ctx context.Context, testId int) (test usec
 // Steps:
 // @1. Compare result to the database answer to produce the test result.
 // @2. Insert the test answer into database.
-func (t *TestUsecase) SubmitTest(ctx context.Context, data usecase_dto.SubmitData, userId int, entityCode int, testClassId int, testSkillId int) (testResultId int, err error) {
-	sk, err := t.TestRepository.QuerySkillTest(ctx, testSkillId)
+func (t *TestUsecase) SubmitTest(ctx context.Context, data usecase_dto.SubmitData, userId int, entityCode int, testClassId int) (testResultId int, err error) {
+	sk, err := t.TestRepository.QuerySkillTest(ctx, data.ID)
 	if err != nil {
 		return testResultId, err
 	}

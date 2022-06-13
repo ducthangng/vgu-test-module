@@ -72,7 +72,7 @@ type (
 	}
 
 	SubmitData struct {
-		ID       string              `json:"id"`
+		ID       int                 `json:"id"`
 		Sections []SubmitDataSection `json:"sections"`
 	}
 

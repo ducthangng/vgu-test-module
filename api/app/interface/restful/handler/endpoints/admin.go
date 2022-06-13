@@ -2,6 +2,7 @@ package endpoints
 
 import (
 	"context"
+	"errors"
 	"net/http"
 	"server/app/interface/persistence/rdbms/sqlconnection"
 	"server/app/interface/restful/handler/gctx"
@@ -13,8 +14,41 @@ import (
 )
 
 func AdminHandler(c *gin.RouterGroup) {
+	c.DELETE("/class", DeleteClass)
 	c.DELETE("/user", DeleteUser)
 	c.DELETE("/user_test_result", DeleteUserTestResult)
+}
+
+func DeleteClass(c *gin.Context) {
+	app := gctx.Gin{C: c}
+	ctx := context.Background()
+
+	EntityCode := c.GetInt("EntityCode")
+	if EntityCode != 1 {
+		app.Response(http.StatusOK, 0, e.ErrorNotAuthorized)
+		return
+	}
+
+	ClassID := c.Query("class_id")
+	if ClassID == "" {
+		app.Response(http.StatusOK, 0, errors.New("no classId provided"))
+		return
+	}
+
+	ID, err := strconv.Atoi(ClassID)
+	if err != nil {
+		app.Response(http.StatusInternalServerError, 0, err)
+		return
+	}
+
+	access := registry.BuildClassAccessPoint(true, sqlconnection.DBConn)
+	err = access.Service.DeleteClass(ctx, ID)
+	if err != nil {
+		app.Response(http.StatusInternalServerError, 0, err)
+		return
+	}
+
+	app.Response(http.StatusOK, 1, nil)
 }
 
 func DeleteUser(c *gin.Context) {

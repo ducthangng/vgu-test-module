@@ -26,7 +26,7 @@ func (q *Querier) AssignTestClass(ctx context.Context, TestClass entity.TestClas
 }
 
 func (q *Querier) QueryTestClass(ctx context.Context, TestClassID int) (result []entity.TestClassRelation, err error) {
-	rows, err := q.DB.QueryContext(ctx, "SELECT cid, tid, ispublished FROM test_class WHERE id = ? ", TestClassID)
+	rows, err := q.DB.QueryContext(ctx, "SELECT cid, tid FROM test_class WHERE id = ? ", TestClassID)
 	if err == sql.ErrNoRows {
 		return nil, nil
 	}
@@ -49,7 +49,7 @@ func (q *Querier) QueryTestClass(ctx context.Context, TestClassID int) (result [
 }
 
 func (q *Querier) QueryTestOfClass(ctx context.Context, ClassID int) (result []entity.TestClassRelation, err error) {
-	rows, err := q.DB.QueryContext(ctx, "SELECT id, tid, ispublished FROM test_class WHERE cid = ? ", ClassID)
+	rows, err := q.DB.QueryContext(ctx, "SELECT id, tid FROM test_class WHERE cid = ? ", ClassID)
 	if err == sql.ErrNoRows {
 		return nil, nil
 	}

@@ -29,7 +29,7 @@ type UserService interface {
 type ClassService interface {
 	DeleteClass(ctx context.Context, classId int) error
 
-	CreateClass(ctx context.Context, class usecase_dto.Class) error
+	CreateClass(ctx context.Context, class usecase_dto.Class) (int, error)
 
 	GetClasses(ctx context.Context) (classes []usecase_dto.Class, err error)
 
@@ -48,15 +48,13 @@ type TestService interface {
 	// GetTestByID returns a test by its ID.
 	QueryTestInfo(ctx context.Context, testId int) (test usecase_dto.Test, err error)
 
-	QueryTestDetails(ctx context.Context, testId int) (test usecase_dto.SkillTest, err error)
-
 	QuerySkillTest(ctx context.Context, testId int) (test usecase_dto.SkillTest, err error)
 
-	SubmitTest(ctx context.Context, data usecase_dto.SubmitData, userId int, entityCode int, testClassId int, testSkillId int) (testResultId int, err error)
+	SubmitTest(ctx context.Context, data usecase_dto.SubmitData, userId int, entityCode int, testClassId int) (testResultId int, err error)
 }
 
 type TestResultService interface {
-	GetUserTestResultsAll(ctx context.Context, userID int) (results []usecase_dto.TestResult, err error)
+	GetUserTestResults(ctx context.Context, userID int) (results []usecase_dto.TestResult, err error)
 
 	GetUserTestResultDetail(ctx context.Context, testId int) (result usecase_dto.TestResult, err error)
 }
