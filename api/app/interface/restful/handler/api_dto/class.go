@@ -1,6 +1,7 @@
 package api_dto
 
 import (
+	"log"
 	"server/utils/e"
 
 	"github.com/gin-gonic/gin"
@@ -46,7 +47,7 @@ func (c Class) Validate(HasID bool, HasBody bool) error {
 	}
 
 	if HasBody {
-		if err := CheckStringLength([]string{c.Classname, c.Info, c.Level, c.RoomCode}, 5, 100, true); err != nil {
+		if err := CheckStringLength([]string{c.Classname, c.Info, c.Level, c.RoomCode}, 2, 100, false); err != nil {
 			return e.ErrorInputInvalid
 		}
 
@@ -60,6 +61,8 @@ func BindClass(c *gin.Context, HasID bool, HasBody bool) (Class, error) {
 	if err := c.ShouldBindJSON(&nc); err != nil {
 		return Class{}, e.ErrorBindJSON
 	}
+
+	log.Println(nc)
 
 	if err := nc.Validate(HasID, HasBody); err != nil {
 		return Class{}, e.ErrorInputInvalid

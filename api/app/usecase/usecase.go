@@ -29,7 +29,7 @@ type UserService interface {
 type ClassService interface {
 	DeleteClass(ctx context.Context, classId int) error
 
-	CreateClass(ctx context.Context, class usecase_dto.Class) error
+	CreateClass(ctx context.Context, class usecase_dto.Class) (int, error)
 
 	GetClasses(ctx context.Context) (classes []usecase_dto.Class, err error)
 

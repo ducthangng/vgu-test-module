@@ -10,7 +10,7 @@ import (
 
 // Returns the ID of the class.
 func (q *Querier) CreateClass(ctx context.Context, c entity.Class) (int, error) {
-	stmt, err := q.DB.PrepareContext(ctx, "INSERT classes SET class_name = ?, info = ?, annoucement = ?, room_code = ?, level = ?, active = ? , datecreated = ?")
+	stmt, err := q.DB.PrepareContext(ctx, "INSERT classes SET class_name = ?, info = ?, announcement = ?, room_code = ?, level = ?, active = ? , datecreated = ?")
 	if err != nil {
 		return 0, err
 	}
@@ -89,7 +89,7 @@ func refactorQueryClass(rows *sql.Rows, nerr error) (result []entity.Class, err 
 
 // UpdateClass allow teacher to update the class information.
 func (q *Querier) UpdateClass(ctx context.Context, c entity.Class) error {
-	stmt, err := q.DB.PrepareContext(ctx, "UPDATE classes SET class_name = ?, info = ?, annoucement = ?, room_code = ?, level = ?, dateupdated = ? WHERE id = ? and active = ?")
+	stmt, err := q.DB.PrepareContext(ctx, "UPDATE classes SET class_name = ?, info = ?, announcement = ?, room_code = ?, level = ?, dateupdated = ? WHERE id = ? and active = ?")
 	if err != nil {
 		return err
 	}

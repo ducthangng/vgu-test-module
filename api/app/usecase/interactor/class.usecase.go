@@ -71,17 +71,18 @@ func (c *ClassUsecase) DeleteClass(ctx context.Context, classId int) error {
 	})
 }
 
-func (c *ClassUsecase) CreateClass(ctx context.Context, class usecase_dto.Class) error {
+func (c *ClassUsecase) CreateClass(ctx context.Context, class usecase_dto.Class) (int, error) {
 	var record entity.Class
 	err := copier.Copy(&record, &class)
 	if err != nil {
-		return err
+		return 0, err
 	}
-	_, err = c.ClassRepository.CreateClass(ctx, record)
+
+	id, err := c.ClassRepository.CreateClass(ctx, record)
 	if err != nil {
-		return err
+		return id, err
 	}
-	return nil
+	return id, nil
 }
 
 func (c *ClassUsecase) GetClasses(ctx context.Context) (classes []usecase_dto.Class, err error) {

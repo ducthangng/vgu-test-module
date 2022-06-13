@@ -71,7 +71,7 @@ create table testcomments (
 );
 
 create table skilltest_test (
-	id INT NOT NULL AUTO_INCREMENT tid INT NOT NULL,
+	tid INT NOT NULL AUTO_INCREMENT,
 	stid INT NOT NULL,
 	PRIMARY KEY (tid, stid),
 	FOREIGN KEY (tid) REFERENCES testbank (id),

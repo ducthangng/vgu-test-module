@@ -85,13 +85,13 @@ func CreateClass(c *gin.Context) {
 	}
 
 	access := registry.BuildClassAccessPoint(false, sqlconnection.DBConn)
-	err = access.Service.CreateClass(ctx, class)
+	id, err := access.Service.CreateClass(ctx, class)
 	if err != nil {
 		app.Response(http.StatusInternalServerError, 0, err)
 		return
 	}
 
-	app.Response(http.StatusOK, 1, nil)
+	app.Response(http.StatusOK, id, nil)
 }
 
 func DeleteClass(c *gin.Context) {

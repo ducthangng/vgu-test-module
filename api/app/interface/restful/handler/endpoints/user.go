@@ -2,6 +2,7 @@ package endpoints
 
 import (
 	"context"
+	"log"
 	"net/http"
 	"server/app/interface/persistence/rdbms/sqlconnection"
 	"server/app/interface/restful/handler/api_dto"
@@ -30,23 +31,30 @@ func GetUserInfo(c *gin.Context) {
 	app := gctx.Gin{C: c}
 	ctx := context.Background()
 
-	username := c.Query("user_name")
+	username := c.Query("username")
 	fullname := c.Query("fullname")
 	userId := c.Query("user_id")
-	if username == "" && fullname == "" && userId != "" {
+	log.Println(username, " ", fullname, " ", userId)
+	if len(username) == 0 && len(fullname) == 0 && len(userId) == 0 {
 		app.Response(http.StatusOK, 0, e.ErrorInputInvalid)
 		return
 	}
 
-	ID, err := strconv.Atoi(userId)
-	if err != nil {
-		app.Response(http.StatusInternalServerError, 0, err)
-		return
+	var ID int
+	var err error
+
+	if len(userId) != 0 {
+		ID, err = strconv.Atoi(userId)
+		if err != nil {
+			app.Response(http.StatusInternalServerError, 0, err)
+			return
+		}
 	}
 
 	if username != "" || fullname != "" || ID != 0 {
 		user_record = usecase_dto.User{ID: ID, Username: username, FullName: fullname}
 	}
+
 	access := registry.BuildUserAccessPoint(false, sqlconnection.DBConn)
 	user, err := access.Service.FindUser(ctx, user_record, true)
 	if err != nil {
