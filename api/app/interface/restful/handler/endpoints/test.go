@@ -2,8 +2,8 @@ package endpoints
 
 import (
 	"net/http"
+	"server/app/interface/restful/handler/api_dto"
 	"server/app/interface/restful/handler/gctx"
-	"server/app/interface/restful/handler/handler_dto"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -29,7 +29,7 @@ func GetTestInfo(c *gin.Context) {
 	// 	return
 	// }
 
-	test := handler_dto.Test{
+	test := api_dto.Test{
 		ID:               1,
 		TagID:            1,
 		TagName:          "Reading",
@@ -41,8 +41,6 @@ func GetTestInfo(c *gin.Context) {
 			Despite many hardships, their program finally works before the D-Day. Thus, they received 1.0`,
 		Duration:     60,
 		Status:       "Happening",
-		IsPublished:  1,
-		IsCompleted:  0,
 		DateAssigned: 1585286400,
 		Deadline:     1585552000,
 	}
@@ -63,7 +61,7 @@ func GetTestResult(c *gin.Context) {
 	// 	return
 	// }
 
-	test := handler_dto.Test{
+	test := api_dto.Test{
 		ID:               1,
 		TagID:            1,
 		TagName:          "Reading",
@@ -75,8 +73,6 @@ func GetTestResult(c *gin.Context) {
 			Despite many hardships, their program finally works before the D-Day. Thus, they received 1.0`,
 		Duration:     60,
 		Status:       "Happening",
-		IsPublished:  1,
-		IsCompleted:  0,
 		DateAssigned: 1585286400,
 		Deadline:     1585552000,
 	}
@@ -96,8 +92,8 @@ func DoTest(c *gin.Context) {
 		return
 	}
 
-	var sk handler_dto.SkillStest
-	matchingHeadingContent := []handler_dto.Content{
+	var sk api_dto.SkillTest
+	matchingHeadingContent := []api_dto.Content{
 		{
 			Q: "Hotel managers need to know what would encourage good staff to remain.",
 			A: []string{"Pfeffer"},
@@ -124,7 +120,7 @@ func DoTest(c *gin.Context) {
 		},
 	}
 
-	MCQ := []handler_dto.Content{
+	MCQ := []api_dto.Content{
 		{
 			Q: "Question 1",
 			A: []string{"ans1", "ans2", "ans3", "ans4"},
@@ -139,13 +135,13 @@ func DoTest(c *gin.Context) {
 		},
 	}
 
-	FB := []handler_dto.Content{
+	FB := []api_dto.Content{
 		{
 			Q: "<form>He <input type='text' class='border border-2 text-center'/> a teacher. He is twenty-five <input type='text' class='border border-2 text-center'/> old. He love listening <input type='text' class='border border-2 text-center'/> music. He can <input type='text' class='border border-2 text-center'/> football. He often <input type='text' class='border border-2 text-center'/> fishing on Saturday.</form",
 		},
 	}
 
-	TFNG := []handler_dto.Content{
+	TFNG := []api_dto.Content{
 		{
 			Q: "Question 1",
 		},
@@ -157,7 +153,7 @@ func DoTest(c *gin.Context) {
 		},
 	}
 
-	sk = handler_dto.SkillStest{
+	sk = api_dto.SkillTest{
 		ID:       "507362db-4212-4649-8068-a2ea9806082c",
 		MediaURL: "https://www.dropbox.com/s/edek16sfvwl4jsh/NocturneInAMinor.mp3?dl=1",
 		Title:    "Listen to everything and answer questions.",
@@ -179,12 +175,12 @@ func DoTest(c *gin.Context) {
 				usually just enough to give its host time to get out of the way or go in for the kill.`,
 		Description: "You should spend about 20 minutes on Questions 1–13, which are based on Reading Passage 1 below",
 		Type:        "Listening",
-		Sections: []handler_dto.Section{
+		Sections: []api_dto.Section{
 			{
 				StartIndex: 1,
 				EndIndex:   5,
 				Title:      "Matching Headings",
-				Media: []handler_dto.Media{
+				Media: []api_dto.Media{
 					{
 						Title:   "Illustration 1",
 						Content: "https://www.ieltspodcast.com/wp-content/uploads/2015/04/Academic-Task-1-Describe-a-Diagram-in-IELTS.png",
@@ -198,7 +194,7 @@ func DoTest(c *gin.Context) {
 				StartIndex: 6,
 				EndIndex:   10,
 				Title:      "Multiple Choice Questions",
-				Media: []handler_dto.Media{
+				Media: []api_dto.Media{
 					{
 						Title:   "Illustration 2",
 						Content: "https://www.ieltspodcast.com/wp-content/uploads/2015/04/Academic-Task-1-Describe-a-Diagram-in-IELTS.png",
@@ -235,9 +231,9 @@ func DoTest(c *gin.Context) {
 func SubmitTest(c *gin.Context) {
 	app := gctx.Gin{C: c}
 
-	var data handler_dto.SubmitData
+	var data api_dto.SubmitData
 
-	data, err := handler_dto.BindSubmitData(c)
+	data, err := api_dto.BindSubmitData(c)
 	if err != nil {
 		app.Response(http.StatusInternalServerError, nil, err)
 	}

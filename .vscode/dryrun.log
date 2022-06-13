@@ -1,0 +1,5 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/truongvinh/projects/pe_project/pe2022_team-3'
+docker-compose -f docker-compose.dev.yml up
+make: Leaving directory `/Users/truongvinh/projects/pe_project/pe2022_team-3'
+ 

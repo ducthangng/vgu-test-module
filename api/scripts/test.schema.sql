@@ -39,22 +39,22 @@ create table testresults (
 	entity_code INT NOT NULL,
 	datecreated DATETIME NOT NULL,
 	score FLOAT NOT NULL,
-	comment varchar(200),
+	comment varchar(255),
 	resultnote varchar(255),
 	dateupdated DATETIME,
 	PRIMARY KEY (id),
-	FOREIGN KEY (test_class_id) REFERENCES testclassrelations (id),
-	FOREIGN KEY (user_id) REFERENCES students (id),
-	CONSTRAINT valid_type_check CHECK (type IN (1, 2)),
+	FOREIGN KEY (test_class_id) REFERENCES test_class (id),
+	FOREIGN KEY (user_id) REFERENCES users (id),
 	UNIQUE KEY (test_class_id, user_id, datecreated)
 );
 
+
 create table testskill (
 	id INT NOT NULL AUTO_INCREMENT,
-	media_url VARCHAR,
-	title VARCHAR NOT NULL,
-	content VARCHAR NOT NULL,
-	description VARCHAR NOT NULL,
+	media_url VARCHAR(200),
+	title VARCHAR(200) NOT NULL,
+	content VARCHAR(255) NOT NULL,
+	description VARCHAR(200) NOT NULL,
 	section MEDIUMTEXT NOT NULL,
 	datecreated DATETIME NOT NULL,
 	dateupdated DATETIME NOT NULL,
@@ -62,21 +62,33 @@ create table testskill (
 	UNIQUE(title)
 );
 
+
 create table testcomments (
 	result_id INT NOT NULL,
-	question_id INT NOT NULL,
 	comment TEXT,
 	datecreated DATETIME NOT NULL,
 	dateupdated DATETIME,
-	UNIQUE KEY (result_id, question_id),
-	FOREIGN KEY (result_id) REFERENCES testresults (id),
-	FOREIGN KEY (question_id) REFERENCES testquestions (id)
+	UNIQUE KEY (result_id),
+	FOREIGN KEY (result_id) REFERENCES testresults (id)
 );
 
 create table skilltest_test (
+	id INT NOT NULL AUTO_INCREMENT
 	tid INT NOT NULL,
 	stid INT NOT NULL,
 	PRIMARY KEY (tid, stid),
 	FOREIGN KEY (tid) REFERENCES testbank (id),
 	FOREIGN KEY (stid) REFERENCES testskill (id)
-);
+)
+
+insert into skill_test values (1, 1);
+insert into skill_test values (1, 2);
+insert into skill_test values (1, 3);
+insert into skill_test values (1, 4);
+insert into skill_test values (1, 5);
+
+insert into testbank values (1, 1, 'test1', 1, 1, 'test1', 'test1', 0, '2015-01-01', '2015-01-01', 1, '2015-01-01', '2015-01-01');
+insert into testbank values (2, 1, 'test2', 1, 1, 'test2', 'test2', 0, '2015-01-01', '2015-01-01', 1, '2015-01-01', '2015-01-01');
+insert into testbank values (3, 1, 'test3', 1, 1, 'test3', 'test3', 0, '2015-01-01', '2015-01-01', 1, '2015-01-01', '2015-01-01');
+insert into testbank values (4, 1, 'test4', 1, 1, 'test4', 'test4', 0, '2015-01-01', '2015-01-01', 1, '2015-01-01', '2015-01-01');
+insert into testbank values (5, 1, 'test5', 1, 1, 'test5', 'test5', 0, '2015-01-01', '2015-01-01', 1, '2015-01-01', '2015-01-01');

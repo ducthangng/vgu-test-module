@@ -1,4 +1,4 @@
-package handler_dto
+package api_dto
 
 import (
 	"server/utils/e"
@@ -11,17 +11,18 @@ type Test struct {
 	TagID            int    `json:"tagid"`
 	TagName          string `json:"tagName"`
 	TestName         string `json:"testName"`
-	CreatedUserID    int    `json:"created_user_id"`
-	TargetEntityCode int    `json:"target_entity_code"`
+	CreatedUserID    int    `json:"createdUserId"`
+	TargetEntityCode int    `json:"targetEntityCode"`
 	Title            string `json:"title"`
 	Info             string `json:"info"`
 	Duration         int    `json:"duration"`
 	Status           string `json:"status"`
-	IsPublished      int    `json:"isPublished"`
-	IsCompleted      int    `json:"completed"`
-	DateAssigned     int64  `json:"dateAssigned"`
-	Deadline         int64  `json:"deadline"`
-	DateUpdated      int64  `json:"dateUpdated"`
+	IsDone           bool   `json:"isDone"`
+	// IsPublished      int    `json:"isPublished"`
+	// IsCompleted      int    `json:"completed"`
+	DateAssigned int64 `json:"dateAssigned"`
+	Deadline     int64 `json:"deadline"`
+	DateUpdated  int64 `json:"dateUpdated"`
 }
 
 func (t Test) Validate(WithID bool, WithBody bool) error {
@@ -34,7 +35,7 @@ func (t Test) Validate(WithID bool, WithBody bool) error {
 			return e.ErrorInputInvalid
 		}
 
-		if (t.Duration == 0) || (t.IsPublished > 1) {
+		if t.Duration == 0 {
 			return e.ErrorInputInvalid
 		}
 	}

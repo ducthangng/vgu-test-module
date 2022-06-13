@@ -1,4 +1,4 @@
-package dto
+package usecase_dto
 
 type UpdatedTestResultResponse struct {
 	ID      int    `json:"test_result_id"`
