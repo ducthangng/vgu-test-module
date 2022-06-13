@@ -82,25 +82,17 @@ export default function AppRoute() {
             </Route>
           </Route>
 
-          {/* not found */}
-          {/* <Route path="*" element={<NotFound />} /> */}
-
-          <Route
-            path="test/review/*"
-            element={
-              <TestProvider>
-                <Test reviewMode={true} />
-              </TestProvider>
-            }
-          />
-          <Route
-            path="test/do/*"
-            element={
-              <TestProvider>
-                <Test reviewMode={false} />
-              </TestProvider>
-            }
-          />
+          {/* test routes */}
+          <Route path="test">
+            <Route
+              path="do/*"
+              element={
+                <TestProvider>
+                  <Test reviewMode={false} />
+                </TestProvider>
+              }
+            />
+          </Route>
 
           {/* 404 Not Found */}
           <Route path="*" element={<NotFound404 />} />

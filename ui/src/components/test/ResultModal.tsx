@@ -26,7 +26,6 @@ export default function ResultModal() {
   const handleReview = () => {
     setReviewMode(true);
     setVisible(false);
-    navigate('../../test/review/1');
   };
 
   const handleHome = () => {

@@ -11,7 +11,7 @@ import ResultModal from '../components/test/ResultModal';
 import SectionAnswer from '../interfaces/test/SectionAnswer.interface';
 import SubmitData from '../interfaces/test/SubmitData.interface';
 // routing
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 // context
 import { useTestContext } from '../context/test/TestContext';
 // fake data
@@ -158,6 +158,7 @@ export default function Test(props: { reviewMode: boolean }) {
   return (
     <div>
       <Routes>
+        <Route index element={<Navigate to="1" replace={true} />} />
         <Route
           path=":id"
           element={
