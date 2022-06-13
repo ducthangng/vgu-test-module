@@ -10,7 +10,7 @@ import TrueFalseSection from './TrueFalseSection';
 import FillBlankSection from './FillBlankSection';
 import AnswerDrawer from './AnswerDrawer';
 //interfaces
-import Section from '../../interfaces/test/Section.interface';
+import Section from '../../models/test/Section.interface';
 // context
 import { useTestContext } from '../../context/test/TestContext';
 

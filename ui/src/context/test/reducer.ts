@@ -1,8 +1,8 @@
 import * as types from './constants';
 
 // import interfaces
-import TestData from '../../interfaces/test/TestData.interface';
-import SubmitData from '../../interfaces/test/SubmitData.interface';
+import TestData from '../../models/test/TestData.interface';
+import SubmitData from '../../models/test/SubmitData.interface';
 
 const reducer = (
   state: {

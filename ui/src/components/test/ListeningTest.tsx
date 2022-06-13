@@ -10,7 +10,7 @@ import TrueFalseSection from './TrueFalseSection';
 import FillBlankSection from './FillBlankSection';
 import AudioPlayer from './AudioPlayer';
 // interfaces
-import Section from '../../interfaces/test/Section.interface';
+import Section from '../../models/test/Section.interface';
 
 //local interfaces
 interface ListeningTestProps {

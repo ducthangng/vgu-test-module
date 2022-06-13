@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { useTestContext } from '../../context/test/TestContext';
-import Section from '../../interfaces/test/Section.interface';
+import Section from '../../models/test/Section.interface';
 
 interface FillBlankSectionProps {
   sectionIndex: number;
