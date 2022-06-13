@@ -41,6 +41,7 @@ create table testresults (
 	score FLOAT NOT NULL,
 	comment varchar(255),
 	resultnote varchar(255),
+	active TINYINT NOT NULL,
 	dateupdated DATETIME,
 	PRIMARY KEY (id),
 	FOREIGN KEY (test_class_id) REFERENCES test_class (id),
@@ -52,22 +53,21 @@ create table skilltests (
 	id INT NOT NULL AUTO_INCREMENT,
 	media_url VARCHAR(200),
 	title VARCHAR(200) NOT NULL,
-	content VARCHAR(255) NOT NULL,
+	content MEDIUMTEXT NOT NULL,
 	description VARCHAR(200) NOT NULL,
 	section MEDIUMTEXT NOT NULL,
+	type VARCHAR(30) NOT NULL,
 	datecreated DATETIME NOT NULL,
 	dateupdated DATETIME,
 	PRIMARY KEY (id),
 	UNIQUE(title)
 );
 
-create table testcomments (
-	result_id INT NOT NULL,
-	comment TEXT,
-	datecreated DATETIME NOT NULL,
-	dateupdated DATETIME,
-	UNIQUE KEY (result_id),
-	FOREIGN KEY (result_id) REFERENCES testresults (id)
+create table test_answer (
+	id INT NOT NULL,
+	section_answer MEDIUMTEXT NOT NULL,
+	UNIQUE KEY (id),
+	FOREIGN KEY (id) REFERENCES testresults (id)
 );
 
 create table skilltest_test (

@@ -65,7 +65,7 @@ func (t *TestUsecase) QuerySkillTest(ctx context.Context, testId int) (test usec
 // Steps:
 // @1. Compare result to the database answer to produce the test result.
 // @2. Insert the test answer into database.
-func (t *TestUsecase) SubmitTest(ctx context.Context, data usecase_dto.SubmitData, userId int, entityCode int, testClassId int) (testResultId int, err error) {
+func (t *TestUsecase) SubmitTest(ctx context.Context, data usecase_dto.SubmitData, userId int, entityCode int) (testResultId int, err error) {
 	sk, err := t.TestRepository.QuerySkillTest(ctx, data.ID)
 	if err != nil {
 		return testResultId, err
@@ -95,9 +95,9 @@ func (t *TestUsecase) SubmitTest(ctx context.Context, data usecase_dto.SubmitDat
 
 	if err := t.TestRepository.EnableTx(func() error {
 		// @1. Create test result
-		id, err := t.TestRepository.CreateTestResult(ctx, entity.TestResult{
+		testResultId, err = t.TestRepository.CreateTestResult(ctx, entity.TestResult{
 			ID:          0,
-			TestClassID: testClassId,
+			TestClassID: data.TestClassID,
 			UserID:      userId,
 			EntityCode:  entityCode,
 			Score:       int(float32(correctAns) / float32(totalAns) * 100),
@@ -114,7 +114,7 @@ func (t *TestUsecase) SubmitTest(ctx context.Context, data usecase_dto.SubmitDat
 			return err
 		}
 
-		entitySubmittedData.ID = id
+		entitySubmittedData.ID = testResultId
 
 		// @2. Insert the test answer into database.
 		err = t.TestRepository.CreateTestAnswer(ctx, entitySubmittedData)
@@ -127,5 +127,5 @@ func (t *TestUsecase) SubmitTest(ctx context.Context, data usecase_dto.SubmitDat
 		return testResultId, err
 	}
 
-	return
+	return testResultId, err
 }

@@ -21,6 +21,7 @@ type TestResult struct {
 type (
 	Test struct {
 		ID               int    `json:"id"`
+		TestClassID      int    `json:"test_class_id"`
 		TagID            int    `json:"tag_id"`
 		TestName         string `json:"test_name"`
 		CreatedUserID    int    `json:"created_user_id"`
@@ -74,8 +75,9 @@ type (
 	}
 
 	SubmitData struct {
-		ID       int                 `json:"id"`
-		Sections []SubmitDataSection `json:"sections"`
+		ID          int                 `json:"id"`
+		TestClassID int                 `json:"test_class_id"`
+		Sections    []SubmitDataSection `json:"sections"`
 	}
 
 	SubmitDataSection struct {

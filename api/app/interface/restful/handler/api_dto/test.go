@@ -8,6 +8,7 @@ import (
 
 type Test struct {
 	ID               int    `json:"id"`
+	TestClassID      int    `json:"testClassId"`
 	TagID            int    `json:"tagid"`
 	TagName          string `json:"tagName"`
 	TestName         string `json:"testName"`
@@ -18,11 +19,9 @@ type Test struct {
 	Duration         int    `json:"duration"`
 	Status           string `json:"status"`
 	IsDone           bool   `json:"isDone"`
-	// IsPublished      int    `json:"isPublished"`
-	// IsCompleted      int    `json:"completed"`
-	DateAssigned int64 `json:"dateAssigned"`
-	Deadline     int64 `json:"deadline"`
-	DateUpdated  int64 `json:"dateUpdated"`
+	DateAssigned     int64  `json:"dateAssigned"`
+	Deadline         int64  `json:"deadline"`
+	DateUpdated      int64  `json:"dateUpdated"`
 }
 
 func (t Test) Validate(WithID bool, WithBody bool) error {

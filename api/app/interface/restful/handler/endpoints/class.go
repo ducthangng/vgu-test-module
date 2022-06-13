@@ -17,12 +17,14 @@ import (
 
 func ClassHandler(c *gin.RouterGroup) {
 	c.GET("/", GetAllClasses)
-	c.GET("/test", GetClassTest)
+	c.GET("/tests", GetClassTest)
 	c.GET("/members", GetClassMembers)
 
-	c.POST("/add_member", AddMember)
 	c.POST("/", CreateClass)
+	c.POST("/add_member", AddMember)
+	c.POST("/add_test", AddTest)
 
+	c.DELETE("/remove_test", RemoveTest)
 	c.DELETE("/remove_member", RemoveMember)
 }
 
@@ -63,7 +65,13 @@ func GetClassTest(c *gin.Context) {
 		return
 	}
 
-	app.Response(http.StatusOK, tests, nil)
+	var test []api_dto.Test
+	if err := copier.Copy(&test, &tests); err != nil {
+		app.Response(http.StatusInternalServerError, 0, err)
+		return
+	}
+
+	app.Response(http.StatusOK, test, nil)
 }
 
 func CreateClass(c *gin.Context) {
@@ -186,6 +194,82 @@ func RemoveMember(c *gin.Context) {
 
 	access := registry.BuildClassAccessPoint(false, sqlconnection.DBConn)
 	err = access.Service.RemoveMemberFromClass(ctx, CID, UID)
+	if err != nil {
+		app.Response(http.StatusInternalServerError, 0, err)
+		return
+	}
+
+	app.Response(http.StatusOK, 1, nil)
+}
+
+func AddTest(c *gin.Context) {
+	app := gctx.Gin{C: c}
+	ctx := context.Background()
+
+	classID := c.Query("class_id")
+	if classID == "" {
+		app.Response(http.StatusOK, 0, e.ErrorInputInvalid)
+		return
+	}
+
+	CID, err := strconv.Atoi(classID)
+	if err != nil {
+		app.Response(http.StatusInternalServerError, 0, err)
+		return
+	}
+
+	testId := c.Query("test_id")
+	if testId == "" {
+		app.Response(http.StatusOK, 0, e.ErrorInputInvalid)
+		return
+	}
+
+	TID, err := strconv.Atoi(testId)
+	if err != nil {
+		app.Response(http.StatusInternalServerError, 0, err)
+		return
+	}
+
+	access := registry.BuildClassAccessPoint(false, sqlconnection.DBConn)
+	err = access.Service.AddTest2Class(ctx, CID, TID)
+	if err != nil {
+		app.Response(http.StatusInternalServerError, 0, err)
+		return
+	}
+
+	app.Response(http.StatusOK, 1, nil)
+}
+
+func RemoveTest(c *gin.Context) {
+	app := gctx.Gin{C: c}
+	ctx := context.Background()
+
+	classID := c.Query("class_id")
+	if classID == "" {
+		app.Response(http.StatusOK, 0, e.ErrorInputInvalid)
+		return
+	}
+
+	CID, err := strconv.Atoi(classID)
+	if err != nil {
+		app.Response(http.StatusInternalServerError, 0, err)
+		return
+	}
+
+	testId := c.Query("test_id")
+	if testId == "" {
+		app.Response(http.StatusOK, 0, e.ErrorInputInvalid)
+		return
+	}
+
+	TID, err := strconv.Atoi(testId)
+	if err != nil {
+		app.Response(http.StatusInternalServerError, 0, err)
+		return
+	}
+
+	access := registry.BuildClassAccessPoint(false, sqlconnection.DBConn)
+	err = access.Service.RemoveTestClass(ctx, CID, TID)
 	if err != nil {
 		app.Response(http.StatusInternalServerError, 0, err)
 		return

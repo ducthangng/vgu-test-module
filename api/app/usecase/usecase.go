@@ -42,6 +42,10 @@ type ClassService interface {
 	QueryClassTestResult(ctx context.Context, classId int, testId int) (results []usecase_dto.TestResult, err error)
 
 	GetClassTest(ctx context.Context, classId int) (tests []usecase_dto.Test, err error)
+
+	AddTest2Class(ctx context.Context, classId int, testId int) (err error)
+
+	RemoveTestClass(ctx context.Context, classId int, testId int) (err error)
 }
 
 type TestService interface {
@@ -50,7 +54,7 @@ type TestService interface {
 
 	QuerySkillTest(ctx context.Context, testId int) (test usecase_dto.SkillTest, err error)
 
-	SubmitTest(ctx context.Context, data usecase_dto.SubmitData, userId int, entityCode int, testClassId int) (testResultId int, err error)
+	SubmitTest(ctx context.Context, data usecase_dto.SubmitData, userId int, entityCode int) (testResultId int, err error)
 }
 
 type TestResultService interface {
