@@ -91,6 +91,26 @@
                 "a": [
                     "ans 1",
                     "ans 2",
+                    "ans 3"
+                ],
+                "correct_ans": 2,
+                "explanation": "explanation why the answer is correct"
+            },
+            {
+                "q": "question",
+                "a": [
+                    "ans 1",
+                    "ans 2",
+                    "ans 3"
+                ],
+                "correct_ans": 1,
+                "explanation": "explanation why the answer is correct"
+            },
+            {
+                "q": "question",
+                "a": [
+                    "ans 1",
+                    "ans 2",
                     "ans 3",
                     "ans 4"
                 ],
@@ -101,7 +121,7 @@
     },
     {
         "startIndex": 11,
-        "endIndex": 16,
+        "endIndex": 15,
         "title": "<p>Complete the table below. Choose ONE WORD ONLY from the passage for each answer. Write your answers in boxes 8-13</p>",
         "media": [
             {
@@ -145,7 +165,7 @@
         ]
     },
     {
-        "startIndex": 17,
+        "startIndex": 16,
         "endIndex": 20,
         "media": [],
         "title": "True False Not Given",
@@ -162,6 +182,18 @@
                 "q": "question",
                 "a": [],
                 "correct_ans": 2,
+                "explanation": "explanation why this is the correct answer"
+            },
+            {
+                "q": "question",
+                "a": [],
+                "correct_ans": 2,
+                "explanation": "explanation why this is the correct answer"
+            },
+            {
+                "q": "question",
+                "a": [],
+                "correct_ans": 0,
                 "explanation": "explanation why this is the correct answer"
             },
             {

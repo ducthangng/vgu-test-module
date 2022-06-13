@@ -9,6 +9,7 @@ import ClassroomLayout from '../pages/Layout/ClassroomLayout';
 import TestCardPage from '../pages/TestSelection';
 import GroupSelection from '../pages/GroupSelection';
 import Test from '../pages/Test';
+import NotFound404 from '../pages/NotFound404';
 import MockTestSelection from '../pages/MockTestSelection';
 import { AdminEC, StudentEC } from '../utils/models/Guard';
 
@@ -81,25 +82,20 @@ export default function AppRoute() {
             </Route>
           </Route>
 
-          {/* not found */}
-          {/* <Route path="*" element={<NotFound />} /> */}
+          {/* test routes */}
+          <Route path="test">
+            <Route
+              path="do/*"
+              element={
+                <TestProvider>
+                  <Test reviewMode={false} />
+                </TestProvider>
+              }
+            />
+          </Route>
 
-          <Route
-            path="test/review/*"
-            element={
-              <TestProvider>
-                <Test reviewMode={true} />
-              </TestProvider>
-            }
-          />
-          <Route
-            path="test/do/*"
-            element={
-              <TestProvider>
-                <Test reviewMode={false} />
-              </TestProvider>
-            }
-          />
+          {/* 404 Not Found */}
+          <Route path="*" element={<NotFound404 />} />
         </Routes>
       </CookiesProvider>
     </BrowserRouter>

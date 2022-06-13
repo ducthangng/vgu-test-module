@@ -5,16 +5,19 @@ import LoadingOverlay from 'react-loading-overlay-ts';
 import TestHeader from '../components/test/TestHeader';
 import ListeningTest from '../components/test/ListeningTest';
 import ReadingTest from '../components/test/ReadingTest';
+import RetakeTestModal from '../components/test/RetakeTestModal';
+import ResultModal from '../components/test/ResultModal';
 // interfaces
 import SectionAnswer from '../interfaces/test/SectionAnswer.interface';
 import SubmitData from '../interfaces/test/SubmitData.interface';
 // routing
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 // context
 import { useTestContext } from '../context/test/TestContext';
 // fake data
-// import data from '../api/mockListeningData.json';
-import data from '../api/mockReadingData.json';
+import data from '../api/mockListeningData.json';
+// import data from '../api/mockReadingData.json';
+import mockPreTestData from '../api/mockPreTestData.json';
 
 /* COMPONENT */
 export default function Test(props: { reviewMode: boolean }) {
@@ -26,6 +29,8 @@ export default function Test(props: { reviewMode: boolean }) {
     setReviewMode,
     isLoading,
     setIsLoading,
+    waitModal,
+    setWaitModal,
     testData,
     submitData,
     setTestData,
@@ -34,10 +39,13 @@ export default function Test(props: { reviewMode: boolean }) {
 
   // test data
   let totalTime: number | undefined = undefined;
+  const [submitted, setSubmitted] = useState(false);
+  const [isDone, setIsDone] = useState(true);
   const [timeLeft, setTimeLeft] = useState<string>('');
   const [intervalId, setIntervalId] = useState<number | undefined>(undefined);
   const [userAnswers, setUserAnswers] = useState<SectionAnswer[]>([]);
   const submitDataRef = useRef<SubmitData>();
+  const waitModalRef = useRef(waitModal);
 
   //fetch data function, currently it only sets mock data
   const fetchData = () => {
@@ -65,6 +73,8 @@ export default function Test(props: { reviewMode: boolean }) {
       id: data.id,
       sections: newSections,
     });
+    setIsDone(mockPreTestData.isDone);
+    setWaitModal(isDone);
     // somehow totalTime only works as a normal variable, rather than a state or context state
     totalTime = reviewMode ? 0 : 60;
   };
@@ -75,6 +85,11 @@ export default function Test(props: { reviewMode: boolean }) {
     setIsLoading(true);
   }, []);
 
+  // update waitModalRef when waitModal changes
+  useEffect(() => {
+    waitModalRef.current = waitModal;
+  }, [waitModal]);
+
   // update submitDataRef when submitData changes
   useEffect(() => {
     submitDataRef.current = submitData;
@@ -82,7 +97,7 @@ export default function Test(props: { reviewMode: boolean }) {
 
   //countdown function
   const countdown = () => {
-    if (totalTime == undefined || isLoading) {
+    if (totalTime == undefined || isLoading || waitModalRef.current) {
       return;
     }
 
@@ -121,8 +136,9 @@ export default function Test(props: { reviewMode: boolean }) {
         setIsLoading(false);
         console.log('submit!');
         console.log(submitDataRef.current);
-        setReviewMode(true);
-        navigate('../test/review/1');
+        // send submitted data to server here, instead of just console log
+        setSubmitted(true);
+        setWaitModal(true);
       };
 
   // intialize userAnswer
@@ -142,6 +158,7 @@ export default function Test(props: { reviewMode: boolean }) {
   return (
     <div>
       <Routes>
+        <Route index element={<Navigate to="1" replace={true} />} />
         <Route
           path=":id"
           element={
@@ -151,6 +168,8 @@ export default function Test(props: { reviewMode: boolean }) {
               text="Your test is loading. Please be patient..."
             >
               <div>
+                {submitted && !reviewMode && <ResultModal />}
+                {isDone && !reviewMode && <RetakeTestModal />}
                 <TestHeader timeLeft={timeLeft} handleSubmit={handleSubmit} />
                 {testData.type === 'listening' && (
                   <ListeningTest

@@ -62,15 +62,15 @@ export default function TrueFalseSection(props: TrueFalseSectionProps) {
                   reviewMode
                     ? submitData.sections[props.sectionIndex - 1].answers[
                         index
-                      ] === question.correct_ans
-                      ? 'bg-green-500'
-                      : 'bg-red-500'
+                      ] == question.correct_ans
+                      ? 'bg-green-300'
+                      : 'bg-red-300'
                     : 'bg-white'
                 }`}
               >
                 <p className="col-span-3 md:col-span-4">
                   <span className="font-bold">
-                    Câu {props.section.startIndex + index}:
+                    Question {props.section.startIndex + index}:
                   </span>{' '}
                   {question.q}
                 </p>
@@ -85,9 +85,9 @@ export default function TrueFalseSection(props: TrueFalseSectionProps) {
                   className={`w-full text-center py-1`}
                   dropdownClassName="text-center"
                 >
-                  <Option value={1}>T</Option>
-                  <Option value={0}>F</Option>
-                  <Option value={2}>NG</Option>
+                  <Option value={'1'}>T</Option>
+                  <Option value={'0'}>F</Option>
+                  <Option value={'2'}>NG</Option>
                 </Select>
               </div>
             );

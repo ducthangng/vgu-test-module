@@ -9,17 +9,20 @@ import SubmitData from '../../interfaces/test/SubmitData.interface';
 interface InitialStateType {
   isLoading: boolean;
   reviewMode: boolean;
+  waitModal: boolean;
   testData: TestData;
   submitData: SubmitData;
   setTestData: (testData: TestData) => void;
   setSubmitData: (submitData: SubmitData) => void;
   setIsLoading: (isLoading: boolean) => void;
   setReviewMode: (reviewMode: boolean) => void;
+  setWaitModal: (waitModal: boolean) => void;
 }
 
 const initialState: InitialStateType = {
   isLoading: false,
   reviewMode: false,
+  waitModal: false,
   testData: {
     mediaURL: '',
     title: '',
@@ -36,6 +39,7 @@ const initialState: InitialStateType = {
   setSubmitData: () => {},
   setIsLoading: () => {},
   setReviewMode: () => {},
+  setWaitModal: () => {},
 };
 
 const TestContext = createContext<InitialStateType>(initialState);
@@ -71,6 +75,13 @@ const TestProvider = (parameter: { children: React.ReactNode }) => {
     });
   };
 
+  const handleSetWaitModal = (waitModal: boolean) => {
+    dispatch({
+      type: types.SET_WAIT_MODAL,
+      payload: waitModal,
+    });
+  };
+
   return (
     <TestContext.Provider
       value={{
@@ -79,6 +90,7 @@ const TestProvider = (parameter: { children: React.ReactNode }) => {
         setSubmitData: handleSetSubmitData,
         setIsLoading: handleSetIsLoading,
         setReviewMode: handleSetReviewMode,
+        setWaitModal: handleSetWaitModal,
       }}
     >
       {parameter.children}

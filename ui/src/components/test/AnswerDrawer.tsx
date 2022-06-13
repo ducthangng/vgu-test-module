@@ -1,6 +1,11 @@
 import React from 'react';
-import { Form, Drawer, Space, Button } from 'antd';
-import { LeftOutlined, RightOutlined, CheckOutlined } from '@ant-design/icons';
+import { Form, Drawer, Space } from 'antd';
+import {
+  LeftOutlined,
+  RightOutlined,
+  CheckOutlined,
+  HomeOutlined,
+} from '@ant-design/icons';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -29,6 +34,10 @@ export default function AnswerDrawer(props: AnswerDrawerProps) {
 
   const handleNext = () => {
     navigate(`../${parseInt(id as string) + 1}`);
+  };
+
+  const handleHome = () => {
+    navigate('/');
   };
 
   return (
@@ -63,19 +72,25 @@ export default function AnswerDrawer(props: AnswerDrawerProps) {
             <div>
               <button
                 type="button"
-                className="disabled:text-white disabled:bg-gray-300 hidden sm:inline text-white bg-green-500 font-bold hover:bg-primary/75 rounded-lg text-sm px-5 py-2.5 text-center mr-3 sm:mr-0"
-                onClick={props.handleSubmit}
-                disabled={reviewMode}
+                className={`disabled:text-white disabled:bg-gray-300 hidden md:inline text-white ${
+                  reviewMode
+                    ? 'bg-primary hover:bg-primary/75'
+                    : 'bg-green-500 hover:bg-green-400'
+                } font-bold rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0`}
+                onClick={reviewMode ? handleHome : props.handleSubmit}
               >
-                SUBMIT
+                {reviewMode ? 'HOME' : 'SUBMIT'}
               </button>
               <button
                 type="button"
-                className="disabled:text-white disabled:bg-gray-300 inline sm:hidden text-white bg-green-500 font-bold hover:bg-primary/75 rounded-lg text-sm px-4 py-2 text-center mr-3 sm:mr-0"
-                onClick={props.handleSubmit}
-                disabled={reviewMode}
+                className={`disabled:text-white disabled:bg-gray-300 inline md:hidden text-white ${
+                  reviewMode
+                    ? 'bg-primary hover:bg-primary/75'
+                    : 'bg-green-500 hover:bg-green-400'
+                } font-bold rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0`}
+                onClick={reviewMode ? handleHome : props.handleSubmit}
               >
-                <CheckOutlined />
+                {reviewMode ? <HomeOutlined /> : <CheckOutlined />}
               </button>
             </div>
           ) : (
