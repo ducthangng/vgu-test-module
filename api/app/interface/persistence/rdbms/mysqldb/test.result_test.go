@@ -57,7 +57,47 @@ func TestQueryTestResultDetails(t *testing.T) {
 func TestQueryTestResultIndexScore(t *testing.T) {
 	q := NewQuery("TestQueryTestResultIndexScore")
 	ctx := context.Background()
-	res, err := q.QueryTestResultIndexScore(ctx, 1, 1, time.Now(), 1)
+
+	for i := 1; i <= 7; i++ {
+		res, err := q.QueryTestResultIndexScore(ctx, 1, 1, time.Now(), i)
+		require.NoError(t, err)
+		require.NotEmpty(t, res)
+	}
+}
+
+func TestDeleteTestResult(t *testing.T) {
+	q := NewQuery("TestDeleteTestResult")
+	ctx := context.Background()
+	res, err := q.QueryTestResultDetails(ctx, 1)
 	require.NoError(t, err)
 	require.NotEmpty(t, res)
+	for _, item := range res {
+		err = q.DeleteTestResult(ctx, item.ID)
+		require.NoError(t, err)
+	}
+}
+
+func TestArchieveTestResult(t *testing.T) {
+	q := NewQuery("TestArchiveTestResult")
+	ctx := context.Background()
+	res, err := q.QueryTestResultDetails(ctx, 1)
+	require.NoError(t, err)
+	require.NotEmpty(t, res)
+
+	for _, item := range res {
+		err = q.ArchieveTestResult(ctx, item.TestClassID, item.UserID)
+		require.NoError(t, err)
+	}
+}
+
+func TestDeleteTestResultOfClass(t *testing.T) {
+	q := NewQuery("TestDeleteResultOfClass")
+	ctx := context.Background()
+	res, err := q.QueryTestResultDetails(ctx, 1)
+	require.NoError(t, err)
+	require.NotEmpty(t, res)
+	for _, item := range res {
+		err = q.DeleteTestResultOfClass(ctx, item.TestClassID)
+		require.NoError(t, err)
+	}
 }
