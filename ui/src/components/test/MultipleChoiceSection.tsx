@@ -4,7 +4,7 @@ import { RadioChangeEvent } from 'antd/lib/radio';
 
 import { useTestContext } from '../../context/test/TestContext';
 
-import Section from '../../interfaces/test/Section.interface';
+import Section from '../../models/test/Section.interface';
 
 // local interfaces
 interface MultipleChoiceSectionProps {

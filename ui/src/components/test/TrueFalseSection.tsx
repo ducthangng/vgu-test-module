@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useTestContext } from '../../context/test/TestContext';
 
-import Section from '../../interfaces/test/Section.interface';
+import Section from '../../models/test/Section.interface';
 
 import { Select } from 'antd';
 const { Option } = Select;

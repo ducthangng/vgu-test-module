@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 import { useTestContext } from '../../context/test/TestContext';
 
-import Section from '../../interfaces/test/Section.interface';
+import Section from '../../models/test/Section.interface';
 
 import shuffle from '../../utils/shuffleArray';
 
