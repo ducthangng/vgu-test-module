@@ -10,7 +10,7 @@ import (
 
 const (
 	User     = "root"
-	Password = "ducthang"
+	Password = "root"
 	Host     = "127.0.0.1:3306"
 	Name     = "ieltscenter"
 )

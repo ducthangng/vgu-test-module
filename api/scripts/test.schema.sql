@@ -39,11 +39,11 @@ create table testresults (
 	entity_code INT NOT NULL,
 	datecreated DATETIME NOT NULL,
 	score FLOAT NOT NULL,
-	comment varchar(200),
+	comment varchar(255),
 	resultnote varchar(255),
 	dateupdated DATETIME,
 	PRIMARY KEY (id),
-	FOREIGN KEY (test_class_id) REFERENCES class_test (id),
+	FOREIGN KEY (test_class_id) REFERENCES test_class (id),
 	FOREIGN KEY (user_id) REFERENCES users (id),
 	UNIQUE KEY (test_class_id, user_id, datecreated)
 );
@@ -52,8 +52,8 @@ create table testskill (
 	id INT NOT NULL AUTO_INCREMENT,
 	media_url VARCHAR(200),
 	title VARCHAR(200) NOT NULL,
-	content VARCHAR(300) NOT NULL,
-	description VARCHAR(300) NOT NULL,
+	content VARCHAR(255) NOT NULL,
+	description VARCHAR(200) NOT NULL,
 	section MEDIUMTEXT NOT NULL,
 	datecreated DATETIME NOT NULL,
 	dateupdated DATETIME NOT NULL,
@@ -63,11 +63,10 @@ create table testskill (
 
 create table testcomments (
 	result_id INT NOT NULL,
-	question_id INT NOT NULL,
 	comment TEXT,
 	datecreated DATETIME NOT NULL,
 	dateupdated DATETIME,
-	UNIQUE KEY (result_id, question_id),
+	UNIQUE KEY (result_id),
 	FOREIGN KEY (result_id) REFERENCES testresults (id)
 );
 
@@ -77,4 +76,4 @@ create table skilltest_test (
 	PRIMARY KEY (tid, stid),
 	FOREIGN KEY (tid) REFERENCES testbank (id),
 	FOREIGN KEY (stid) REFERENCES testskill (id)
-);
+)

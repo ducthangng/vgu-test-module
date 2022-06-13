@@ -8,8 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This program built for i386-apple-darwin11.3.0
  
 
-# Make data base, printed on Sat Jun 11 16:41:42 2022
- 
+# Make data base, printed on Sun Jun 12 12:41:37 2022
 
 # Variables
 
@@ -46,7 +45,7 @@ __CFBundleIdentifier = com.microsoft.VSCode
 # environment
 P9K_SSH = 0
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/bl/996slnl94lvfmttq9wfr861c0000gn/T/vscode-ipc-302592ee-1438-4f54-8f55-3654641a016c.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/bl/996slnl94lvfmttq9wfr861c0000gn/T/vscode-ipc-e83b7e8a-db42-442c-8d35-dc36fd81b548.sock
 # environment
 VSCODE_CWD = /
 # environment
@@ -70,7 +69,7 @@ ELECTRON_RUN_AS_NODE = 1
 # environment
 UUID = e1765006-b28b-41b7-8d1a-5547e1e204ae
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.sUFERazHUT/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.YLDpjBDaTO/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -116,7 +115,6 @@ SHLVL = 1
 # environment
 JAVA_HOME = /Path/to/your/java/home
 # default
- 
 MAKE_VERSION := 3.81
 # environment
 USER = truongvinh
@@ -181,7 +179,7 @@ MAKELEVEL := 0
 # environment
 CONDA_PREFIX = /Users/truongvinh/opt/anaconda3
 # environment
-VSCODE_PID = 2146
+VSCODE_PID = 1752
 # environment
 _CE_CONDA = 
 # environment
@@ -195,7 +193,7 @@ LANG = C
 
 # Directories
 
-# . (device 16777221, inode 52394226): 16 files, no impossibilities.
+# . (device 16777224, inode 52394226): 16 files, no impossibilities.
 
 # 16 files, no impossibilities in 1 directories.
 
@@ -231,6 +229,7 @@ all:
 # ? := 
 # variable set hash-table stats:
 # Load=8/32=25%, Rehash=0, Collisions=1/10=10%
+ 
 #  commands to execute (from `Makefile', line 9):
 	docker-compose -f docker-compose.yml up
 	
@@ -240,7 +239,6 @@ all:
 #  Modification time never checked.
 #  File has not been updated.
 
- 
 # Not a target:
 .SUFFIXES:
 #  Implicit rule search has not been done.
@@ -304,6 +302,6 @@ down:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Sat Jun 11 16:41:42 2022
+# Finished Make data base on Sun Jun 12 12:41:37 2022
 
  

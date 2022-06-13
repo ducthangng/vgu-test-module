@@ -73,7 +73,7 @@ func (u *UserUsecase) FindUser(ctx context.Context, user usecase_dto.User, HasPa
 		totalRecord = append(totalRecord, record...)
 	}
 
-	if len(user.Username) != 0 {
+	if user.ID != 0 {
 		record, err := u.UserRepository.QueryUser(ctx, user.Username, user.FullName, user.ID, 2, HasPassword)
 		if err != nil {
 			return result, err
