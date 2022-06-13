@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { authApi } from '../api/authApi';
 import { useLocation, RouteProps, Outlet, Navigate } from 'react-router-dom';
-import { GuardEC } from '../utils/models/Guard';
+import { GuardEC } from '../models/Guard';
 
 const Guard = ({ guardEntity }: GuardEC, { ...routeProps }: RouteProps) => {
   const [isAuth, setIsAuth] = useState<null | boolean>(null);

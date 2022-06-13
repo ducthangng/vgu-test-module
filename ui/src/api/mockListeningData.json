@@ -133,7 +133,7 @@
         "type": "fill in the blank",
         "content": [
             {
-                "q": "<form>He <input type='text'/> a teacher. He is twenty-five <input type='text'/> old. He love listening <input type='text'/> music. He can <input type='text'/> football. He often <input type='text'/> fishing on Saturday.</form>",
+                "q": "<form>He <input type='text'/> a teacher. He is twenty-five <input type='text'/> old. He love listening <input type='text'/> music.\n He can <input type='text'/> football. He often <input type='text'/> fishing on Saturday.</form>",
                 "a": [],
                 "correct_ans": "is",
                 "explanation": "explanation why this is the correct answer"

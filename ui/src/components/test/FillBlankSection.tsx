@@ -89,6 +89,7 @@ export default function FillBlankSection(props: FillBlankSectionProps) {
           ))}
       </div>
       <div
+        className="whitespace-pre-line"
         onInput={handleInput}
         ref={htmlContentRef}
         dangerouslySetInnerHTML={{ __html: props.section.content[0].q }}
