@@ -5,7 +5,7 @@ import Footer from './components/Footer';
 import './configs/antd/customized.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { TestProvider } from './context/test/TestContext';
-import MockTestSelection from './pages/MockTestSelection';
+import UserManagement from './pages/UserManagement';
 
 function App() {
   return (
@@ -23,8 +23,8 @@ function App() {
     //     </Routes>
     //   </BrowserRouter>
     // </div>
-
-    <MockTestSelection />
+    //<Test />
+    <UserManagement />
   );
 }
 
