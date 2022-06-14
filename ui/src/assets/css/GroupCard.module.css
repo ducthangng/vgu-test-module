@@ -5,7 +5,7 @@
    height: 35px;
    background-color: #8172D5;
    color: white;
-   top: 88px;
+   top: 80px;
    font-family: Roboto;
    grid-area: a;
    align-self: center;
@@ -16,8 +16,8 @@
     /* Select card test */
     width: 220px;
     border-radius: 20px;
-    border:20px ;
-    height: 300px;
+    border: 20px ;
+    height: 320px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -61,7 +61,7 @@
     grid-template-columns: repeat(0, 1fr);
     grid-template-rows: repeat(1, 1fr);
     gap: 10px;
-    grid-auto-rows: 30px;
+    grid-auto-rows: 80px;
     grid-template-areas: 
         ". a b a ."
         ". a b a .";
