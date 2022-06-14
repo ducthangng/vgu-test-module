@@ -6,11 +6,16 @@ import { Pagination } from 'antd';
 
 //import Component from components
 import TestTable from '../components/TestTable';
-import { TestInformation } from '../models/TestInformation';
+// import { Test } from '../models/Test';
 
-// Language: typescript
-// Path: ui\src\pages\TestManagement.tsx
-const defaultData: TestInformation[] = [
+interface Test {
+  key: string;
+  nameTest: string;
+  testId: number;
+  testDate: string;
+}
+
+const defaultData: Test[] = [
   {
     key: '1',
     nameTest: 'Hai',
@@ -54,7 +59,7 @@ function TestManagement() {
         </Divider>
 
         <Table>
-          <TestTable key={''} nameTest={''} testId={0} testDate={null} />
+          <TestTable key={''} nameTest={''} testId={0} testDate={''} />
         </Table>
         <br></br>
         <Row justify="center">
@@ -68,5 +73,4 @@ function TestManagement() {
     </div>
   );
 }
-
 export default TestManagement;
