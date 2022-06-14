@@ -5,7 +5,7 @@ import { GuardEC } from '../models/Guard';
 import { CookiesProvider } from 'react-cookie';
 import UserLayout from '../pages/Layout/UserLayout';
 import ClassroomLayout from '../pages/Layout/ClassroomLayout';
-import TestCardPage from '../pages/TestSelection';
+import TestSelection from '../pages/TestSelection';
 import GroupSelection from '../pages/GroupSelection';
 import PreTestPage from '../pages/PreTestPage';
 import Test from '../pages/Test';
@@ -34,13 +34,14 @@ export default function AppRoute() {
           {/* public routes */}
           {/* <Route
             path="/"
-            element={<Navigate to="/student/dashboard" replace />}
+            element={<TestSelection/>}
           /> */}
 
           {/* student routes */}
-          <Route path="/student/*" element={<Guard {...StudentGuard} />}>
+          {/* <Route path="/student/*" element={<Guard {...StudentGuard} />}> */}
+          <Route path="/student/*">
             <Route element={<UserLayout />}>
-              <Route path="dashboard/*" element={<TestCardPage />}>
+              <Route path="dashboard/*" element={<TestSelection />}>
                 <Route path="*" element={<Navigate to="" replace />} />
               </Route>
 
