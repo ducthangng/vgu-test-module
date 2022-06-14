@@ -34,7 +34,7 @@ export default function AppRoute() {
           {/* public routes */}
           {/* <Route
             path="/"
-            element={<Navigate to="/student/dashboard" replace />}
+            element={<TestSelection/>}
           /> */}
 
           {/* student routes */}

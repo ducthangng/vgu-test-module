@@ -5,8 +5,8 @@ import LoadingOverlay from 'react-loading-overlay-ts';
 import TestHeader from '../components/test/TestHeader';
 import ListeningTest from '../components/test/ListeningTest';
 import ReadingTest from '../components/test/ReadingTest';
-import RetakeTestModal from '../components/test/RetakeTestModal';
 import ResultModal from '../components/test/ResultModal';
+import ExitWarningModal from '../components/test/ExitWarningModal';
 // interfaces
 import SectionAnswer from '../models/test/SectionAnswer.interface';
 import SubmitData from '../models/test/SubmitData.interface';
@@ -21,8 +21,8 @@ import {
 // context
 import { useTestContext } from '../context/test/TestContext';
 // fake data
-import data from '../api/mockListeningData.json';
-// import data from '../api/mockReadingData.json';
+// import data from '../api/mockListeningData.json';
+import data from '../api/mockReadingData.json';
 import mockPreTestData from '../api/mockPreTestData.json';
 
 /* COMPONENT */
@@ -51,6 +51,7 @@ export default function Test(props: { reviewMode: boolean }) {
   const [timeLeft, setTimeLeft] = useState<string>('');
   const [intervalId, setIntervalId] = useState<number | undefined>(undefined);
   const [userAnswers, setUserAnswers] = useState<SectionAnswer[]>([]);
+  const [exitWarningModalVisible, setExitWarningModalVisible] = useState(false);
   const submitDataRef = useRef<SubmitData>();
   const waitModalRef = useRef(waitModal);
 
@@ -91,6 +92,8 @@ export default function Test(props: { reviewMode: boolean }) {
     setReviewMode(props.reviewMode);
     fetchData();
     setIsLoading(true);
+
+    return () => {};
   }, []);
 
   // update waitModalRef when waitModal changes
@@ -138,8 +141,8 @@ export default function Test(props: { reviewMode: boolean }) {
 
   //submit test function
   const handleSubmit = reviewMode
-    ? (event?: React.MouseEvent<HTMLElement>) => {}
-    : (event?: React.MouseEvent<HTMLElement>) => {
+    ? () => {}
+    : (event?: React.MouseEvent<HTMLElement> | BeforeUnloadEvent) => {
         event?.preventDefault();
         setIsLoading(false);
         console.log('submit!');
@@ -176,8 +179,8 @@ export default function Test(props: { reviewMode: boolean }) {
               text="Your test is loading. Please be patient..."
             >
               <div>
+                {exitWarningModalVisible && <ExitWarningModal />}
                 {submitted && !reviewMode && <ResultModal />}
-                {isDone && !reviewMode && <RetakeTestModal />}
                 <TestHeader timeLeft={timeLeft} handleSubmit={handleSubmit} />
                 {testData.type === 'listening' && (
                   <ListeningTest
