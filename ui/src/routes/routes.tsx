@@ -7,6 +7,7 @@ import UserLayout from '../pages/Layout/UserLayout';
 import ClassroomLayout from '../pages/Layout/ClassroomLayout';
 import TestCardPage from '../pages/TestSelection';
 import GroupSelection from '../pages/GroupSelection';
+import PreTestPage from '../pages/PreTestPage';
 import Test from '../pages/Test';
 import Guard from '../guards/AuthGuard';
 import NotFound404 from '../pages/NotFound404';
