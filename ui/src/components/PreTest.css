@@ -1,0 +1,38 @@
+.container{
+    display: block;
+    height: 77px;
+    width: 1283px;
+    left: 319px;
+    top: 215px;
+    border-radius: 10px;
+    background-color: #8172D5;
+}
+
+.message-box{
+    height: 649px;
+    width: 1283px;
+    left: 319px;
+    top: 312px;
+    border-radius: 10px;
+    background-color: #F2F5F8;
+}
+
+.btn{
+    background-color: #8172D5;
+    color: white;
+    width: 191px;
+    height: 49px;
+    display: block;
+    top: 566px;
+    left: 1031px;
+    text-align: center;
+}
+
+.btn-text{
+    display: relative;
+    font-size: 25px;
+    font-family: Roboto;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}

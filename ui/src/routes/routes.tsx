@@ -11,6 +11,7 @@ import UserLayout from '../pages/Layout/UserLayout';
 import ClassroomLayout from '../pages/Layout/ClassroomLayout';
 import TestCardPage from '../pages/TestSelection';
 import GroupSelection from '../pages/GroupSelection';
+import PreTestPage from '../pages/PreTestPage';
 import Test from '../pages/Test';
 import NotFound404 from '../pages/NotFound404';
 
@@ -50,7 +51,7 @@ export default function AppRoute() {
 
               <Route path="classroom/*">
                 <Route element={<ClassroomLayout />}>
-                  <Route path="" element={<MockTestSelection />} />
+                  <Route path="" element={<PreTestPage />} />
                   {/* <Route path="" element={<Classroom />} /> */}
                   {/* <Route path=":id/home" element={<Classroom />} /> */}
                   {/* <Route path=":id/test" element={<Test />} /> */}
