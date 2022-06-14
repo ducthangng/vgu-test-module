@@ -20,6 +20,7 @@ func NewTestResultUsecase(TestSkillRepository repository.DataService) *TestResul
 }
 
 // Only return the score of each test result.
+// @deprecated
 func (s *TestResultUsecase) GetUserTestResults(ctx context.Context, userID int) (results []usecase_dto.TestResult, err error) {
 	classes, err := s.TestResultRepository.QueryClassOfUser(ctx, userID)
 	if err != nil {
@@ -55,6 +56,7 @@ func (s *TestResultUsecase) GetUserTestResults(ctx context.Context, userID int) 
 }
 
 // Only the test result with information.
+// @deprecated
 func (s *TestResultUsecase) GetUserTestResultDetail(ctx context.Context, testId int) (result usecase_dto.TestResult, err error) {
 	record, err := s.TestResultRepository.QueryTestResultDetails(ctx, testId)
 	if err != nil {
@@ -66,4 +68,21 @@ func (s *TestResultUsecase) GetUserTestResultDetail(ctx context.Context, testId 
 	}
 
 	return
+}
+
+func (s *TestResultUsecase) GetTestResultHeadline(ctx context.Context, testResultId int) (result usecase_dto.TestResult, err error) {
+	record, err := s.TestResultRepository.QueryTestResultDetails(ctx, testResultId)
+	if err != nil {
+		return result, err
+	}
+
+	if len(record) == 0 {
+		return result, nil
+	}
+
+	if err := copier.Copy(&result, &record[0]); err != nil {
+		return result, err
+	}
+
+	return result, err
 }

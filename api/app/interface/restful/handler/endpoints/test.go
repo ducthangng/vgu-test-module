@@ -68,7 +68,7 @@ func GetTestResult(c *gin.Context) {
 	}
 
 	access := registry.BuildTestResultAccessPoint(false, sqlconnection.DBConn)
-	test, err := access.Service.GetUserTestResults(ctx, ID)
+	test, err := access.Service.GetTestResultHeadline(ctx, ID)
 	if err != nil {
 		app.Response(http.StatusInternalServerError, nil, err)
 		return

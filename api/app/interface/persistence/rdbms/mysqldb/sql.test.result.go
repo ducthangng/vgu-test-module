@@ -47,7 +47,7 @@ func refactorTestResultDetail(rows *sql.Rows) (data []entity.TestResult, err err
 		var result entity.TestResult
 		var score sql.NullInt64
 
-		if err := rows.Scan(&result.ID, &result.TestClassID, &result.UserID, &result.EntityCode, &created, &score, &comment, &note, &updated); err != nil {
+		if err := rows.Scan(&result.ID, &result.TestClassID, &result.UserID, &result.EntityCode, &created, &score, &comment, &note, &result.Active, &updated); err != nil {
 			return data, err
 		}
 
@@ -81,8 +81,7 @@ func refactorTestResultIndex(rows *sql.Rows) (data []entity.TestResult, err erro
 		var created string
 		var score sql.NullFloat64
 		var result entity.TestResult
-		var comment sql.NullString
-		var resultNote sql.NullString
+		var comment, resultNote sql.NullString
 
 		if err := rows.Scan(&result.ID, &result.TestClassID, &result.UserID, &result.EntityCode, &created, &score, &comment, &resultNote); err != nil {
 			return data, err
@@ -101,6 +100,7 @@ func refactorTestResultIndex(rows *sql.Rows) (data []entity.TestResult, err erro
 		}
 
 		result.DateCreated = conversion.ConvertMysqlTimeUnixTime(created)
+
 		data = append(data, result)
 	}
 

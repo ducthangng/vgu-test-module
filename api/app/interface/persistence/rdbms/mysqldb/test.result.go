@@ -21,6 +21,10 @@ func (q *Querier) UpdateTestResult(ctx context.Context, data entity.TestResult) 
 // Query TestResultIndex allows you to search according to flag, returns all fields.
 func (q *Querier) QueryTestResultDetails(ctx context.Context, ID int) ([]entity.TestResult, error) {
 	rows, err := q.DB.QueryContext(ctx, "SELECT * FROM testresults WHERE id = ? and active = ?", ID, 1)
+	if err == sql.ErrNoRows {
+		return nil, nil
+	}
+
 	if err != nil {
 		return []entity.TestResult{}, err
 	}
@@ -28,6 +32,10 @@ func (q *Querier) QueryTestResultDetails(ctx context.Context, ID int) ([]entity.
 	data, err := refactorTestResultDetail(rows)
 	if err != nil {
 		return []entity.TestResult{}, err
+	}
+
+	if len(data) == 0 {
+		return nil, nil
 	}
 
 	var result []entity.TestResult
@@ -45,21 +53,25 @@ func (q *Querier) QueryTestResultIndexScore(ctx context.Context, TestClassID int
 	var rows *sql.Rows
 	switch Flag {
 	case 1:
-		rows, err = q.DB.QueryContext(ctx, "SELECT id, test_class_id, user_id, entity_code, datecreated, score, comment, result_note FROM testresults WHERE test_class_id = ? and active = ?", TestClassID, 1)
+		rows, err = q.DB.QueryContext(ctx, "SELECT id, test_class_id, user_id, entity_code, datecreated, score, comment, resultnote FROM testresults WHERE test_class_id = ? and active = ?", TestClassID, 1)
 	case 2:
-		rows, err = q.DB.QueryContext(ctx, "SELECT id, test_class_id, user_id, entity_code, datecreated, score, comment, result_note FROM testresults WHERE user_id = ? and active = ?", UserID, 1)
+		rows, err = q.DB.QueryContext(ctx, "SELECT id, test_class_id, user_id, entity_code, datecreated, score, comment, resultnote FROM testresults WHERE user_id = ? and active = ?", UserID, 1)
 	case 3:
-		rows, err = q.DB.QueryContext(ctx, "SELECT id, test_class_id, user_id, entity_code, datecreated, score, comment, result_note FROM testresults WHERE datecreated = ? and active = ?", DateCreate, 1)
+		rows, err = q.DB.QueryContext(ctx, "SELECT id, test_class_id, user_id, entity_code, datecreated, score, comment, resultnote FROM testresults WHERE datecreated = ? and active = ?", DateCreate, 1)
 	case 4:
-		rows, err = q.DB.QueryContext(ctx, "SELECT id, test_class_id, user_id, entity_code, datecreated, score, comment, result_note FROM testresults WHERE test_class_id = ? AND user_id = ? AND active = ?", TestClassID, UserID, 1)
+		rows, err = q.DB.QueryContext(ctx, "SELECT id, test_class_id, user_id, entity_code, datecreated, score, comment, resultnote FROM testresults WHERE test_class_id = ? AND user_id = ? AND active = ?", TestClassID, UserID, 1)
 	case 5:
-		rows, err = q.DB.QueryContext(ctx, "SELECT id, test_class_id, user_id, entity_code, datecreated, score, comment, result_note FROM testresults WHERE test_class_id = ? AND datecreated = ? AND active = ?", TestClassID, DateCreate, 1)
+		rows, err = q.DB.QueryContext(ctx, "SELECT id, test_class_id, user_id, entity_code, datecreated, score, comment, resultnote FROM testresults WHERE test_class_id = ? AND datecreated = ? AND active = ?", TestClassID, DateCreate, 1)
 	case 6:
-		rows, err = q.DB.QueryContext(ctx, "SELECT id, test_class_id, user_id, entity_code, datecreated, score, comment, result_note FROM testresults WHERE user_id = ? AND datecreated = ? AND active = ?", UserID, DateCreate, 1)
+		rows, err = q.DB.QueryContext(ctx, "SELECT id, test_class_id, user_id, entity_code, datecreated, score, comment, resultnote FROM testresults WHERE user_id = ? AND datecreated = ? AND active = ?", UserID, DateCreate, 1)
 	case 7:
-		rows, err = q.DB.QueryContext(ctx, "SELECT id, test_class_id, user_id, entity_code, datecreated, score, comment, result_note FROM testresults WHERE test_class_id = ? AND user_id = ? AND datecreated = ? AND active = ?", TestClassID, UserID, DateCreate, 1)
+		rows, err = q.DB.QueryContext(ctx, "SELECT id, test_class_id, user_id, entity_code, datecreated, score, comment, resultnote FROM testresults WHERE test_class_id = ? AND user_id = ? AND datecreated = ? AND active = ?", TestClassID, UserID, DateCreate, 1)
 	default:
 		return nil, errors.New("error flag not found")
+	}
+
+	if err == sql.ErrNoRows {
+		return nil, nil
 	}
 
 	if err != nil {

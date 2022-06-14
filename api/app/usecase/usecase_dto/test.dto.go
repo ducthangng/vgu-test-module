@@ -1,21 +1,14 @@
 package usecase_dto
 
-type UserTestResultResponse struct {
-	ID      int    `json:"test_result_id"`
-	UserID  int    `json:"user_id"`
-	Score   int    `json:"score"`
-	Comment string `json:"comment"`
-}
-
 type TestResult struct {
 	ID          int    `json:"id"`
-	TestClassID int    `json:"test_class_id"`
-	UserID      int    `json:"user_id"`
-	EntityCode  int    `json:"entity_code"`
-	DateCreated int64  `json:"datecreated"`
+	TestClassID int    `json:"testClassId"`
+	UserID      int    `json:"userId"`
+	EntityCode  int    `json:"entityCode"`
+	DateCreated int64  `json:"dateCreated"`
 	Score       int    `json:"score"`
 	Comment     string `json:"comment"`
-	ResultNote  string `json:"result_note"`
+	ResultNote  string `json:"resultNote"`
 }
 
 type (

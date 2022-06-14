@@ -20,7 +20,8 @@ import (
 func UserHandler(c *gin.RouterGroup) {
 	c.GET("/", GetUserInfo)
 	c.GET("/class", GetUserClass)
-	c.GET("/test_result", ReviewTestResult)
+	c.GET("/test_answer", ReviewTestAnswer)
+	c.GET("/test_result", GetAllTestResult)
 
 	c.PUT("/", UpdateUser)
 }
@@ -90,7 +91,7 @@ func GetUserClass(c *gin.Context) {
 	app.Response(http.StatusOK, classes, nil)
 }
 
-func ReviewTestResult(c *gin.Context) {
+func ReviewTestAnswer(c *gin.Context) {
 	app := gctx.Gin{C: c}
 	ctx := context.Background()
 
@@ -107,6 +108,32 @@ func ReviewTestResult(c *gin.Context) {
 
 	access := registry.BuildUserAccessPoint(false, sqlconnection.DBConn)
 	result, err := access.Service.ReviewTestResult(ctx, ID)
+	if err != nil {
+		app.Response(http.StatusInternalServerError, 0, err)
+		return
+	}
+
+	app.Response(http.StatusOK, result, nil)
+}
+
+func GetAllTestResult(c *gin.Context) {
+	app := gctx.Gin{C: c}
+	ctx := context.Background()
+
+	resultID := c.Query("user_id")
+	if resultID == "" {
+		app.Response(http.StatusOK, 0, e.ErrorInputInvalid)
+		return
+	}
+
+	ID, err := strconv.Atoi(resultID)
+	if err != nil {
+		app.Response(http.StatusInternalServerError, 0, err)
+		return
+	}
+
+	access := registry.BuildUserAccessPoint(false, sqlconnection.DBConn)
+	result, err := access.Service.FindAllUserTestResult(ctx, ID)
 	if err != nil {
 		app.Response(http.StatusInternalServerError, 0, err)
 		return
