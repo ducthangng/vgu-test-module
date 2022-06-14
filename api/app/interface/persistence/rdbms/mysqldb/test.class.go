@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"server/app/domain/entity"
-	"strings"
 )
 
 func (q *Querier) AssignTestClass(ctx context.Context, TestClass entity.TestClassRelation) error {
@@ -15,11 +14,7 @@ func (q *Querier) AssignTestClass(ctx context.Context, TestClass entity.TestClas
 
 	_, err = stmt.ExecContext(ctx, TestClass.TestID, TestClass.ClassID)
 	if err != nil {
-		if (strings.Index(err.Error(), "1062")) != 0 {
-			return nil
-		} else {
-			return err
-		}
+		return err
 	}
 
 	return nil

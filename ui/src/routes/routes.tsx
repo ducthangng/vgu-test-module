@@ -15,7 +15,7 @@ import Test from '../pages/Test';
 import NotFound404 from '../pages/NotFound404';
 
 import MockTestSelection from '../pages/MockTestSelection';
-import TestInformation from '../pages/TestManagement';
+import TestManagement from '../pages/TestManagement';
 import UserManagement from '../pages/UserManagement';
 
 import { AdminEC, StudentEC } from '../models/Guard';
@@ -36,10 +36,10 @@ export default function AppRoute() {
       <CookiesProvider>
         <Routes>
           {/* public routes */}
-          <Route
+          {/* <Route
             path="/"
             element={<Navigate to="/student/dashboard" replace />}
-          />
+          /> */}
 
           {/* student routes */}
           <Route path="/student/*">
@@ -96,7 +96,7 @@ export default function AppRoute() {
 
           {/* admin view test information */}
           <Route path="testmanagement/">
-            <Route element={<TestInformation />} />
+            <Route element={<TestManagement />} />
           </Route>
 
           {/* test routes */}

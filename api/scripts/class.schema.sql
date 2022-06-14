@@ -19,6 +19,7 @@ create table test_class (
 	cid INT NOT NULL,
 	tid INT NOT NULL,
 	primary key (id),
+	UNIQUE(cid, tid),
 	FOREIGN KEY (cid) REFERENCES classes (id),
 	FOREIGN KEY (tid) REFERENCES testbank (id)
 );

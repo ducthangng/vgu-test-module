@@ -28,7 +28,7 @@ const UserProfileCard: React.FC<UserCardProps> = ({
       <Card hoverable className={styles.card}>
         <Avatar size="large" icon={<UserOutlined />} />
 
-        <div className={styles.wrapper}>
+        {/* <div className={styles.wrapper}>
           id={id}
           title={fullname}
           email={email}
@@ -36,7 +36,7 @@ const UserProfileCard: React.FC<UserCardProps> = ({
           address={address}
           dob={dob}
           style={{ alignItems: 'center' }}
-        </div>
+        </div> */}
       </Card>
     </Form>
   );

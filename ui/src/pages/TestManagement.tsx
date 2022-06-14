@@ -31,7 +31,7 @@ const defaultData: TestInformation[] = [
   },
 ];
 
-function TestInformation() {
+function TestManagement() {
   return (
     <div
       style={{
@@ -68,4 +68,5 @@ function TestInformation() {
     </div>
   );
 }
-export default TestInformation;
+
+export default TestManagement;
