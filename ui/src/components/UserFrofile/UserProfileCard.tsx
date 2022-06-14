@@ -1,9 +1,8 @@
-import { UserOutlined } from '@ant-design/icons';
-import { Avatar, Card, Form } from 'antd';
-
 import React from 'react';
-//import { User } from '../utils/models/User';
-import styles from '../../assets/css/GroupCard.module.css';
+import { UserOutlined } from '@ant-design/icons';
+import { Avatar, Card, Image, Typography, Space } from 'antd';
+import styles from '../../assets/css/UserProfile.module.css';
+const { Title, Text } = Typography;
 
 interface UserCardProps {
   id: number;
@@ -24,21 +23,23 @@ const UserProfileCard: React.FC<UserCardProps> = ({
   dob,
 }) => {
   return (
-    <Form>
-      <Card hoverable className={styles.card}>
-        <Avatar size="large" icon={<UserOutlined />} />
+    <div className={styles.content}>
+      <Image
+        width={250}
+        src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+        style={{ borderRadius: '50%' }}
+      />
 
-        {/* <div className={styles.wrapper}>
-          id={id}
-          title={fullname}
-          email={email}
-          phone={phone}
-          address={address}
-          dob={dob}
-          style={{ alignItems: 'center' }}
-        </div> */}
-      </Card>
-    </Form>
+      <div className={styles.info}>
+        <Title level={3}>{fullname}</Title>
+        <p style={{ fontSize: '20px', color: '#49484a' }}>{email}</p>
+        <Space direction="vertical">
+          <Text strong>{phone}</Text>
+          <Text strong>{address}</Text>
+          <Text strong>{dob}</Text>
+        </Space>
+      </div>
+    </div>
   );
 };
 
