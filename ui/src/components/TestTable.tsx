@@ -5,9 +5,9 @@ import { useState, useEffect } from 'react';
 import { Table, Button, Popconfirm } from 'antd';
 
 //import Component from components
-import { TestInformation } from '../models/TestInformation';
+import { Test } from '../models/Test';
 
-const TestTable: React.FC<TestInformation> = () => {
+const TestTable: React.FC<Test> = () => {
   const [dataSource, setDataSource] = React.useState<any>([]);
 
   const fetchData = async () => {

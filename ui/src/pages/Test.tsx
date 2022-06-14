@@ -11,7 +11,13 @@ import ResultModal from '../components/test/ResultModal';
 import SectionAnswer from '../models/test/SectionAnswer.interface';
 import SubmitData from '../models/test/SubmitData.interface';
 // routing
-import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
+import {
+  Routes,
+  Route,
+  useNavigate,
+  Navigate,
+  useParams,
+} from 'react-router-dom';
 // context
 import { useTestContext } from '../context/test/TestContext';
 // fake data
@@ -23,6 +29,7 @@ import mockPreTestData from '../api/mockPreTestData.json';
 export default function Test(props: { reviewMode: boolean }) {
   // routing
   const navigate = useNavigate();
+  const { testClassId } = useParams();
   // context
   const {
     reviewMode,
@@ -80,6 +87,7 @@ export default function Test(props: { reviewMode: boolean }) {
   };
 
   useEffect(() => {
+    console.log(`testClassId: ${testClassId}`);
     setReviewMode(props.reviewMode);
     fetchData();
     setIsLoading(true);
