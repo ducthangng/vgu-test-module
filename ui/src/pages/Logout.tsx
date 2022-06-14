@@ -1,5 +1,5 @@
-import React from "react";
-import { authApi } from "../../api/authApi";
+import React from 'react';
+import { authApi } from '../api/authApi';
 // import { useNavigate } from "react-router-dom";
 
 /**
@@ -8,9 +8,9 @@ import { authApi } from "../../api/authApi";
 export const LogOut = () => {
   authApi.logout().then((status) => {
     if (status) {
-      window.location.href = "/";
+      window.location.href = '/';
     } else {
-      throw new Error("Network response was not ok.");
+      throw new Error('Network response was not ok.');
     }
   });
 };

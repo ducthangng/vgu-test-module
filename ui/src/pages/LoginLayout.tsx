@@ -1,33 +1,50 @@
-import { Layout } from 'antd'
-import React from 'react'
-import { Outlet } from 'react-router-dom'
-import logo from "../../assets/logo-1.svg";
-
+import { Layout } from 'antd';
+import React from 'react';
+import { Outlet } from 'react-router-dom';
+import logo from '../assets/images/15backward.svg';
 
 export const LoginLayout = () => {
   return (
-    <Layout className="App" style={{ backgroundColor: "white" }}>
+    <Layout className="App" style={{ backgroundColor: 'white' }}>
       <header
         style={{
-          height: "54px",
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
+          height: '54px',
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
         }}
       >
-        <h1 style={{ width: "254px", paddingLeft: "22px", marginTop: "1em"}}>
-          <a href="/">
+        <h1 style={{ width: '254px', paddingLeft: '22px', marginTop: '1em' }}>
+          {/* <a href="/">
             <img src={logo} width="30px"></img>
-          </a>
+          </a> */}
         </h1>
       </header>
       <section>
         <div className="login__body">
-          <Outlet/>
+          <Outlet />
         </div>
       </section>
-      <footer style={{ position: "fixed", bottom: "0", width: "100vw", height: "61px"}}><div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", width: "100vw"}}>GL Education © 2022</div></footer>
-      {/* <img className="image-visible" src={image}></img> */}
+      <footer
+        style={{
+          position: 'fixed',
+          bottom: '0',
+          width: '100vw',
+          height: '61px',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '100vw',
+          }}
+        >
+          GL Education © 2022
+        </div>
+      </footer>
     </Layout>
-  )
-}
+  );
+};
