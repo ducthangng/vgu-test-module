@@ -38,13 +38,15 @@ export default function AppRoute() {
           /> */}
 
           {/* student routes */}
-          <Route path="/student/*" element={<Guard {...StudentGuard} />}>
+          {/* <Route path="/student/*" element={<Guard {...StudentGuard} />}> */}
+          <Route path="/student/*">
             <Route element={<UserLayout />}>
-              <Route path="dashboard/*" element={<TestCardPage />}>
+              <Route path="dashboard/*" element={<UserProfile />}>
                 <Route path="*" element={<Navigate to="" replace />} />
               </Route>
 
               <Route path="classroom/*">
+                <Route path="" element={<GroupSelection />} />
                 <Route element={<ClassroomLayout />}>
                   <Route path=":id/home" element={<GroupSelection />} />
                   <Route path=":id/test/:id" element={<MockTestSelection />} />
@@ -52,7 +54,7 @@ export default function AppRoute() {
                 <Route path="*" element={<Navigate to="" replace />} />
               </Route>
 
-              <Route path="account/*" element={<UserProfile />} />
+              {/* <Route path="account/*" element={<UserProfile />} /> */}
             </Route>
 
             <Route path="*" element={<Navigate to="dashboard" replace />} />

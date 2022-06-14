@@ -3,7 +3,7 @@ import { Avatar, Card, Form } from 'antd';
 
 import React from 'react';
 //import { User } from '../utils/models/User';
-import styles from '../assets/css/GroupCard.module.css';
+import styles from '../../assets/css/GroupCard.module.css';
 
 interface UserCardProps {
   id: number;

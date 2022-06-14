@@ -69,7 +69,7 @@ func Login(c *gin.Context) {
 func Logout(c *gin.Context) {
 	app := gctx.Gin{C: c}
 	app.C.SetCookie("gledu", "", -1, "/", setting.CookieDomain, setting.CookieSecure, setting.CookieHTTPS)
-	app.Response(http.StatusOK, 0, nil)
+	app.Response(http.StatusOK, 1, nil)
 }
 
 func ValidateRole(c *gin.Context) {
