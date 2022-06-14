@@ -1,6 +1,5 @@
 import React from 'react';
 import TestCard from '../components/TestCard';
-import { Row, Divider } from 'antd';
 
 import { Pagination } from 'antd';
 import { TestCardData } from '../models/TestCardData';
@@ -58,7 +57,7 @@ const defaultData: TestCardData[] = [
 
 function TestSelection() {
   return (
-    <div className="w-2/3 text-xl font-black">
+    <div className="w-5/6 text-xl font-black">
       <div>Choose the test</div>
 
       <div>

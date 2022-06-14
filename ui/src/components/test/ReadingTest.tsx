@@ -71,6 +71,7 @@ export default function ReadingTest(props: ReadingTestProps) {
 
   useEffect(() => {
     setIsLoading(false);
+    console.log(props.passage);
   }, []);
 
   return (
@@ -79,9 +80,13 @@ export default function ReadingTest(props: ReadingTestProps) {
         <div className="md:h-screen flex content-center place-content-center">
           <div className="md:grid md:grid-cols-2 md:gap-10 p-7 md:p-10 rounded-lg w-full md:px-50 bg-white overflow-hidden shadow-lg">
             <div className="md:border-r-2 md:pr-8 md:overflow-y-scroll">
-              <h1 className="text-center font-bold text-4xl">{props.title}</h1>
-              <img className="py-10" src={props.illustration} />
-              <p className="whitespace-pre-line">{props.passage}</p>
+              <h1 className="text-center font-bold text-2xl">{props.title}</h1>
+              <div className="flex justify-center">
+                <img className="py-10 w-11/12" src={props.illustration} />
+              </div>
+              <p className="whitespace-pre-line">
+                {props.passage.replaceAll('\\n', '\n\n')}
+              </p>
             </div>
 
             <div className="hidden md:block pr-8 overflow-y-scroll">

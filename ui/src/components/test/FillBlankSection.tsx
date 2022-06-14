@@ -24,6 +24,7 @@ export default function FillBlankSection(props: FillBlankSectionProps) {
       for (let i = 0; i < inputList.length; i++) {
         inputList[i].classList.add('border');
         inputList[i].classList.add('text-center');
+        inputList[i].classList.add('mx-1');
         //sync input elements' values with submitData
         inputList[i].value = submitData.sections[props.sectionIndex - 1]
           .answers[i]
@@ -34,12 +35,22 @@ export default function FillBlankSection(props: FillBlankSectionProps) {
           // disable inputs in review mode
           inputList[i].setAttribute('disabled', '');
           // if correct, color green, otherwise red
-          if (inputList[i].value == props.section.content[i].correct_ans) {
+          if (inputList[i].value == props.section.content[i].correctAns) {
             inputList[i].classList.add('bg-green-300');
           } else {
             inputList[i].classList.add('bg-red-300');
           }
         }
+      }
+
+      //get h2 element
+      let h2List = Array.from(
+        htmlContentRef.current.getElementsByTagName('h2')
+      );
+      // style them, make disabled if in review mode
+      for (let i = 0; i < h2List.length; i++) {
+        h2List[i].classList.add('text-lg');
+        h2List[i].classList.add('font-bold');
       }
     }
   }, []);
@@ -83,7 +94,9 @@ export default function FillBlankSection(props: FillBlankSectionProps) {
         {props.section.media &&
           props.section.media.map((image) => (
             <div className="flex flex-col items-center">
-              <img src={image.content} className="" />
+              <div className="flex justify-center">
+                <img className="py-10 w-11/12" src={image.content} />
+              </div>
               <p className="mb-10 italic">{image.title}</p>
             </div>
           ))}

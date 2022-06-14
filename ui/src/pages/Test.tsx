@@ -22,8 +22,10 @@ import {
 import { useTestContext } from '../context/test/TestContext';
 // fake data
 // import data from '../api/mockListeningData.json';
-import data from '../api/mockReadingData.json';
+// import data from '../api/mockReadingData.json';
 import mockPreTestData from '../api/mockPreTestData.json';
+// fetches
+import { testApi } from '../api/testApi';
 
 /* COMPONENT */
 export default function Test(props: { reviewMode: boolean }) {
@@ -56,44 +58,48 @@ export default function Test(props: { reviewMode: boolean }) {
   const waitModalRef = useRef(waitModal);
 
   //fetch data function, currently it only sets mock data
-  const fetchData = () => {
-    let newTestData = {
-      mediaURL: data.mediaURL,
-      title: data.title,
-      content: data.content,
-      description: data.description,
-      type: data.type,
-      sections: data.sections,
-    };
+  const fetchData = async () => {
+    try {
+      let data = await testApi.doTest(testClassId as string);
 
-    let newSections = [];
-    for (let i = 0; i < data.sections.length; i++) {
-      let newSection = {
-        startIndex: data.sections[i]?.startIndex,
-        endIndex: data.sections[i]?.endIndex,
-        answers: [],
+      console.log('data:');
+      console.log(data);
+
+      let newTestData = {
+        mediaURL: data.mediaURL,
+        title: data.title,
+        content: data.content,
+        description: data.description,
+        type: data.type,
+        sections: data.sections,
       };
-      newSections.push(newSection);
-    }
+      let newSections = [];
+      for (let i = 0; i < data.sections.length; i++) {
+        let newSection = {
+          startIndex: data.sections[i]?.startIndex,
+          endIndex: data.sections[i]?.endIndex,
+          answers: [],
+        };
+        newSections.push(newSection);
 
-    setTestData(newTestData);
-    setSubmitData({
-      id: data.id,
-      sections: newSections,
-    });
-    setIsDone(mockPreTestData.isDone);
-    setWaitModal(isDone);
-    // somehow totalTime only works as a normal variable, rather than a state or context state
-    totalTime = reviewMode ? 0 : 60;
+        setTestData(newTestData);
+        setSubmitData({
+          id: data.id,
+          sections: newSections,
+        });
+        setIsDone(mockPreTestData.isDone);
+        // somehow totalTime only works as a normal variable, rather than a state or context state
+        totalTime = reviewMode ? 0 : 60;
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
-    console.log(`testClassId: ${testClassId}`);
     setReviewMode(props.reviewMode);
     fetchData();
     setIsLoading(true);
-
-    return () => {};
   }, []);
 
   // update waitModalRef when waitModal changes
@@ -142,14 +148,22 @@ export default function Test(props: { reviewMode: boolean }) {
   //submit test function
   const handleSubmit = reviewMode
     ? () => {}
-    : (event?: React.MouseEvent<HTMLElement> | BeforeUnloadEvent) => {
+    : async (event?: React.MouseEvent<HTMLElement> | BeforeUnloadEvent) => {
         event?.preventDefault();
         setIsLoading(false);
-        console.log('submit!');
-        console.log(submitDataRef.current);
+        try {
+          let response = await testApi.submitTest(
+            submitDataRef.current as SubmitData
+          );
+          console.log(response);
+          setSubmitted(true);
+          setWaitModal(true);
+        } catch (error) {
+          console.log(error);
+        }
+        // console.log('submit!');
+        // console.log(submitDataRef.current);
         // send submitted data to server here, instead of just console log
-        setSubmitted(true);
-        setWaitModal(true);
       };
 
   // intialize userAnswer

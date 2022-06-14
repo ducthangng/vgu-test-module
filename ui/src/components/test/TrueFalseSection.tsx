@@ -32,6 +32,8 @@ export default function TrueFalseSection(props: TrueFalseSectionProps) {
           ...submitData,
           sections: newSubmitDataSections,
         };
+        console.log(newChosenAnswers);
+        console.log(props.section.content[index].correctAns);
         setSubmitData(newSubmitData);
       };
 
@@ -46,7 +48,9 @@ export default function TrueFalseSection(props: TrueFalseSectionProps) {
         {props.section.media &&
           props.section.media.map((image, index) => (
             <div key={index} className="flex flex-col items-center">
-              <img src={image.content} className="" />
+              <div className="flex justify-center">
+                <img className="py-10 w-11/12" src={image.content} />
+              </div>
               <p className="mb-10 italic">{image.title}</p>
             </div>
           ))}
@@ -62,7 +66,7 @@ export default function TrueFalseSection(props: TrueFalseSectionProps) {
                   reviewMode
                     ? submitData.sections[props.sectionIndex - 1].answers[
                         index
-                      ] == question.correct_ans
+                      ] == question.correctAns
                       ? 'bg-green-300'
                       : 'bg-red-300'
                     : 'bg-white'
@@ -85,9 +89,9 @@ export default function TrueFalseSection(props: TrueFalseSectionProps) {
                   className={`w-full text-center py-1`}
                   dropdownClassName="text-center"
                 >
-                  <Option value={'1'}>T</Option>
-                  <Option value={'0'}>F</Option>
-                  <Option value={'2'}>NG</Option>
+                  <Option value={'true'}>T</Option>
+                  <Option value={'false'}>F</Option>
+                  <Option value={'not given'}>NG</Option>
                 </Select>
               </div>
             );

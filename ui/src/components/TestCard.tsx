@@ -1,15 +1,10 @@
 import { Card, Form, Button } from 'antd';
 import React from 'react';
 import test from '../assets/images/test-cover.jpg';
-import mail from '../assets/images/ic_contact_mail_24px.png';
-import calendar from '../assets/images/ic_event_available_24px.png';
 import { TestCardData } from '../models/TestCardData';
 
 import { TeamOutlined, CalendarOutlined } from '@ant-design/icons';
 
-// TODO: CSS need to be changed to /src/assets/css.
-// Change the CSS file to module.
-// See GroupCard for more info.
 const TestCard: React.FC<TestCardData> = ({
   testId,
   groupId,
@@ -19,9 +14,9 @@ const TestCard: React.FC<TestCardData> = ({
 }) => {
   return (
     <div className="my-3">
-      <Card hoverable className="h-40 rounded rounded-xl">
+      <Card hoverable className="h-50 rounded rounded-xl">
         <div className="grid grid-cols-9">
-          <div className="col-span-2 overflow-y-hidden">
+          <div className="col-span-2 overflow-y-hidden flex items-center">
             <img
               alt="example"
               src={test}
@@ -29,9 +24,9 @@ const TestCard: React.FC<TestCardData> = ({
             />
           </div>
 
-          <div className="col-span-3 grid grid-rows-2 flex justify-center items-center">
-            <div className="text-2xl font-bold"> Test {testId}</div>
-            <p className="font-medium"> {description} </p>
+          <div className="col-span-3 grid grid-rows-2 flex items-start">
+            <div className="text-2xl font-bold">Test {testId}</div>
+            <div className="font-medium"> {description} </div>
           </div>
 
           <div className="col-span-3 grid grid-rows-2 flex justify-center items-center">

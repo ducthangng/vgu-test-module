@@ -8,7 +8,7 @@ export default interface Section {
   content: {
     q: string;
     a: string[];
-    correct_ans: string | number;
+    correctAns: string;
     explanation: string;
   }[];
 }
