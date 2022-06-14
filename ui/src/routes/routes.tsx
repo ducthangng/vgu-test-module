@@ -1,25 +1,20 @@
 import React from 'react';
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-
 import { GuardEC } from '../models/Guard';
-import Guard from '../guards/AuthGuard';
-
 import { CookiesProvider } from 'react-cookie';
-
 import UserLayout from '../pages/Layout/UserLayout';
 import ClassroomLayout from '../pages/Layout/ClassroomLayout';
 import TestCardPage from '../pages/TestSelection';
 import GroupSelection from '../pages/GroupSelection';
 import Test from '../pages/Test';
+import Guard from '../guards/AuthGuard';
 import NotFound404 from '../pages/NotFound404';
-
 import MockTestSelection from '../pages/MockTestSelection';
+import UserProfile from '../pages/UserProfile';
 import TestManagement from '../pages/TestManagement';
 import UserManagement from '../pages/UserManagement';
-
 import { AdminEC, StudentEC } from '../models/Guard';
-
 import { TestProvider } from '../context/test/TestContext';
 
 export default function AppRoute() {
@@ -42,7 +37,7 @@ export default function AppRoute() {
           /> */}
 
           {/* student routes */}
-          <Route path="/student/*">
+          <Route path="/student/*" element={<Guard {...StudentGuard} />}>
             <Route element={<UserLayout />}>
               <Route path="dashboard/*" element={<TestCardPage />}>
                 <Route path="*" element={<Navigate to="" replace />} />
@@ -50,35 +45,33 @@ export default function AppRoute() {
 
               <Route path="classroom/*">
                 <Route element={<ClassroomLayout />}>
-                  <Route path="" element={<MockTestSelection />} />
-                  {/* <Route path="" element={<Classroom />} /> */}
-                  {/* <Route path=":id/home" element={<Classroom />} /> */}
-                  {/* <Route path=":id/test" element={<Test />} /> */}
+                  <Route path=":id/home" element={<GroupSelection />} />
+                  <Route path=":id/test/:id" element={<MockTestSelection />} />
                 </Route>
-
                 <Route path="*" element={<Navigate to="" replace />} />
               </Route>
 
-              {/* <Route path="account/*" element={<Account />} /> */}
+              <Route path="account/*" element={<UserProfile />} />
             </Route>
 
-            {/* add new user routes here */}
             <Route path="*" element={<Navigate to="dashboard" replace />} />
           </Route>
 
           {/* admin routes */}
           <Route path="/admin/*" element={<Guard {...AdminGuard} />}>
             <Route element={<UserLayout />}>
-              {/* <Route path="dashboard/*">
-		      <Route path="" element={<AdminDashboardLayout />} />
-		      <Route path="usercontrol" element={<ControlLayout />} />
-		    </Route> */}
+              <Route path="dashboard/*">
+                <Route path="user" element={<UserManagement />} />
+                <Route path="test" element={<TestManagement />} />
+              </Route>
 
               <Route path="classroom/*">
                 <Route element={<ClassroomLayout />}>
-                  {/* <Route path="" element={<Classroom />} /> */}
-                  {/* <Route path=":id/home" element={<Classroom />} /> */}
-                  {/* <Route path=":id/test" element={<Test />} /> */}
+                  <Route path=":id/home" element={<GroupSelection />} />
+                  <Route
+                    path=":classid/test/:testid"
+                    element={<MockTestSelection />}
+                  />
                 </Route>
                 <Route path="*" element={<Navigate to="" replace />} />
               </Route>
@@ -87,16 +80,6 @@ export default function AppRoute() {
               {/* add new admin routes here */}
               <Route path="*" element={<Navigate to="dashboard/" replace />} />
             </Route>
-          </Route>
-
-          {/* admin view user information */}
-          <Route path="userinformation/">
-            <Route element={<UserManagement />} />
-          </Route>
-
-          {/* admin view test information */}
-          <Route path="testmanagement/">
-            <Route element={<TestManagement />} />
           </Route>
 
           {/* test routes */}
