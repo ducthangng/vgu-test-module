@@ -26,7 +26,7 @@ const LeftContentBlock = ({
         </Col>
         <Col lg={11} md={11} sm={11} xs={24}>
           <ContentWrapper>
-            <h1>{title}</h1>
+            <h6>{title}</h6>
             <Content>{content}</Content>
             <ServiceWrapper>
               <Row justify="space-between">

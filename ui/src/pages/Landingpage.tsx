@@ -6,6 +6,7 @@ import IntroButton from '../api/IntroButton.json';
 //import ScrollToTop from "../models/ScrollToTop";
 //import ContentBlock from "../components/contentBlock/index";
 import { Styles } from '../pages/Styles/styles';
+import Header from '../components/Header/Index';
 
 const MiddleBlock = lazy(
   () => import('../components/contentBlock/middleContent/index')
@@ -18,6 +19,7 @@ const Home = () => {
   return (
     <Container>
       <Styles />
+      <Header />
       <ScrollToTop />
       <ContentBlock
         type="left"
@@ -38,7 +40,7 @@ const Home = () => {
         title={'How to improve your English skills?'}
         content={'Pratice with other 100+ online test and 1000+ exercises.'}
         icon="graphs.svg"
-        id="about"
+        id="introduction"
       />
       <ContentBlock
         type="right"
@@ -52,7 +54,7 @@ const Home = () => {
         title={'Why are we?'}
         content={'100+ online test and 1000+ exercises.'}
         icon="waving.svg"
-        id="product"
+        id="about"
       />
     </Container>
   );

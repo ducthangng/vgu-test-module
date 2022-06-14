@@ -39,7 +39,7 @@ export const Styles = createGlobalStyle`
     textarea {
         border-radius: 4px;
         border: 0;
-        background: rgb(241, 242, 243);
+        background: rgb(129, 114, 213);
         transition: all 0.3s ease-in-out;  
         outline: none;
         width: 100%;  
@@ -58,12 +58,12 @@ export const Styles = createGlobalStyle`
     h5,
     h6 {
         font-family: 'Roboto', serif;
-        color: #18216d;
+        color: #8172d5;
         font-size: 56px;
         line-height: 1.18;
 
         @media only screen and (max-width: 890px) {
-          font-size: 47px;
+          font-size: 36px;
         }
       
         @media only screen and (max-width: 414px) {
@@ -73,7 +73,7 @@ export const Styles = createGlobalStyle`
 
     p {
         color: #18216d;
-        font-size: 21px;        
+        font-size: 20px;        
         line-height: 1.41;
     }
 
@@ -84,10 +84,10 @@ export const Styles = createGlobalStyle`
     a {
         text-decoration: none;
         outline: none;
-        color: #2E186A;
+        color: #8172d5;
 
         :hover {
-            color: #2e186a;
+            color: #8172d5;
         }
     }
     
