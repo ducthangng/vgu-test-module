@@ -24,6 +24,7 @@
   },
   "homepage": "https://gitlab.com/galvdat/vgu_tinyprojects/pe2022/pe2022_team-3#readme",
   "devDependencies": {
+    "@types/react": "^18.0.12",
     "@typescript-eslint/eslint-plugin": "^5.20.0",
     "@typescript-eslint/parser": "^5.20.0",
     "eslint": "^8.13.0",
@@ -41,7 +42,10 @@
     ]
   },
   "dependencies": {
+    "antd": "^4.21.1",
+    "i": "^0.3.7",
     "interweave": "^13.0.0",
+    "npm": "^8.12.1",
     "react": "^18.1.0"
   }
 }

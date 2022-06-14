@@ -21,9 +21,11 @@ type UserService interface {
 
 	FindUser(ctx context.Context, user usecase_dto.User, HasPassword bool) (result []usecase_dto.User, err error)
 
-	ReviewTestResult(ctx context.Context, resultId int) (skilltest usecase_dto.SkillTest, err error)
+	ReviewTestResult(ctx context.Context, resultId int) (submittedAnswer usecase_dto.SubmitData, err error)
 
 	FindUserClasses(ctx context.Context, userId int) (classes []usecase_dto.Class, err error)
+
+	FindAllUserTestResult(ctx context.Context, userId int) (results []usecase_dto.TestResult, err error)
 }
 
 type ClassService interface {
@@ -42,6 +44,10 @@ type ClassService interface {
 	QueryClassTestResult(ctx context.Context, classId int, testId int) (results []usecase_dto.TestResult, err error)
 
 	GetClassTest(ctx context.Context, classId int) (tests []usecase_dto.Test, err error)
+
+	AddTest2Class(ctx context.Context, classId int, testId int) (err error)
+
+	RemoveTestClass(ctx context.Context, classId int, testId int) (err error)
 }
 
 type TestService interface {
@@ -50,13 +56,15 @@ type TestService interface {
 
 	QuerySkillTest(ctx context.Context, testId int) (test usecase_dto.SkillTest, err error)
 
-	SubmitTest(ctx context.Context, data usecase_dto.SubmitData, userId int, entityCode int, testClassId int) (testResultId int, err error)
+	SubmitTest(ctx context.Context, data usecase_dto.SubmitData, userId int, entityCode int) (testResultId int, err error)
 }
 
 type TestResultService interface {
 	GetUserTestResults(ctx context.Context, userID int) (results []usecase_dto.TestResult, err error)
 
 	GetUserTestResultDetail(ctx context.Context, testId int) (result usecase_dto.TestResult, err error)
+
+	GetTestResultHeadline(ctx context.Context, testResultId int) (result usecase_dto.TestResult, err error)
 }
 
 type TestSkillService interface {

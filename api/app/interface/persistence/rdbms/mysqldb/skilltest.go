@@ -41,7 +41,7 @@ func (q *Querier) QuerySkillTest(ctx context.Context, id int) (st entity.SkillTe
 	var created, jsonSection string
 	var update sql.NullString
 	err = q.DB.QueryRowContext(ctx, "SELECT * FROM skilltests WHERE id = ?", id).
-		Scan(&st.Id, &st.MediaURL, &st.Title, &st.Content, &st.Description, &jsonSection, &created, &update)
+		Scan(&st.Id, &st.MediaURL, &st.Title, &st.Content, &st.Description, &jsonSection, &st.Type, &created, &update)
 	if err != nil {
 		return st, err
 	}

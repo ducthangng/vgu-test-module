@@ -1,7 +1,7 @@
 import React from 'react';
 
 //import library from antd
-import { Divider, Row, Table } from 'antd';
+import { Divider, Row, Table, Button } from 'antd';
 import { Pagination } from 'antd';
 
 //import Component from components
@@ -45,12 +45,22 @@ function TestManagement() {
     >
       <body>
         <Divider
+          orientation="right"
+          style={{ fontSize: '20px', fontFamily: 'Roboto' }}
+        >
+          <Button type="primary"> Test Information </Button>
+        </Divider>
+
+        <Divider
           orientation="left"
           style={{ fontSize: '26px', fontFamily: 'Roboto' }}
         >
           Test Management
         </Divider>
-        <Table></Table>
+
+        <Table>
+          <TestTable key={''} nameTest={''} testId={0} testDate={''} />
+        </Table>
         <br></br>
         <Row justify="center">
           <Pagination

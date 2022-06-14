@@ -153,12 +153,37 @@ func (c *ClassUsecase) AddMember2Class(ctx context.Context, classId int, userId 
 	}
 }
 
+func (c *ClassUsecase) AddTest2Class(ctx context.Context, classId int, testId int) (err error) {
+	err = c.ClassRepository.AssignTestClass(ctx, entity.TestClassRelation{
+		TestID:  testId,
+		ClassID: classId,
+	})
+
+	if err != nil {
+		return err
+	}
+
+	return
+
+}
+
 func (c *ClassUsecase) RemoveMemberFromClass(ctx context.Context, classId int, userId int) (err error) {
 	err = c.ClassRepository.DeleteUserClass(ctx, classId, userId)
 	if err != nil {
 		return err
 	}
 	return nil
+}
+
+// @reduce
+func (c *ClassUsecase) RemoveTestClass(ctx context.Context, classId int, testId int) (err error) {
+	err = c.ClassRepository.DeleteTestClass(ctx, testId, classId)
+	if err != nil {
+		return err
+	}
+
+	return
+
 }
 
 // get all reults of corresponding class and test
@@ -209,6 +234,7 @@ func (c *ClassUsecase) GetClassTest(ctx context.Context, classId int) (tests []u
 	if err != nil {
 		return nil, err
 	}
+
 	for _, item := range records {
 		record_item, err := c.ClassRepository.QueryTestHeadline(ctx, item.TestID, "")
 		if err != nil {
@@ -223,6 +249,7 @@ func (c *ClassUsecase) GetClassTest(ctx context.Context, classId int) (tests []u
 			return nil, err
 		}
 
+		test.TestClassID = item.ID
 		tests = append(tests, test)
 	}
 

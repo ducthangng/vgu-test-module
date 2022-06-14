@@ -5,6 +5,7 @@ import (
 	"server/app/domain/entity"
 	"server/app/domain/repository"
 	"server/app/usecase/usecase_dto"
+	"time"
 
 	"github.com/jinzhu/copier"
 )
@@ -118,7 +119,60 @@ func (u *UserUsecase) FindUserClasses(ctx context.Context, userId int) (classes 
 	return classes, nil
 }
 
-func (u *UserUsecase) ReviewTestResult(ctx context.Context, resultId int) (skilltest usecase_dto.SkillTest, err error) {
+func (u *UserUsecase) ReviewTestResult(ctx context.Context, resultId int) (submittedAnswer usecase_dto.SubmitData, err error) {
+	result, err := u.UserRepository.QueryTestResultDetails(ctx, resultId)
+	if err != nil {
+		return submittedAnswer, err
+	}
 
-	return
+	if len(result) == 0 {
+		return submittedAnswer, nil
+	}
+
+	answers, err := u.UserRepository.FindTestAnswer(ctx, resultId)
+	if err != nil {
+		return submittedAnswer, err
+	}
+
+	if err := copier.Copy(&submittedAnswer, &answers); err != nil {
+		return submittedAnswer, err
+	}
+
+	submittedAnswer.TestClassID = result[0].TestClassID
+	return submittedAnswer, nil
+}
+
+func (u *UserUsecase) FindAllUserTestResult(ctx context.Context, userId int) (results []usecase_dto.TestResult, err error) {
+	classes, err := u.UserRepository.QueryClassOfUser(ctx, userId)
+	if err != nil {
+		return results, err
+	}
+
+	for _, v := range classes {
+		testClassIDs, err := u.UserRepository.QueryTestOfClass(ctx, v)
+		if err != nil {
+			return results, err
+		}
+
+		for _, testclass := range testClassIDs {
+			testResult, err := u.UserRepository.QueryTestResultIndexScore(ctx, testclass.ID, userId, time.Now(), 4)
+			if err != nil {
+				return results, err
+			}
+
+			if len(testResult) == 0 {
+				return results, nil
+			}
+
+			var usecaseTestResult []usecase_dto.TestResult
+			err = copier.Copy(&usecaseTestResult, &testResult)
+			if err != nil {
+				return results, err
+			}
+
+			results = append(results, usecaseTestResult...)
+		}
+	}
+
+	return results, err
 }

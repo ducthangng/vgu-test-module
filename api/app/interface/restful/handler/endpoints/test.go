@@ -68,7 +68,7 @@ func GetTestResult(c *gin.Context) {
 	}
 
 	access := registry.BuildTestResultAccessPoint(false, sqlconnection.DBConn)
-	test, err := access.Service.GetUserTestResults(ctx, ID)
+	test, err := access.Service.GetTestResultHeadline(ctx, ID)
 	if err != nil {
 		app.Response(http.StatusInternalServerError, nil, err)
 		return
@@ -121,20 +121,8 @@ func SubmitTest(c *gin.Context) {
 	ID := c.GetInt("ID")
 	EntityCode := c.GetInt("ID")
 
-	TestClassID := c.Query("test_class_id")
-	if len(TestClassID) == 0 {
-		app.Response(http.StatusInternalServerError, nil, errors.New("test_class_id is required, but empty."))
-		return
-	}
-
-	TCID, err := strconv.Atoi(TestClassID)
-	if err != nil {
-		app.Response(http.StatusInternalServerError, nil, err)
-		return
-	}
-
-	access := registry.BuildTestAccessPoint(false, sqlconnection.DBConn)
-	resultID, err := access.Service.SubmitTest(ctx, submitTest, ID, EntityCode, TCID)
+	access := registry.BuildTestAccessPoint(true, sqlconnection.DBConn)
+	resultID, err := access.Service.SubmitTest(ctx, submitTest, ID, EntityCode)
 	if err != nil {
 		app.Response(http.StatusInternalServerError, nil, err)
 		return

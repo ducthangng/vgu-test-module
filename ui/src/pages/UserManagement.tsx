@@ -1,7 +1,7 @@
 import React from 'react';
 
 // import library from antd
-import { Divider, Row } from 'antd';
+import { Divider, Row, Button } from 'antd';
 import { Pagination } from 'antd';
 
 // import Component from components
@@ -15,6 +15,13 @@ function AdminManagement() {
       }}
     >
       <body>
+        <Divider
+          orientation="right"
+          style={{ fontSize: '20px', fontFamily: 'Roboto' }}
+        >
+          <Button type="primary"> Test Information </Button>
+        </Divider>
+
         <Divider
           orientation="left"
           style={{ fontSize: '26px', fontFamily: 'Roboto' }}

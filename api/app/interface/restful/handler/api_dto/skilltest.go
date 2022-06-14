@@ -40,8 +40,9 @@ type (
 		Content                []Content `json:"content"`
 	}
 	SubmitData struct {
-		ID       int                 `json:"id"`
-		Sections []SubmitDataSection `json:"sections"`
+		ID          int                 `json:"id"`
+		TestClassID int                 `json:"testClassId"`
+		Sections    []SubmitDataSection `json:"sections"`
 	}
 
 	SubmitDataSection struct {

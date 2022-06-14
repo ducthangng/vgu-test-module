@@ -5,7 +5,14 @@ import { useState, useEffect } from 'react';
 import { Table, Button, Popconfirm } from 'antd';
 
 //import Component from components
-import { Test } from '../models/Test';
+// import { Test } from '../models/Test';
+
+interface Test {
+  key: string;
+  nameTest: string;
+  testId: number;
+  testDate: string;
+}
 
 const TestTable: React.FC<Test> = () => {
   const [dataSource, setDataSource] = React.useState<any>([]);
