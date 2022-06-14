@@ -1,17 +1,21 @@
 import { Card, Form, Button } from 'antd';
 import React from 'react';
 import styles from '../assets/css/GroupCard.module.css';
-import { GroupCardData } from '../models/GroupCardData';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { Class } from '../models/Class';
 const { Meta } = Card;
 
-const GroupCard: React.FC<GroupCardData> = ({ title, description }) => {
-  const handleClick = () => {};
+const GroupCard: React.FC<Class> = ({ id, className, info, level }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`${id}/home`);
+  };
 
   return (
     <Form>
       <Card
         hoverable
-        // bordered={true}
         className={styles.card}
         cover={
           <img
@@ -28,8 +32,8 @@ const GroupCard: React.FC<GroupCardData> = ({ title, description }) => {
       >
         <div className={styles.wrapper}>
           <Meta
-            title={title}
-            description={description}
+            title={className}
+            description={info}
             className={styles.content}
             style={{ textAlign: 'center' }}
           />

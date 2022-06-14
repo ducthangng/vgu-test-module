@@ -2,25 +2,40 @@ import React from 'react';
 import GroupCard from '../components/GroupCard';
 import { Row, Divider } from 'antd';
 import { Pagination } from 'antd';
-import { GroupCardData } from '../models/GroupCardData';
+import { Class } from '../models/Class';
 
-const defaultData: GroupCardData[] = [
+const defaultData: Class[] = [
   {
-    // id: 1,
-    title: 'BASIC IELTS CLASS',
-    description: 'Book unique camping experiences on over 300,000 campsites.',
+    id: 1,
+    className: 'BASIC IELTS CLASS',
+    info: 'Book unique camping experiences on over 300,000 campsites.',
+    announcement: '',
+    roomCode: '',
+    level: '',
   },
   {
-    title: 'ADVANCED IELTS CLASS',
-    description: 'Book unique camping experiences on over 300,000 campsites.',
+    id: 2,
+    className: 'ADVANCED IELTS CLASS',
+    info: 'Book unique camping experiences on over 300,000 campsites.',
+    announcement: '',
+    roomCode: '',
+    level: '',
   },
   {
-    title: 'ADVANCED IELTS CLASS',
-    description: 'Book unique camping experiences on over 300,000 campsites.',
+    id: 3,
+    className: 'ADVANCED IELTS CLASS',
+    info: 'Book unique camping experiences on over 300,000 campsites.',
+    announcement: '',
+    roomCode: '',
+    level: '',
   },
   {
-    title: 'ADVANCED IELTS CLASS',
-    description: 'Book unique camping experiences on over 300,000 campsites.',
+    id: 4,
+    className: 'ADVANCED IELTS CLASS',
+    info: 'Book unique camping experiences on over 300,000 campsites.',
+    announcement: '',
+    roomCode: '',
+    level: '',
   },
 ];
 
@@ -32,7 +47,12 @@ function GroupSelection() {
         width: '60%',
       }}
     >
-      <Divider orientation="left">Choose the class</Divider>
+      <Divider
+        orientation="left"
+        style={{ fontSize: '25px', fontFamily: 'Roboto' }}
+      >
+        Choose the class
+      </Divider>
       <Row
         gutter={[20, 20]}
         justify="space-between"
@@ -45,20 +65,22 @@ function GroupSelection() {
                 borderColor: '#d4d4d6',
                 borderWidth: '1px',
                 borderRadius: '20px',
-                // marginRight: '60px',
               }}
             >
-              <GroupCard title={item.title} description={item.description} />
+              <GroupCard
+                id={item.id}
+                className={item.className}
+                info={item.info}
+                announcement={item.announcement}
+                roomCode={item.roomCode}
+                level={item.level}
+              />
             </div>
           );
         })}
       </Row>
       <Row justify="center">
-        <Pagination
-          defaultCurrent={1}
-          total={50}
-          style={{ color: '#8172D5' }}
-        />
+        <Pagination defaultCurrent={1} total={5} style={{ color: '#8172D5' }} />
       </Row>
     </div>
   );
