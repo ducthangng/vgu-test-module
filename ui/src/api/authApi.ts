@@ -8,6 +8,45 @@ const apiUrl = `${BASE_API}`;
  * functions that related to authentication/authorization.
  */
 export const authApi = {
+  register: async (parameter: {
+    fullname: string;
+    username: string;
+    password: string;
+    gender: string;
+  }) => {
+    const payload = parameter;
+
+    const response = await fetch(`${apiUrl}/register`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        throw new Error('Network response was not ok.');
+      })
+      .then((data) => {
+        console.log(data);
+        const err: AppError = data.error;
+        if (err.errorCode !== 0) {
+          throw new Error(err.errorMsg + ' ++ ' + err.errorField);
+        }
+
+        const response: number = data.data;
+        return response;
+      })
+      .catch((err) => {
+        return err;
+      });
+
+    return response;
+  },
   /**
    * Login Function.
    *
@@ -62,9 +101,28 @@ export const authApi = {
     const response = await fetch(`${apiUrl}/logout`, {
       method: 'GET',
       credentials: 'include',
-    });
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
 
-    return response.json();
+        throw new Error('Network response was not ok.');
+      })
+      .then((data) => {
+        const err: AppError = data.error;
+        if (err.errorCode) {
+          return null;
+        }
+
+        const response: number = data.data;
+        return response;
+      })
+      .catch((err) => {
+        return err;
+      });
+
+    return response;
   },
 
   /**
@@ -103,6 +161,33 @@ export const authApi = {
    */
   validateRole: async () => {
     const response = await fetch(`${apiUrl}/validateRole`, {
+      method: 'GET',
+      credentials: 'include',
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        throw new Error('Network response was not ok.');
+      })
+      .then((data) => {
+        const err: AppError = data.error;
+        if (err.errorCode) {
+          return null;
+        }
+
+        return data.data;
+      })
+      .catch((error) => {
+        return error;
+      });
+
+    return response;
+  },
+
+  getId: async () => {
+    const response = await fetch(`${apiUrl}/v1/ID`, {
       method: 'GET',
       credentials: 'include',
     })

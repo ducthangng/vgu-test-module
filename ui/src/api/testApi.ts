@@ -1,17 +1,19 @@
 import { AppError } from '../models/Error';
-import { User } from '../models/User';
-import { Class } from '../models/Class';
+import { Test } from '../models/Test';
+import { Result } from '../models/Result';
+import TestData from '../models/test/TestData.interface';
+import SubmitData from '../models/test/SubmitData.interface';
 
 const BASE_API = process.env.REACT_APP_BASE_API || 'http://localhost:8080';
-const apiUrl = `${BASE_API}/api/v1/user`;
+const apiUrl = `${BASE_API}/api/v1/test`;
 
 /**
- * fetches for user data.
+ * fetches for test data.
  */
-export const userApi = {
-  getInfoByUsername: async (username: string) => {
+export const testApi = {
+  getTest: async (testId: number) => {
     const response = await fetch(
-      `${apiUrl}?` + new URLSearchParams({ username }),
+      `${apiUrl}?` + new URLSearchParams({ test_id: testId.toString() }),
       {
         method: 'GET',
         credentials: 'include',
@@ -31,8 +33,8 @@ export const userApi = {
           throw new Error(err.errorMsg + ' ++ ' + err.errorField);
         }
 
-        const users: User[] = data.data;
-        return users;
+        const test: Test = data.data;
+        return test;
       })
       .catch((err) => {
         return err;
@@ -41,9 +43,9 @@ export const userApi = {
     return response;
   },
 
-  getInfoById: async (id: number) => {
+  doTest: async (testId: number) => {
     const response = await fetch(
-      `${apiUrl}?` + new URLSearchParams({ id: id.toString() }),
+      `${apiUrl}/do?` + new URLSearchParams({ test_id: testId.toString() }),
       {
         method: 'GET',
         credentials: 'include',
@@ -63,8 +65,8 @@ export const userApi = {
           throw new Error(err.errorMsg + ' ++ ' + err.errorField);
         }
 
-        const users: User[] = data.data;
-        return users;
+        const testData: TestData = data.data;
+        return testData;
       })
       .catch((err) => {
         return err;
@@ -73,75 +75,11 @@ export const userApi = {
     return response;
   },
 
-  getInfoByFullname: async (fullname: string) => {
-    const response = await fetch(
-      `${apiUrl}?` + new URLSearchParams({ fullname }),
-      {
-        method: 'GET',
-        credentials: 'include',
-      }
-    )
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        throw new Error('Network response was not ok.');
-      })
-      .then((data) => {
-        console.log(data);
-        const err: AppError = data.error;
-        if (err.errorCode !== 0) {
-          throw new Error(err.errorMsg + ' ++ ' + err.errorField);
-        }
-
-        const users: User[] = data.data;
-        return users;
-      })
-      .catch((err) => {
-        return err;
-      });
-
-    return response;
-  },
-
-  getClass: async (userId: number) => {
-    const response = await fetch(
-      `${apiUrl}/class?` + new URLSearchParams({ user_id: userId.toString() }),
-      {
-        method: 'GET',
-        credentials: 'include',
-      }
-    )
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        throw new Error('Network response was not ok.');
-      })
-      .then((data) => {
-        console.log(data);
-        const err: AppError = data.error;
-        if (err.errorCode !== 0) {
-          throw new Error(err.errorMsg + ' ++ ' + err.errorField);
-        }
-
-        const classes: Class[] = data.data;
-        return classes;
-      })
-      .catch((err) => {
-        return err;
-      });
-
-    return response;
-  },
-
-  updateInfo: async (parameter: User) => {
+  submitTest: async (parameter: SubmitData) => {
     const payload = parameter;
 
-    const response = await fetch(`${apiUrl}`, {
-      method: 'PUT',
+    const response = await fetch(`${apiUrl}/submit`, {
+      method: 'POST',
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -162,8 +100,41 @@ export const userApi = {
           throw new Error(err.errorMsg + ' ++ ' + err.errorField);
         }
 
-        const response: number = data.data;
-        return response;
+        const testResultId: number = data.data;
+        return testResultId;
+      })
+      .catch((err) => {
+        return err;
+      });
+
+    return response;
+  },
+
+  getResult: async (testResultId: number) => {
+    const response = await fetch(
+      `${apiUrl}/result?` +
+        new URLSearchParams({ test_result_id: testResultId.toString() }),
+      {
+        method: 'GET',
+        credentials: 'include',
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        throw new Error('Network response was not ok.');
+      })
+      .then((data) => {
+        console.log(data);
+        const err: AppError = data.error;
+        if (err.errorCode !== 0) {
+          throw new Error(err.errorMsg + ' ++ ' + err.errorField);
+        }
+
+        const result: Result = data.data;
+        return result;
       })
       .catch((err) => {
         return err;
