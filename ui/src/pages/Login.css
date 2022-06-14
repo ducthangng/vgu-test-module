@@ -1,0 +1,95 @@
+.login__title {
+  font-size: 38px;
+  letter-spacing: 1px;
+  line-height: 48px;
+  font-weight: 500;
+  color: #181b21;
+  padding-top: 32px;
+  padding-bottom: 8px;
+  transition: all 0.3s ease;
+}
+
+.login__body {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+
+  /*
+     Introduced in Internet Explorer 10.
+     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+   */
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.login__form {
+  width: 380px;
+  height: 459px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  padding-left: 24px;
+  padding-right: 24px;
+  transition: all 0.3s ease;
+}
+
+.temp__form {
+  width: 380px;
+  height: 600px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  padding-left: 24px;
+  padding-right: 24px;
+  transition: all 0.3s ease;
+}
+
+.login__button {
+  transition: all 0.2s ease;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 12px;
+  background-clip: border-box;
+}
+
+.login__login {
+  background-color: #3d69e1;
+  border: 3px solid #3d69e1;
+}
+
+.login__create {
+  background-color: white;
+}
+
+.login__login:hover {
+  background-color: #3457b2;
+  border: 3px solid #3457b2;
+}
+
+.login__create:hover {
+  background-color: #181b21;
+  color: white;
+}
+
+.login__button:active {
+  box-shadow: inset 0 0 0 2px white;
+}
+
+@media only screen and (max-width: 600px) {
+  .login__form {
+    height: 450px;
+  }
+  .login__title {
+    font-size: 32px;
+    line-height: 36px;
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  .login__form {
+    width: 100%;
+  }
+}
