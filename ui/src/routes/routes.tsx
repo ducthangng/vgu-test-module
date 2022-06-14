@@ -17,6 +17,7 @@ import TestManagement from '../pages/TestManagement';
 import UserManagement from '../pages/UserManagement';
 import { AdminEC, StudentEC } from '../models/Guard';
 import { TestProvider } from '../context/test/TestContext';
+import Landingpage from '../pages/Landingpage';
 
 export default function AppRoute() {
   const AdminGuard: GuardEC = {
@@ -32,10 +33,7 @@ export default function AppRoute() {
       <CookiesProvider>
         <Routes>
           {/* public routes */}
-          {/* <Route
-            path="/"
-            element={<Navigate to="/student/dashboard" replace />}
-          /> */}
+          <Route path="/" element={<Landingpage />} />
 
           {/* student routes */}
           {/* <Route path="/student/*" element={<Guard {...StudentGuard} />}> */}

@@ -3,7 +3,7 @@ import { SvgIcon } from '../../Landing/SvgIcon';
 import { ContentBlockProps } from '../../../models/ContentBlockData';
 import { RightBlockContainer, Content, ContentWrapper } from './styles';
 
-const RightBlock = ({ title, content, icon, t, id }: ContentBlockProps) => {
+const RightBlock = ({ title, content, icon, id }: ContentBlockProps) => {
   const scrollTo = (id: string) => {
     const element = document.getElementById(id) as HTMLDivElement;
     element.scrollIntoView({
@@ -15,8 +15,8 @@ const RightBlock = ({ title, content, icon, t, id }: ContentBlockProps) => {
       <Row justify="space-between" align="middle" id={id}>
         <Col lg={11} md={11} sm={11} xs={24}>
           <ContentWrapper>
-            <h6>{t(title)}</h6>
-            <Content>{t(content)}</Content>
+            <h6>{title}</h6>
+            <Content>{content}</Content>
           </ContentWrapper>
         </Col>
         <Col lg={11} md={11} sm={12} xs={24}>

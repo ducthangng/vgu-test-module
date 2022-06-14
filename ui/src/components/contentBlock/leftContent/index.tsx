@@ -15,9 +15,9 @@ const LeftContentBlock = ({
   title,
   content,
   section,
-  t,
   id,
 }: ContentBlockProps) => {
+  console.log('dccmmm');
   return (
     <LeftContentSection>
       <Row justify="space-between" align="middle" id={id}>
@@ -26,8 +26,8 @@ const LeftContentBlock = ({
         </Col>
         <Col lg={11} md={11} sm={11} xs={24}>
           <ContentWrapper>
-            <h6>{t(title)}</h6>
-            <Content>{t(content)}</Content>
+            <h1>{title}</h1>
+            <Content>{content}</Content>
             <ServiceWrapper>
               <Row justify="space-between">
                 {typeof section === 'object' &&
@@ -35,8 +35,8 @@ const LeftContentBlock = ({
                     return (
                       <Col key={id} span={11}>
                         <SvgIcon src={item.icon} width="60px" height="60px" />
-                        <MinTitle>{t(item.title)}</MinTitle>
-                        <MinPara>{t(item.content)}</MinPara>
+                        <MinTitle>{item.title}</MinTitle>
+                        <MinPara>{item.content}</MinPara>
                       </Col>
                     );
                   })}
