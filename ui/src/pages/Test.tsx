@@ -51,6 +51,7 @@ export default function Test(props: { reviewMode: boolean }) {
   let totalTime: number | undefined = undefined;
   const [submitted, setSubmitted] = useState(false);
   const [isDone, setIsDone] = useState(true);
+  const [resultId, setResultId] = useState<number>();
   const [timeLeft, setTimeLeft] = useState<string>('');
   const [intervalId, setIntervalId] = useState<number | undefined>(undefined);
   const [userAnswers, setUserAnswers] = useState<SectionAnswer[]>([]);
@@ -86,7 +87,7 @@ export default function Test(props: { reviewMode: boolean }) {
         setTestData(newTestData);
         setSubmitData({
           id: data.id,
-          testClassId: testDetails.testClassId,
+          testClassId: 1, //change this later
           sections: newSections,
         });
         setIsDone(mockPreTestData.isDone);
@@ -154,10 +155,10 @@ export default function Test(props: { reviewMode: boolean }) {
         event?.preventDefault();
         setIsLoading(false);
         try {
-          let response = await testApi.submitTest(
+          let resultId = await testApi.submitTest(
             submitDataRef.current as SubmitData
           );
-          console.log(response);
+          setResultId(resultId);
           setSubmitted(true);
           setWaitModal(true);
         } catch (error) {
@@ -195,7 +196,9 @@ export default function Test(props: { reviewMode: boolean }) {
             >
               <div>
                 {exitWarningModalVisible && <ExitWarningModal />}
-                {submitted && !reviewMode && <ResultModal />}
+                {submitted && !reviewMode && (
+                  <ResultModal resultId={resultId as number} />
+                )}
                 <TestHeader timeLeft={timeLeft} handleSubmit={handleSubmit} />
                 {testData.type === 'listening' && (
                   <ListeningTest

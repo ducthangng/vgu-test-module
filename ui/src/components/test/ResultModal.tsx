@@ -1,5 +1,7 @@
 import { Button, Modal } from 'antd';
 import React, { useState, useEffect } from 'react';
+// toast
+import { toast } from 'react-toastify';
 // routing
 import { useNavigate } from 'react-router-dom';
 // context
@@ -9,18 +11,35 @@ import { Progress } from 'antd';
 import { HomeOutlined } from '@ant-design/icons';
 // mock data
 import mockResultData from '../../api/mockResultData.json';
+// fetches
+import { testApi } from '../../api/testApi';
 
-export default function ResultModal() {
+interface ResultModalProps {
+  resultId: number;
+}
+
+export default function ResultModal(props: ResultModalProps) {
   const [visible, setVisible] = useState(true);
   const [score, setScore] = useState<number>();
+  const [resultNote, setResultNote] = useState('');
   // context
   const { setReviewMode } = useTestContext();
   // routing
   const navigate = useNavigate();
 
+  const fetchData = async () => {
+    try {
+      let result = await testApi.getResult(props.resultId.toString());
+      setScore(result.score);
+      setResultNote(result.resultNote);
+    } catch (error) {
+      toast(`error: ${error}`);
+    }
+  };
+
   // fetch data
   useEffect(() => {
-    setScore(mockResultData.score);
+    fetchData();
   }, []);
 
   const handleReview = () => {
@@ -67,6 +86,7 @@ export default function ResultModal() {
           />
           <div className="py-5">
             <p>You have completed this test.</p>
+            <p className="italic">《 {resultNote} 》</p>
           </div>
         </div>
       </Modal>
