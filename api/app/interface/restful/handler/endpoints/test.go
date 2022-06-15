@@ -55,7 +55,6 @@ func GetTestInfo(c *gin.Context) {
 	}
 
 	app.Response(http.StatusOK, apitest, nil)
-
 }
 
 func GetAllTests(c *gin.Context) {

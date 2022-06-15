@@ -2,6 +2,8 @@ package usecase_dto
 
 type TestResult struct {
 	ID          int    `json:"id"`
+	TestID      int    `json:"testId"`
+	TestName    string `json:"testName"`
 	TestClassID int    `json:"testClassId"`
 	UserID      int    `json:"userId"`
 	EntityCode  int    `json:"entityCode"`
