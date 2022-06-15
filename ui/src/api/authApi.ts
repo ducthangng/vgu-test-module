@@ -83,7 +83,8 @@ export const authApi = {
       .then((data) => {
         console.log(data);
         const err: AppError = data.error;
-        if (err.errorCode !== 0) {
+        if (err.errorMsg.length !== 0) {
+          alert(err.errorMsg);
           throw new Error(err.errorMsg + ' ++ ' + err.errorField);
         }
 

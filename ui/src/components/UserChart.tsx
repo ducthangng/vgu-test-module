@@ -2,7 +2,6 @@ import React, { useState, useEffect, PureComponent } from 'react';
 import { Chart } from 'react-google-charts';
 import { Result } from '../models/Result';
 import { authApi } from '../api/authApi';
-import { testApi } from '../api/testApi';
 import { userApi } from '../api/userApi';
 import { unixToDatetime } from '../utils/timeConvert';
 
@@ -12,8 +11,6 @@ let defaultData = [
 ];
 
 const UserChart: React.FC = () => {
-  // let data: google.visualization.DataTable();
-
   const [data, setData] = useState<(string | number)[][]>([
     ['Test Name', 'Grade'],
     ['', 0],
@@ -49,15 +46,13 @@ const UserChart: React.FC = () => {
     legend: { position: 'bottom' },
   };
   return (
-    <>
-      <Chart
-        chartType="LineChart"
-        width="100%"
-        height="400px"
-        data={data}
-        options={options}
-      />
-    </>
+    <Chart
+      chartType="LineChart"
+      width="100%"
+      height="400px"
+      data={data}
+      options={options}
+    />
   );
 };
 

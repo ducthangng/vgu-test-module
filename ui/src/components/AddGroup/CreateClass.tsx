@@ -27,34 +27,36 @@ const CreateForm: React.FC = () => {
   };
 
   return (
-    <Form
-      {...layout}
-      name="nest-messages"
-      onFinish={onFinish}
-      validateMessages={validateMessages}
-    >
-      <Form.Item
-        name={['user', 'name']}
-        label="Name"
-        rules={[{ required: true }]}
+    <div style={{ width: '60%' }}>
+      <Form
+        {...layout}
+        name="nest-messages"
+        onFinish={onFinish}
+        validateMessages={validateMessages}
       >
-        <Input />
-      </Form.Item>
+        <Form.Item
+          name={['user', 'name']}
+          label="Name"
+          rules={[{ required: true }]}
+        >
+          <Input />
+        </Form.Item>
 
-      <Select
-        mode="multiple"
-        placeholder="Inserted are removed"
-        value={selectedIDs}
-        onChange={setSelectedIDs}
-        style={{ width: '100%' }}
-      >
-        {filteredOptions.map((item) => (
-          <Select.Option key={item} value={item}>
-            {item}
-          </Select.Option>
-        ))}
-      </Select>
-    </Form>
+        <Select
+          mode="multiple"
+          placeholder="Student Name"
+          value={selectedIDs}
+          onChange={setSelectedIDs}
+          style={{ width: '100%' }}
+        >
+          {filteredOptions.map((item) => (
+            <Select.Option key={item} value={item}>
+              {item}
+            </Select.Option>
+          ))}
+        </Select>
+      </Form>
+    </div>
   );
 };
 

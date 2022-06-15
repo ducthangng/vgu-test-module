@@ -41,9 +41,7 @@ const Login = () => {
 
   const handleLogin = () => {
     let data = authApi.login({ username, password }).then((res) => {
-      console.log('Login here: ', res);
       if (res.id !== 0) {
-        console.log('Success login: ', res);
         routeChange('dashboard');
       } else {
         alert('Invalid username or password');

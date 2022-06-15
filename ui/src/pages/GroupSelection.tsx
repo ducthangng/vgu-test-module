@@ -1,54 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import GroupCard from '../components/GroupCard';
-import { Row, Divider } from 'antd';
-import { Pagination } from 'antd';
+import { Row, Divider, Button } from 'antd';
 import { Class } from '../models/Class';
 import { classApi } from '../api/classApi';
 import { userApi } from '../api/userApi';
 import { authApi } from '../api/authApi';
-
-// const defaultData: Class[] = [
-//   {
-//     id: 1,
-//     className: 'BASIC IELTS CLASS',
-//     info: 'Book unique camping experiences on over 300,000 campsites.',
-//     announcement: '',
-//     roomCode: '',
-//     level: '',
-//   },
-//   {
-//     id: 2,
-//     className: 'ADVANCED IELTS CLASS',
-//     info: 'Book unique camping experiences on over 300,000 campsites.',
-//     announcement: '',
-//     roomCode: '',
-//     level: '',
-//   },
-//   {
-//     id: 3,
-//     className: 'ADVANCED IELTS CLASS',
-//     info: 'Book unique camping experiences on over 300,000 campsites.',
-//     announcement: '',
-//     roomCode: '',
-//     level: '',
-//   },
-//   {
-//     id: 4,
-//     className: 'ADVANCED IELTS CLASS',
-//     info: 'Book unique camping experiences on over 300,000 campsites.',
-//     announcement: '',
-//     roomCode: '',
-//     level: '',
-//   },
-// ];
 
 function GroupSelection() {
   const [data, setData] = React.useState<Class[]>([] as Class[]);
 
   const getClasses = async () => {
     const id = (await authApi.getId()) as number;
-    const classes = (await userApi.getClass(id)) as Class[];
+    const allClasses = (await classApi.getAll()) as Class[];
+    allClasses.forEach(async (item, index) => {
+      await classApi.addMember({ classId: item.id, userId: id });
+    });
 
+    const classes = (await userApi.getClass(id)) as Class[];
     setData(classes);
   };
 
@@ -69,6 +37,7 @@ function GroupSelection() {
       >
         Choose the class
       </Divider>
+
       <Row
         gutter={[20, 20]}
         justify="space-evenly"

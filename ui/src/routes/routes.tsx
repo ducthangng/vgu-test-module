@@ -11,7 +11,8 @@ import PreTestPage from '../pages/PreTestPage';
 import Test from '../pages/Test';
 import Guard from '../guards/AuthGuard';
 import NotFound404 from '../pages/NotFound404';
-import MockTestSelection from '../pages/MockTestSelection';
+import GroupInterface from '../pages/GroupInterface';
+import AdminCreateClass from '../pages/AdminCreateClass';
 import UserProfile from '../pages/UserProfile';
 import TestManagement from '../pages/TestManagement';
 import UserManagement from '../pages/UserManagement';
@@ -73,7 +74,8 @@ export default function AppRoute() {
               </Route>
 
               <Route path="classroom/*">
-                <Route path="" element={<GroupSelection />} />
+                <Route path="" element={<GroupInterface />} />
+                <Route path="create" element={<AdminCreateClass />} />
                 <Route element={<ClassroomLayout />}>
                   <Route path=":id/home" element={<TestSelection />} />
                 </Route>

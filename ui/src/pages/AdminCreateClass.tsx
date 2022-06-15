@@ -9,7 +9,7 @@ const layout = {
 
 const { Content } = Layout;
 
-function createGroup() {
+function AdminCreateClass() {
   return (
     <body>
       <Divider
@@ -36,4 +36,4 @@ function createGroup() {
   );
 }
 
-export default createGroup;
+export default AdminCreateClass;

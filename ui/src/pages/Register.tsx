@@ -1,8 +1,10 @@
 import { Divider, Form, Input } from 'antd';
 import React, { useState } from 'react';
 import { authApi } from '../api/authApi';
+import { classApi } from '../api/classApi';
 import { Button, notification } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { Class } from '../models/Class';
 import './Login.css';
 
 export const Register = () => {
@@ -15,7 +17,7 @@ export const Register = () => {
   const [gender, setGender] = useState('');
 
   const handleRegister = async () => {
-    const res = (await authApi.register({
+    const id = (await authApi.register({
       fullname: fullname,
       username: username,
       password: password,
@@ -23,16 +25,16 @@ export const Register = () => {
       mail: email,
     })) as number;
 
-    if (res > 0) {
+    if (id > 0) {
       openNotification();
     }
   };
 
   const openNotification = () => {
     notification.open({
-      message: 'Notification Title',
+      message: 'Create Account Success!',
       description:
-        'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+        'Please move to sign-in section to start using our application.',
       onClick: () => {
         console.log('Notification Clicked!');
       },
