@@ -1,71 +1,65 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
-//import { isEmpty } from 'lodash';
-
-//import library from antd
+import React, { useEffect, useState } from 'react';
+import { userApi } from '../api/userApi';
+import { User } from '../models/User';
 import { Table, Button, Popconfirm } from 'antd';
 
-//import data from '..';
-//import data from '../api/UserData.json';
+interface UserData {
+  key: number;
+  username: string;
+  fullname: string;
+  email: string;
+}
 
-// create interface for UserTable
-type Props = {};
+const UserTable: React.FC = () => {
+  const [users, setUsers] = useState<UserData[]>([] as UserData[]);
 
-const UserTable: React.FC<Props> = () => {
-  const [dataSource, setDataSource] = React.useState<any>([
-    {
-      key: '1',
-      nameTest: 'Hai',
-      testId: 1,
-      testDate: '2020-01-01',
-    },
-    {
-      key: '2',
-      nameTest: 'IELTS Basic',
-      testId: 2,
-      testDate: '2020-01-02',
-    },
-    {
-      key: '3',
-      nameTest: 'IELTS Academic',
-      testId: 3,
-      testDate: '2020-01-03',
-    },
-  ]);
+  const getData = async () => {
+    let data = (await userApi.getAllUsers()) as User[];
 
-  const fetchData = async () => {
-    const response = await fetch('http://localhost:8080/api/users');
-    const json = await response.json();
-    setDataSource(json);
+    if (data.length === 0) {
+      return;
+    }
+
+    let newUser: UserData[] = [];
+    data.forEach((user, index) => {
+      let tempt: UserData = {
+        key: index + 1,
+        username: user.username,
+        fullname: user.fullname,
+        email: user.mail,
+      };
+
+      newUser.push(tempt);
+    });
+
+    setUsers(newUser);
   };
 
   useEffect(() => {
-    fetchData();
+    getData();
   }, []);
-
-  //GOTO: Call to delete test information from database
-  const onDelete = (record: any) => {
-    setDataSource((pre: any) => {
-      return pre.filter((test: { key: any }) => test.key !== record.key);
-    });
-  };
 
   //create title of columns in user table information
   const columns = [
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: 'Key',
+      dataIndex: 'key',
+      key: 'key',
+    },
+    {
+      title: 'Username',
+      dataIndex: 'username',
+      key: 'username',
+    },
+    {
+      title: 'Fullname',
+      dataIndex: 'fullname',
+      key: 'fullname',
     },
     {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
-    },
-    {
-      title: 'User ID',
-      dataIndex: 'userId',
-      key: 'userId',
     },
     {
       title: 'Action',
@@ -75,7 +69,7 @@ const UserTable: React.FC<Props> = () => {
       render: (record: any) => {
         return (
           <Popconfirm
-            title=" You want to delete this test?"
+            title=" You want to delete this user?"
             onConfirm={() => onDelete(record)}
           >
             <Button type="primary">Delete</Button>
@@ -85,10 +79,17 @@ const UserTable: React.FC<Props> = () => {
     },
   ];
 
+  //GOTO: Call to delete test information from database
+  const onDelete = (record: any) => {
+    // setDataSource((pre: any) => {
+    //   return pre.filter((test: { key: any }) => test.key !== record.key);
+    // });
+  };
+
   return (
     <div style={{ padding: 20, background: '#fff', minHeight: '360' }}>
       <span>
-        <Table columns={columns}> dataSource={dataSource}</Table>
+        <Table columns={columns} dataSource={users}></Table>
       </span>
     </div>
   );

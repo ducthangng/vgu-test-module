@@ -28,6 +28,7 @@ type UserRepository interface {
 }
 
 type TestRepository interface {
+	QueryAllTest(ctx context.Context) (result []entity.Test, err error)
 	CreateTest(ctx context.Context, test entity.Test) (int, error)
 	QueryTestHeadline(ctx context.Context, ID int, TestName string) (result []entity.Test, err error)
 	QueryTestByTestTag(ctx context.Context, TestTagID int) (result []entity.Test, err error)

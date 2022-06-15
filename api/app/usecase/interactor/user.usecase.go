@@ -176,3 +176,16 @@ func (u *UserUsecase) FindAllUserTestResult(ctx context.Context, userId int) (re
 
 	return results, err
 }
+
+func (u *UserUsecase) FindAllUser(ctx context.Context) (result []usecase_dto.User, err error) {
+	record, err := u.UserRepository.QueryUser(ctx, "", "", 0, 3, false)
+	if err != nil {
+		return result, err
+	}
+
+	if err := copier.Copy(&result, &record); err != nil {
+		return result, err
+	}
+
+	return result, err
+}

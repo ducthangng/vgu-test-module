@@ -11,7 +11,7 @@ func (q *Querier) CreateUser(ctx context.Context, user entity.User) (int, error)
 	return insertUser(q, ctx, user)
 }
 
-// Flag determine the query element of the functions: [0 - username]  [1 - fullname] [2 - ID].
+// Flag determine the query element of the functions: [0 - username]  [1 - fullname] [2 - ID] [3 - All].
 // Option 2 is unindex search, therefore do not overuse.
 func (q *Querier) QueryUser(ctx context.Context, Username string, Fullname string, ID int, Flag int, HasPassword bool) ([]entity.User, error) {
 	return queryUser(q, ctx, Username, Fullname, ID, Flag, HasPassword)
