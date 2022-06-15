@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { Pagination } from 'antd';
+import { Pagination, Divider } from 'antd';
 import { TestDetails } from '../models/TestDetails';
 import { classApi } from '../api/classApi';
 import { Empty } from 'antd';
@@ -48,7 +48,12 @@ function TestSelection() {
 
   return (
     <div className="w-5/6 text-xl font-black">
-      <div>Choose the test</div>
+      <Divider
+        orientation="left"
+        style={{ fontSize: '25px', fontFamily: 'Roboto' }}
+      >
+        Choose the test
+      </Divider>
 
       <div>
         {data &&

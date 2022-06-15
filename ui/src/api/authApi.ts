@@ -99,11 +99,12 @@ export const authApi = {
    */
   logout: async () => {
     const response = await fetch(`${apiUrl}/logout`, {
-      method: 'GET',
+      method: 'POST',
       credentials: 'include',
     })
       .then((res) => {
         if (res.ok) {
+          console.log(res);
           return res.json();
         }
 

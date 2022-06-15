@@ -33,38 +33,39 @@ const TestCard: React.FC<TestCardData> = ({
   return (
     <div className="my-3">
       <Card hoverable className="h-50 rounded rounded-xl">
-        <div className="grid grid-cols-9">
-          <div className="col-span-2 overflow-y-hidden flex items-center">
-            <img
-              alt="example"
-              src={test}
-              className="w-3/4 p-0 rounded rounded-lg"
-            />
+        <div className="lg:grid lg:grid-cols-9 flex flex-col lg:flex-row">
+          <div className="lg:col-span-2 overflow-y-hidden flex items-center justify-center mb-5 lg:mb-0">
+            <img alt="example" src={test} className="p-0 rounded rounded-lg" />
           </div>
 
-          <div className="col-span-3 grid grid-rows-2 flex items-start">
-            <div className="text-2xl font-bold">Test {testName}</div>
-            <div className="font-medium"> {description} </div>
-          </div>
-
-          <div className="col-span-3 grid grid-rows-2 flex justify-center items-center">
-            <div className="inline-flex">
-              <TeamOutlined style={{ color: '#8172D5' }} className="mr-3" />
-              Group {groupName}
+          <div className="lg:col-span-7 flex flex-col lg:flex-row lg:pl-5">
+            <div className="grid grid-rows-2 flex items-start lg:px-3">
+              <div className="text-2xl font-medium">{testName}</div>
+              <div className="font-medium"> {description} </div>
             </div>
-            <div className="inline-flex">
-              <CalendarOutlined style={{ color: '#8172D5' }} className="mr-3" />
-              {unixToDatetime(deadline)}
-            </div>
-          </div>
 
-          <div className="col-span-1 flex flex-col justify-center">
-            <button
-              className="bg-primary px-1 py-2 rounded rounded-lg font-bold text-white"
-              onClick={routeChange}
-            >
-              Take
-            </button>
+            <div className="grid grid-rows-2 flex justify-center items-center py-3 lg:px-3">
+              <div className="inline-flex font-medium">
+                <TeamOutlined style={{ color: '#8172D5' }} className="mr-3" />
+                Group {groupName}
+              </div>
+              <div className="inline-flex font-medium">
+                <CalendarOutlined
+                  style={{ color: '#8172D5' }}
+                  className="mr-3"
+                />
+                {unixToDatetime(deadline)}
+              </div>
+            </div>
+
+            <div className="flex flex-col justify-center">
+              <button
+                className="bg-primary hover:bg-primary/70 px-4 py-2 rounded rounded-lg font-bold text-white"
+                onClick={routeChange}
+              >
+                Take
+              </button>
+            </div>
           </div>
         </div>
       </Card>
