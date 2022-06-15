@@ -71,7 +71,6 @@ export default function ReadingTest(props: ReadingTestProps) {
 
   useEffect(() => {
     setIsLoading(false);
-    console.log(props.passage);
   }, []);
 
   return (

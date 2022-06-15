@@ -20,6 +20,28 @@ export default function FillBlankSection(props: FillBlankSectionProps) {
       let inputList = Array.from(
         htmlContentRef.current.getElementsByTagName('input')
       );
+
+      //initialize answers array
+      if (submitData.sections[props.sectionIndex - 1].answers.length == 0) {
+        console.log('length 0!');
+
+        let newChosenAnswers = [
+          ...submitData.sections[props.sectionIndex - 1].answers,
+        ];
+        for (let i = 0; i < inputList.length; i++) {
+          newChosenAnswers[i] = inputList[i].value;
+        }
+
+        let newSubmitDataSections = [...submitData.sections];
+        newSubmitDataSections[props.sectionIndex - 1].answers =
+          newChosenAnswers;
+        let newSubmitData = {
+          ...submitData,
+          sections: newSubmitDataSections,
+        };
+        setSubmitData(newSubmitData);
+      }
+
       // style them, make disabled if in review mode
       for (let i = 0; i < inputList.length; i++) {
         inputList[i].classList.add('border');

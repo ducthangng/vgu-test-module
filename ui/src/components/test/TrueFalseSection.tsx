@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useTestContext } from '../../context/test/TestContext';
 
@@ -36,6 +36,17 @@ export default function TrueFalseSection(props: TrueFalseSectionProps) {
         console.log(props.section.content[index].correctAns);
         setSubmitData(newSubmitData);
       };
+
+  useEffect(() => {
+    // initialize answers array of this section
+    if (submitData.sections[props.sectionIndex - 1].answers.length < 1) {
+      for (let i = 0; i < props.section.content.length; i++) {
+        if (props.section.content[i].q) {
+          submitData.sections[props.sectionIndex - 1].answers.push('');
+        }
+      }
+    }
+  }, []);
 
   return (
     <div>
