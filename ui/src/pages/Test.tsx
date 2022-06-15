@@ -31,7 +31,7 @@ import { testApi } from '../api/testApi';
 export default function Test(props: { reviewMode: boolean }) {
   // routing
   const navigate = useNavigate();
-  const { testClassId } = useParams();
+  const { testId } = useParams();
   // context
   const {
     reviewMode,
@@ -60,7 +60,7 @@ export default function Test(props: { reviewMode: boolean }) {
   //fetch data function, currently it only sets mock data
   const fetchData = async () => {
     try {
-      let data = await testApi.doTest(testClassId as string);
+      let data = await testApi.doTest(testId as string);
 
       console.log('data:');
       console.log(data);
@@ -155,7 +155,6 @@ export default function Test(props: { reviewMode: boolean }) {
           let response = await testApi.submitTest(
             submitDataRef.current as SubmitData
           );
-          console.log(response);
           setSubmitted(true);
           setWaitModal(true);
         } catch (error) {
