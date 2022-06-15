@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { Row } from 'antd';
 import Container from '../../components/Container';
 import { SvgIcon } from '../../components/Landing/SvgIcon';
-import { ButtonNor } from '../../components/Button';
+import { ButtonNor } from '../../components/Button/index';
 import { Button } from '../../components/Button/index2';
+import { useNavigate } from 'react-router-dom';
 import {
   HeaderSection,
   LogoContainer,
@@ -16,6 +17,8 @@ import {
 
 const Header = () => {
   const [visible, setVisibility] = useState(false);
+
+  let navigate = useNavigate();
 
   const showDrawer = () => {
     setVisibility(!visible);
@@ -46,15 +49,15 @@ const Header = () => {
         </CustomNavLinkSmall>
         <CustomNavLinkSmall
           style={{ width: '180px' }}
-          onClick={() => scrollTo('contact')}
+          onClick={() => navigate('/register')}
         >
           <Span>
-            <ButtonNor>{'Sign up'}</ButtonNor>
+            <ButtonNor> {'Sign up'} </ButtonNor>
           </Span>
         </CustomNavLinkSmall>
         <CustomNavLinkSmall
           style={{ width: '180px', fontFamily: 'Roboto', color: '#8172d5' }}
-          onClick={() => scrollTo('contact')}
+          onClick={() => navigate('/login')}
         >
           <Span>
             <Button>{'Sign in'}</Button>
