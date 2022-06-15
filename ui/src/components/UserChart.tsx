@@ -8,11 +8,7 @@ import { unixToDatetime } from '../utils/timeConvert';
 
 let defaultData = [
   ['Test Name', 'Grade'],
-  ['September 09', 4.5],
-  ['September 11', 5.5],
-  ['Octorber 15', 6.5],
-  ['Octorber 29', 7.5],
-  ['Octorber 31', 8.5],
+  ['', 0],
 ];
 
 const UserChart: React.FC = () => {
@@ -20,6 +16,7 @@ const UserChart: React.FC = () => {
 
   const [data, setData] = useState<(string | number)[][]>([
     ['Test Name', 'Grade'],
+    ['', 0],
   ]);
 
   const getData = async () => {

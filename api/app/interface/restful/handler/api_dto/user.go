@@ -26,6 +26,8 @@ type UserModel struct {
 	Username   string `json:"username"`
 	Password   string `json:"password"`
 	FullName   string `json:"fullname"`
+	Mail       string `json:"mail"`
+	Gender     string `json:"gender"`
 }
 
 func BindUserModel(c *gin.Context, WithAuth bool) (UserModel, error) {

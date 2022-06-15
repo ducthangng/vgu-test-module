@@ -2,6 +2,7 @@ package endpoints
 
 import (
 	"context"
+	"log"
 	"net/http"
 	"server/app/interface/persistence/rdbms/sqlconnection"
 	"server/app/interface/restful/handler/api_dto"
@@ -198,8 +199,10 @@ func CreateUser(c *gin.Context) {
 		return
 	}
 
+	log.Println("data: ", data)
+
 	var user_record usecase_dto.User
-	err = copier.Copy(&user_record, data)
+	err = copier.Copy(&user_record, &data)
 	if err != nil {
 		app.Response(http.StatusInternalServerError, 0, err)
 		return
@@ -212,12 +215,15 @@ func CreateUser(c *gin.Context) {
 	}
 
 	user_record.Password = password
-	user_record.EntityCode = 2
+	user_record.EntityCode = 3
+
+	log.Println("record: ", user_record)
 
 	access := registry.BuildUserAccessPoint(false, sqlconnection.DBConn)
 	IDs, err := access.Service.CreateUser(ctx, user_record)
 	if err != nil {
-		app.Response(http.StatusInternalServerError, 0, err)
+		log.Println("err: ", err)
+		app.Response(http.StatusOK, 0, err)
 		return
 	}
 

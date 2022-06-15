@@ -13,7 +13,7 @@ const Container = lazy(() => import('../components/Container/index'));
 const ScrollToTop = lazy(() => import('../models/ScrollToTop'));
 const ContentBlock = lazy(() => import('../components/contentBlock/index'));
 
-const Home = () => {
+const Landingpage = () => {
   return (
     <Container>
       <Styles />
@@ -58,4 +58,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Landingpage;

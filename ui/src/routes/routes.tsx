@@ -20,6 +20,7 @@ import { TestProvider } from '../context/test/TestContext';
 import { LoginLayout } from '../pages/LoginLayout';
 import { Register } from '../pages/Register';
 import Login from '../pages/Login';
+import Landingpage from '../pages/Landingpage';
 
 export default function AppRoute() {
   const AdminGuard: GuardEC = {
@@ -36,7 +37,8 @@ export default function AppRoute() {
         <Routes>
           {/* public routes */}
           <Route element={<LoginLayout />}>
-            <Route path="/" element={<Login />} />
+            <Route path="/" element={<Landingpage />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Route>
 

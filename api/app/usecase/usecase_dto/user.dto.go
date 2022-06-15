@@ -13,8 +13,7 @@ type User struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
 	Gender   string `json:"gender"`
-	// Address       string `json:"address"`
-	Mail string `json:"mail"`
+	Mail     string `json:"mail"`
 	// Phone         string `json:"phone"`
 	// Dob           int64  `json:"dob"`
 	// Qualification string `json:"qualification"`

@@ -1,9 +1,45 @@
-import { Divider, Form, Input, Popover } from 'antd';
-import React from 'react';
+import { Divider, Form, Input } from 'antd';
+import React, { useState } from 'react';
+import { authApi } from '../api/authApi';
+import { Button, notification } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
-import { InfoCircleOutlined } from '@ant-design/icons';
 
 export const Register = () => {
+  let navigate = useNavigate();
+
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [fullname, setFullname] = useState('');
+  const [email, setEmail] = useState('');
+  const [gender, setGender] = useState('');
+
+  const handleRegister = async () => {
+    const res = (await authApi.register({
+      fullname: fullname,
+      username: username,
+      password: password,
+      gender: gender,
+      mail: email,
+    })) as number;
+
+    if (res > 0) {
+      openNotification();
+    }
+  };
+
+  const openNotification = () => {
+    notification.open({
+      message: 'Notification Title',
+      description:
+        'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+      onClick: () => {
+        console.log('Notification Clicked!');
+      },
+      placement: 'top',
+    });
+  };
+
   return (
     <>
       <h1
@@ -29,6 +65,8 @@ export const Register = () => {
                 padding: '10px',
                 backgroundColor: '#F2F5F8',
               }}
+              value={fullname}
+              onChange={(e) => setFullname(e.target.value)}
             />
           </Form.Item>
           <Form.Item>
@@ -46,6 +84,8 @@ export const Register = () => {
                 padding: '10px',
                 backgroundColor: '#F2F5F8',
               }}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </Form.Item>
           <Form.Item>
@@ -55,7 +95,7 @@ export const Register = () => {
               Password
             </label>
             <Input
-              type="text"
+              type="password"
               style={{
                 borderTopWidth: 0,
                 borderLeftWidth: 0,
@@ -63,6 +103,8 @@ export const Register = () => {
                 padding: '10px',
                 backgroundColor: '#F2F5F8',
               }}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Item>
           <Form.Item>
@@ -80,6 +122,8 @@ export const Register = () => {
                 padding: '10px',
                 backgroundColor: '#F2F5F8',
               }}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </Form.Item>
           <Form.Item>
@@ -97,11 +141,13 @@ export const Register = () => {
                 padding: '10px',
                 backgroundColor: '#F2F5F8',
               }}
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
             />
           </Form.Item>
           <Form.Item>
             <button
-              onClick={() => false}
+              onClick={handleRegister}
               className="login__button login__login"
               style={{
                 width: '100%',
@@ -121,7 +167,7 @@ export const Register = () => {
           <Form.Item>
             <button
               className="login__create login__button"
-              onClick={() => false}
+              onClick={() => navigate('/login')}
               style={{
                 width: '100%',
                 height: '40px',

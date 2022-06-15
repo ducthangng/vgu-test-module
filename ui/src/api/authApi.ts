@@ -1,5 +1,6 @@
 import { AppError } from '../models/Error';
 import { User } from '../models/User';
+import { toast } from 'react-toastify';
 
 const BASE_API = process.env.REACT_APP_BASE_API || 'http://localhost:8080';
 const apiUrl = `${BASE_API}/api`;
@@ -13,6 +14,7 @@ export const authApi = {
     username: string;
     password: string;
     gender: string;
+    mail: string;
   }) => {
     const payload = parameter;
 
@@ -34,7 +36,8 @@ export const authApi = {
       .then((data) => {
         console.log(data);
         const err: AppError = data.error;
-        if (err.errorCode !== 0) {
+        if (err.errorMsg.length !== 0) {
+          alert(err.errorMsg);
           throw new Error(err.errorMsg + ' ++ ' + err.errorField);
         }
 
@@ -42,6 +45,7 @@ export const authApi = {
         return response;
       })
       .catch((err) => {
+        //
         return err;
       });
 
