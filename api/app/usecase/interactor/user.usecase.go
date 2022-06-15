@@ -170,6 +170,20 @@ func (u *UserUsecase) FindAllUserTestResult(ctx context.Context, userId int) (re
 				return results, err
 			}
 
+			test, err := u.UserRepository.QueryTestHeadline(ctx, testclass.TestID, "")
+			if err != nil {
+				return results, err
+			}
+
+			if len(test) == 0 {
+				return results, nil
+			}
+
+			for i := range usecaseTestResult {
+				usecaseTestResult[i].TestID = testclass.TestID
+				usecaseTestResult[i].TestName = test[0].TestName
+			}
+
 			results = append(results, usecaseTestResult...)
 		}
 	}

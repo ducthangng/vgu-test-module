@@ -5,80 +5,35 @@ import styles from '../assets/css/UserProfilePage.module.css';
 import { Layout, Divider, Typography } from 'antd';
 import { userApi } from '../api/userApi';
 import { authApi } from '../api/authApi';
-import { TestDetails } from '../models/TestDetails';
+import { Result } from '../models/Result';
 import { User } from '../models/User';
 
 const { Title } = Typography;
 
-const defaultData: TestDetails[] = [
-  {
-    id: 1,
-    testClassId: 0,
-    tagId: 1,
-    tagName: '',
-    testName: 'Test 1',
-    createdUserId: 0,
-    targetEntityCode: 0,
-    title: 'Test 1',
-    info: 'Test 1',
-    status: '',
-    duration: 0,
-    dateAssigned: 0,
-    dateUpdated: 0,
-    deadline: 0,
-    isDone: false,
-  },
-  {
-    id: 2,
-    testClassId: 0,
-    tagId: 1,
-    tagName: '',
-    testName: 'Test 2',
-    createdUserId: 0,
-    targetEntityCode: 0,
-    title: 'Test 2',
-    info: 'Test 2',
-    status: '',
-    duration: 0,
-    dateAssigned: 0,
-    dateUpdated: 0,
-    deadline: 0,
-    isDone: false,
-  },
-  {
-    id: 3,
-    testClassId: 0,
-    tagId: 1,
-    tagName: '',
-    testName: 'Test 3',
-    createdUserId: 0,
-    targetEntityCode: 0,
-    title: 'Test 3',
-    info: 'Test 3',
-    status: '',
-    duration: 0,
-    dateAssigned: 0,
-    dateUpdated: 0,
-    deadline: 0,
-    isDone: false,
-  },
-];
-
 function UserProfile() {
   const [user, setUser] = useState<User>();
+  const [results, setResults] = useState<Result[]>([] as Result[]);
 
-  const getUser = async () => {
+  const getData = async () => {
     const id = (await authApi.getId()) as number;
     const userData = (await userApi.getInfoById(id)) as User[];
 
-    console.log('usedata');
-    console.log(userData);
-
     setUser(userData[0]);
+
+    const testResult = (await userApi.getAllTestResult(id)) as Result[];
+
+    let res: Result[] = [];
+    testResult.forEach((item, index) => {
+      if (index + 1 > testResult.length - 3) {
+        res.push(item);
+      }
+    });
+
+    setResults(res);
   };
 
   useEffect(() => {
-    getUser();
+    getData();
   }, []);
 
   return (
@@ -131,11 +86,11 @@ function UserProfile() {
               }}
             >
               <Title level={4} style={{ textDecoration: 'underline' }}>
-                Recent Tests Done
+                Most Recent Test Results
               </Title>
 
               <div className={styles.recent_test}>
-                {defaultData.map((test) => {
+                {results.map((result) => {
                   return (
                     <div
                       style={{
@@ -149,7 +104,7 @@ function UserProfile() {
                     >
                       <a
                         style={{ color: 'black' }}
-                        href={`/test/${test.tagId}`}
+                        href={`/test/${result.testId}/details`}
                       >
                         <div
                           style={{
@@ -161,8 +116,10 @@ function UserProfile() {
                             marginLeft: '20px',
                           }}
                         >
-                          <p style={{ fontWeight: 'bold' }}>{test.testName}</p>
-                          <p>90/100</p>
+                          <p style={{ fontWeight: 'bold' }}>
+                            {result.testName}
+                          </p>
+                          <p>{result.score}</p>
                         </div>
                       </a>
                     </div>

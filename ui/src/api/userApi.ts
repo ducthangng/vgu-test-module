@@ -1,6 +1,7 @@
 import { AppError } from '../models/Error';
 import { User } from '../models/User';
 import { Class } from '../models/Class';
+import { Result } from '../models/Result';
 import { stringify } from 'querystring';
 
 const BASE_API = process.env.REACT_APP_BASE_API || 'http://localhost:8080';
@@ -226,8 +227,8 @@ export const userApi = {
           throw new Error(err.errorMsg + ' ++ ' + err.errorField);
         }
 
-        const users: User[] = data.data;
-        return users;
+        const results: Result[] = data.data;
+        return results;
       })
       .catch((err) => {
         return err;
