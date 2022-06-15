@@ -1,16 +1,17 @@
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Dropdown } from 'antd';
 import React, { Children } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
 import {
   HomeOutlined,
   AppstoreOutlined,
-  BellOutlined,
   UserOutlined,
+  DownOutlined,
   LogoutOutlined,
-  BookOutlined,
 } from '@ant-design/icons';
 import '../../App.scss';
+
+import { authApi } from '../../api/authApi';
 
 const { Content, Header } = Layout;
 
@@ -33,6 +34,7 @@ const UserLayout = () => {
   return (
     <>
       <Layout className="App">
+        {/* <UserLayoutHeader/> */}
         <Header
           className="AppHeader"
           style={{
@@ -52,27 +54,62 @@ const UserLayout = () => {
           <a onClick={() => navigate('/')}>
             <img src="https://picsum.photos/200" width="30px"></img>
           </a>
-          <div className="ItemMenu">
-            <Menu
-              defaultSelectedKeys={defaultSelectedKeys()}
-              defaultOpenKeys={['sub1']}
-              mode={'horizontal'}
-              _internalDisableMenuItemTitleTooltip={true}
-            >
-              <Menu.Item key="1" onClick={() => navigate('dashboard')}>
-                <HomeOutlined />
-              </Menu.Item>
+          <Menu
+            defaultSelectedKeys={defaultSelectedKeys()}
+            defaultOpenKeys={['sub1']}
+            mode={'horizontal'}
+            _internalDisableMenuItemTitleTooltip={true}
+            disabledOverflow={true}
+          >
+            <Menu.Item key="1" onClick={() => navigate('dashboard')}>
+              <div className="flex justify-center items-center">
+                <HomeOutlined className="mr-2" />
+                Dashboard
+              </div>
+            </Menu.Item>
 
-              <Menu.Item key="2" onClick={() => navigate('classroom')}>
-                <AppstoreOutlined />
-              </Menu.Item>
+            <Menu.Item key="2" onClick={() => navigate('classroom')}>
+              <div className="flex justify-center items-center">
+                <AppstoreOutlined className="mr-2" />
+                Class
+              </div>
+            </Menu.Item>
 
-              <Menu.Item key="3" onClick={() => navigate('account')}>
-                <UserOutlined />
-              </Menu.Item>
-            </Menu>
-          </div>
+            <Menu.Item key="3">
+              <Dropdown
+                placement="bottom"
+                overlay={
+                  <Menu>
+                    <Menu.Item key="1" onClick={() => navigate('account')}>
+                      <div className="flex justify-center items-center">
+                        <UserOutlined className="mr-2" />
+                        Profile
+                      </div>
+                    </Menu.Item>
+                    <Menu.Item
+                      key="2"
+                      onClick={async () => {
+                        await authApi.logout();
+                      }}
+                    >
+                      <div className="flex justify-center items-center">
+                        <LogoutOutlined className="mr-2" />
+                        Logout
+                      </div>
+                    </Menu.Item>
+                  </Menu>
+                }
+              >
+                <div className="flex justify-center items-center">
+                  <UserOutlined className="mr-2" />
+                  User
+                  <DownOutlined className="ml-2" />
+                </div>
+              </Dropdown>
+            </Menu.Item>
+          </Menu>
         </Header>
+
         <Layout>
           <Content>
             <div className="Layout">

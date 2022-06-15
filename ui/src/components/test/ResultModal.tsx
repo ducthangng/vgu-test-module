@@ -9,15 +9,12 @@ import { useTestContext } from '../../context/test/TestContext';
 // components
 import { Progress } from 'antd';
 import { HomeOutlined } from '@ant-design/icons';
-// mock data
-import mockResultData from '../../api/mockResultData.json';
 // fetches
 import { testApi } from '../../api/testApi';
 
 interface ResultModalProps {
   resultId: number;
 }
-
 export default function ResultModal(props: ResultModalProps) {
   const [visible, setVisible] = useState(true);
   const [score, setScore] = useState<number>();
@@ -36,7 +33,6 @@ export default function ResultModal(props: ResultModalProps) {
       toast(`error: ${error}`);
     }
   };
-
   // fetch data
   useEffect(() => {
     fetchData();
@@ -77,8 +73,7 @@ export default function ResultModal(props: ResultModalProps) {
         <div className="text-xl text-center">
           <Progress
             strokeColor={{
-              '0%': '#108ee9',
-              '100%': '#87d068',
+              '0%': (score as number) < 50 ? '#e30b1a' : '#87d068',
             }}
             type="circle"
             percent={score}
