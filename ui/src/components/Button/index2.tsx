@@ -1,7 +1,7 @@
 import { StyledButton } from './styles';
 import { ButtonProps } from '../../models/landingcomponent';
 
-export const ButtonNor = ({
+export const Button = ({
   color,
   fixedWidth,
   children,

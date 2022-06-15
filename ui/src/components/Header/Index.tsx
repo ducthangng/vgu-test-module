@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { Row } from 'antd';
 import Container from '../../components/Container';
 import { SvgIcon } from '../../components/Landing/SvgIcon';
-import { Button } from '../../components/Button';
+import { ButtonNor } from '../../components/Button';
+import { Button } from '../../components/Button/index2';
 import {
   HeaderSection,
   LogoContainer,
@@ -48,7 +49,7 @@ const Header = () => {
           onClick={() => scrollTo('contact')}
         >
           <Span>
-            <Button>{'Sign up'}</Button>
+            <ButtonNor>{'Sign up'}</ButtonNor>
           </Span>
         </CustomNavLinkSmall>
         <CustomNavLinkSmall
