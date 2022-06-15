@@ -6,6 +6,7 @@ import (
 	"server/app/domain/entity"
 	"server/app/domain/repository"
 	"server/app/usecase/usecase_dto"
+	"time"
 
 	"github.com/jinzhu/copier"
 )
@@ -21,7 +22,42 @@ func NewTestUsecase(testRepository repository.DataService) *TestUsecase {
 }
 
 // Return only the test information.
-func (t *TestUsecase) QueryTestInfo(ctx context.Context, testId int) (test usecase_dto.Test, err error) {
+func (t *TestUsecase) QueryTestInfo(ctx context.Context, testId int, userId int) (test usecase_dto.Test, err error) {
+	testResultID := 0
+	var dateCreated int64
+	dateCreated = 0
+
+	// check if user has done the task
+	classes, err := t.TestRepository.QueryClassOfUser(ctx, userId)
+	if err != nil {
+		return test, err
+	}
+
+	for _, classId := range classes {
+		tests, err := t.TestRepository.QueryTestOfClass(ctx, classId)
+		if err != nil {
+			return test, err
+		}
+
+		for _, tid := range tests {
+			if tid.TestID == testId {
+				testResult, err := t.TestRepository.QueryTestResultIndexScore(ctx, tid.ID, userId, time.Now(), 4)
+				if err != nil {
+					return test, err
+				}
+
+				if len(testResult) > 0 {
+					for _, r := range testResult {
+						if r.DateCreated > (dateCreated) {
+							testResultID = r.ID
+							dateCreated = r.DateCreated
+						}
+					}
+				}
+			}
+		}
+	}
+
 	record, err := t.TestRepository.QueryTestHeadline(ctx, testId, "")
 	if err != nil {
 		return
@@ -33,6 +69,11 @@ func (t *TestUsecase) QueryTestInfo(ctx context.Context, testId int) (test useca
 
 	if err := copier.Copy(&test, &record[0]); err != nil {
 		return test, err
+	}
+
+	test.PreviousTestResultID = testResultID
+	if test.PreviousTestResultID != 0 {
+		test.IsDone = true
 	}
 
 	return

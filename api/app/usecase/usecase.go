@@ -54,7 +54,7 @@ type ClassService interface {
 
 type TestService interface {
 	// GetTestByID returns a test by its ID.
-	QueryTestInfo(ctx context.Context, testId int) (test usecase_dto.Test, err error)
+	QueryTestInfo(ctx context.Context, testId int, userId int) (test usecase_dto.Test, err error)
 
 	QuerySkillTest(ctx context.Context, testId int) (test usecase_dto.SkillTest, err error)
 

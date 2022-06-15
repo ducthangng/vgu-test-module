@@ -41,8 +41,10 @@ func GetTestInfo(c *gin.Context) {
 		return
 	}
 
+	UserID := c.GetInt("ID")
+
 	access := registry.BuildTestAccessPoint(false, sqlconnection.DBConn)
-	test, err := access.Service.QueryTestInfo(ctx, ID)
+	test, err := access.Service.QueryTestInfo(ctx, ID, UserID)
 	if err != nil {
 		app.Response(http.StatusInternalServerError, nil, err)
 		return

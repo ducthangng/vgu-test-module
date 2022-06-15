@@ -7,21 +7,23 @@ import (
 )
 
 type Test struct {
-	ID               int    `json:"id"`
-	TestClassID      int    `json:"testClassId"`
-	TagID            int    `json:"tagId"`
-	TagName          string `json:"tagName"`
-	TestName         string `json:"testName"`
-	CreatedUserID    int    `json:"createdUserId"`
-	TargetEntityCode int    `json:"targetEntityCode"`
-	Title            string `json:"title"`
-	Info             string `json:"info"`
-	Duration         int    `json:"duration"`
-	Status           string `json:"status"`
-	IsDone           bool   `json:"isDone"`
-	DateAssigned     int64  `json:"dateAssigned"`
-	Deadline         int64  `json:"deadline"`
-	DateUpdated      int64  `json:"dateUpdated"`
+	ID                   int    `json:"id"`
+	TestClassID          int    `json:"testClassId"`
+	TagID                int    `json:"tagId"`
+	TagName              string `json:"tagName"`
+	TestName             string `json:"testName"`
+	CreatedUserID        int    `json:"createdUserId"`
+	PreviousTestResultID int    `json:"previousTestResultId"`
+	TargetEntityCode     int    `json:"targetEntityCode"`
+	Title                string `json:"title"`
+	Info                 string `json:"info"`
+	Duration             int    `json:"duration"`
+	Status               string `json:"status"`
+	IsDone               bool   `json:"isDone"`
+	DateAssigned         int64  `json:"dateAssigned"`
+	Deadline             int64  `json:"deadline"`
+	DateCreated          int64  `json:"dateCreated"`
+	DateUpdated          int64  `json:"dateUpdated"`
 }
 
 func (t Test) Validate(WithID bool, WithBody bool) error {

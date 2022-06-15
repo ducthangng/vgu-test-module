@@ -1,6 +1,7 @@
 package conversion
 
 import (
+	"strings"
 	"time"
 )
 
@@ -8,10 +9,12 @@ import (
 // 	return strconv.FormatInt(t.Unix(), 10)
 // }
 func ConvertMysqlTimeUnixTime(mysqlTime string) int64 {
+	res1 := strings.Replace(mysqlTime, "T", " ", 1)
+	res2 := res1[:19]
+
 	// YYYY-MM-DD
 	layout := "2006-01-02 15:04:05"
-	str := "2015-12-23 00:00:00"
-	t, err := time.Parse(layout, str)
+	t, err := time.Parse(layout, res2)
 	if err != nil {
 		panic(err)
 	}

@@ -15,17 +15,21 @@ type TestResult struct {
 
 type (
 	Test struct {
-		ID               int    `json:"id"`
-		TestClassID      int    `json:"test_class_id"`
-		TagID            int    `json:"tag_id"`
-		TestName         string `json:"test_name"`
-		CreatedUserID    int    `json:"created_user_id"`
-		TargetEntityCode int    `json:"target_entity_code"`
-		Title            string `json:"title"`
-		Info             string `json:"info"`
-		Duration         int    `json:"duration"`
-		DateAssigned     int64  `json:"date_assigned"`
-		Deadline         int64  `json:"deadline"`
+		ID                   int    `json:"id"`
+		TestClassID          int    `json:"test_class_id"`
+		TagID                int    `json:"tag_id"`
+		TestName             string `json:"test_name"`
+		IsDone               bool   `json:"isDone"`
+		PreviousTestResultID int    `json:"previousTestResultId"`
+		CreatedUserID        int    `json:"created_user_id"`
+		TargetEntityCode     int    `json:"target_entity_code"`
+		Title                string `json:"title"`
+		Info                 string `json:"info"`
+		Duration             int    `json:"duration"`
+		DateAssigned         int64  `json:"date_assigned"`
+		Deadline             int64  `json:"deadline"`
+		DateCreated          int64  `json:"dateCreated"`
+		DateUpdated          int64  `json:"dateUpdated"`
 	}
 
 	SkillTest struct {
