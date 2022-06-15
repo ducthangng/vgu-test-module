@@ -9,15 +9,29 @@ import { Table, Button, Popconfirm } from 'antd';
 //import data from '../api/UserData.json';
 
 // create interface for UserTable
-type Props = {
-  name: string;
-  Email: string;
-  userId: number;
-  action: React.ReactNode;
-};
+type Props = {};
 
 const UserTable: React.FC<Props> = () => {
-  const [dataSource, setDataSource] = React.useState<any>([]);
+  const [dataSource, setDataSource] = React.useState<any>([
+    {
+      key: '1',
+      nameTest: 'Hai',
+      testId: 1,
+      testDate: '2020-01-01',
+    },
+    {
+      key: '2',
+      nameTest: 'IELTS Basic',
+      testId: 2,
+      testDate: '2020-01-02',
+    },
+    {
+      key: '3',
+      nameTest: 'IELTS Academic',
+      testId: 3,
+      testDate: '2020-01-03',
+    },
+  ]);
 
   const fetchData = async () => {
     const response = await fetch('http://localhost:8080/api/users');
@@ -29,12 +43,10 @@ const UserTable: React.FC<Props> = () => {
     fetchData();
   }, []);
 
-  //GOTO: Call to delete user information from database
+  //GOTO: Call to delete test information from database
   const onDelete = (record: any) => {
     setDataSource((pre: any) => {
-      return pre.filter(
-        (user: { userId: any }) => user.userId !== record.userId
-      );
+      return pre.filter((test: { key: any }) => test.key !== record.key);
     });
   };
 
@@ -59,17 +71,17 @@ const UserTable: React.FC<Props> = () => {
       title: 'Action',
       dataIndex: 'action',
       key: 'action',
-      // Button to delete user information
-      render: (record: any) => (
-        <Popconfirm
-          title=" You want to delete this user?"
-          onConfirm={() => onDelete(record)}
-        >
-          <Button type="primary" icon="DeleteOutlined">
-            Delete
-          </Button>
-        </Popconfirm>
-      ),
+      // Button to delete test information
+      render: (record: any) => {
+        return (
+          <Popconfirm
+            title=" You want to delete this test?"
+            onConfirm={() => onDelete(record)}
+          >
+            <Button type="primary">Delete</Button>
+          </Popconfirm>
+        );
+      },
     },
   ];
 

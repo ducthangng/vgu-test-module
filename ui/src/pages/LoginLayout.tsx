@@ -32,19 +32,7 @@ export const LoginLayout = () => {
           width: '100vw',
           height: '61px',
         }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '100vw',
-          }}
-        >
-          GL Education © 2022
-        </div>
-      </footer>
+      ></footer>
     </Layout>
   );
 };
