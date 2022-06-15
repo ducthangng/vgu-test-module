@@ -5,6 +5,7 @@ import { authApi } from '../api/authApi';
 import { useNavigate } from 'react-router-dom';
 import { roleFunc } from '../utils/Roles';
 import './Login.css';
+
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -54,13 +55,18 @@ const Login = () => {
 
   return (
     <div>
-      <h1 className="login__title" style={{ marginLeft: '24px' }}>
+      <h6
+        className="login__title"
+        style={{ color: '#8172d5', marginLeft: '20px' }}
+      >
         Sign In
-      </h1>
+      </h6>
       <div className="login__form">
         <Form>
           <Form.Item>
-            <label style={{ fontWeight: '700', color: 'black' }}>
+            <label
+              style={{ fontSize: 20, fontWeight: '700', color: '#8172d5' }}
+            >
               Username
             </label>
             <Input
@@ -71,13 +77,15 @@ const Login = () => {
                 borderLeftWidth: 0,
                 borderRightWidth: 0,
                 padding: '10px',
-                backgroundColor: '#E8F0FE',
+                backgroundColor: '#F2F5F8',
               }}
               onChange={(e) => setUsername(e.target.value)}
             />
           </Form.Item>
           <Form.Item>
-            <label style={{ fontWeight: '700', color: 'black' }}>
+            <label
+              style={{ fontSize: 20, fontWeight: '700', color: '#8172d5' }}
+            >
               Password
             </label>
             <Input
@@ -88,7 +96,7 @@ const Login = () => {
                 borderLeftWidth: 0,
                 borderRightWidth: 0,
                 padding: '10px',
-                backgroundColor: '#E8F0FE',
+                backgroundColor: '#F2F5F8',
               }}
               onChange={(e) => setPassword(e.target.value)}
               onPressEnter={handleLogin}
@@ -102,15 +110,16 @@ const Login = () => {
               className="login__button login__login"
               style={{
                 width: '100%',
-                height: '40px',
+                height: '50px',
                 borderRadius: '32px',
                 paddingTop: '4px',
+                border: '2px solid #8172d5',
                 paddingBottom: '4px',
                 lineHeight: '14px',
-                color: 'white',
+                fontSize: '20px',
               }}
             >
-              LOGIN
+              Login
             </button>
           </Form.Item>
           <div
@@ -125,9 +134,10 @@ const Login = () => {
             <p>
               <a
                 style={{
-                  color: 'black',
+                  color: '#8172d5',
                   textDecoration: 'underline',
-                  fontSize: '12px',
+                  fontFamily: 'Roboto',
+                  fontSize: '14px',
                 }}
               >
                 Forgot Password?
@@ -137,9 +147,10 @@ const Login = () => {
             <p>
               <a
                 style={{
-                  color: 'black',
+                  color: '#8172d5',
                   textDecoration: 'underline',
-                  fontSize: '12px',
+                  fontFamily: 'Roboto',
+                  fontSize: '14px',
                 }}
               >
                 Forgot Username?
@@ -155,7 +166,7 @@ const Login = () => {
                 width: '100%',
                 height: '40px',
                 borderRadius: '32px',
-                border: '3px solid #181b21',
+                border: '2px solid #8172d5',
                 paddingTop: '4px',
                 paddingBottom: '4px',
                 lineHeight: '14px',
