@@ -13,7 +13,7 @@ import (
 	"github.com/golang/mock/gomock"
 )
 
-func setupTest() *ClassUsecase {
+func buildClassTest() *ClassUsecase {
 	var repo repository.DataService
 	classusecase := NewClassUsecase(repo)
 	return classusecase
@@ -61,14 +61,14 @@ func TesrCreateClass(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if tt.name == "TestCreateClassError" {
 				mockRepo.EXPECT().CreateClass(tt.args.ctx, tt.args.class_dto).Return(errors.New("error when creating class"))
-				classusecase := setupTest()
+				classusecase := buildClassTest()
 				if got := classusecase.CreateClass(tt.args.ctx, tt.args.class_dto); got != tt.want {
 					t.Errorf("ClassUsecase.CreateClass() = %v, want %v", got, tt.want)
 				}
 			}
 			if tt.name == "TestCreateClassSuccess" {
 				mockRepo.EXPECT().CreateClass(tt.args.ctx, tt.args.class_dto).Return(nil)
-				classusecase := setupTest()
+				classusecase := buildClassTest()
 				if got := classusecase.CreateClass(tt.args.ctx, tt.args.class_dto); got != tt.want {
 					t.Errorf("ClassUsecase.CreateClass() = %v, want %v", got, tt.want)
 				}
@@ -106,7 +106,7 @@ func TestGetClasses(t *testing.T) {
 
 	t.Run(tt.name, func(t *testing.T) {
 		mockRepo.EXPECT().GetClasses(tt.args.ctx).Return(tt.want, tt.wantErr)
-		classusecase := setupTest()
+		classusecase := buildClassTest()
 		got, err := classusecase.GetClasses(tt.args.ctx)
 		if err != nil {
 			t.Errorf("ClassUsecase.GetClasses() = %v, want %v", err, tt.wantErr)
@@ -148,7 +148,7 @@ func TestAddMember2Class(t *testing.T) {
 
 	t.Run(tt.name, func(t *testing.T) {
 		mockRepo.EXPECT().AddMember2Class(tt.args.ctx, tt.args.classId, tt.args.userId).Return(tt.want)
-		classusecase := setupTest()
+		classusecase := buildClassTest()
 		if got := classusecase.AddMember2Class(tt.args.ctx, tt.args.classId, tt.args.userId); got != tt.want {
 			t.Errorf("ClassUsecase.AddMember2Class() = %v, want %v", got, tt.want)
 		}
@@ -185,7 +185,7 @@ func TestRemoveMemberFromClass(t *testing.T) {
 
 	t.Run(tt.name, func(t *testing.T) {
 		mockRepo.EXPECT().RemoveMemberFromClass(tt.args.ctx, tt.args.classId, tt.args.userId).Return(tt.want)
-		classusecase := setupTest()
+		classusecase := buildClassTest()
 		if got := classusecase.RemoveMemberFromClass(tt.args.ctx, tt.args.classId, tt.args.userId); got != tt.want {
 			t.Errorf("ClassUsecase.RemoveMemberFromClass() = %v, want %v", got, tt.want)
 		}
@@ -224,7 +224,7 @@ func TestQueryClassTestResult(t *testing.T) {
 
 	t.Run(tt.name, func(t *testing.T) {
 		mockRepo.EXPECT().QueryClassTestResult(tt.args.ctx, tt.args.classId, tt.args.testId).Return(tt.want, tt.wantErr)
-		classusecase := setupTest()
+		classusecase := buildClassTest()
 		got, err := classusecase.QueryClassTestResult(tt.args.ctx, tt.args.classId, tt.args.testId)
 		if err != nil {
 			t.Errorf("ClassUsecase.QueryClassTestResult() = %v, want %v", err, tt.wantErr)
@@ -263,7 +263,7 @@ func TestGetClassTest(t *testing.T) {
 
 	t.Run(tt.name, func(t *testing.T) {
 		mockRepo.EXPECT().GetClassTest(tt.args.ctx, tt.args.classId).Return(tt.want, tt.wantErr)
-		classusecase := setupTest()
+		classusecase := buildClassTest()
 		got, err := classusecase.GetClassTest(tt.args.ctx, tt.args.classId)
 		if err != nil {
 			t.Errorf("ClassUsecase.GetClassTest() = %v, want %v", err, tt.wantErr)
