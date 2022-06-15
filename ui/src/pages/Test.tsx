@@ -86,6 +86,7 @@ export default function Test(props: { reviewMode: boolean }) {
         setTestData(newTestData);
         setSubmitData({
           id: data.id,
+          testClassId: testDetails.testClassId,
           sections: newSections,
         });
         setIsDone(mockPreTestData.isDone);
@@ -164,7 +165,6 @@ export default function Test(props: { reviewMode: boolean }) {
         }
         // console.log('submit!');
         // console.log(submitDataRef.current);
-        // send submitted data to server here, instead of just console log
       };
 
   // intialize userAnswer

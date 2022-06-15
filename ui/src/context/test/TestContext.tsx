@@ -52,7 +52,8 @@ const initialState: InitialStateType = {
     sections: [],
   },
   submitData: {
-    id: '',
+    id: 0,
+    testClassId: 0,
     sections: [],
   },
   setTestDetails: () => {},
