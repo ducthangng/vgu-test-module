@@ -40,6 +40,7 @@ export default function Test(props: { reviewMode: boolean }) {
     setIsLoading,
     waitModal,
     setWaitModal,
+    testDetails,
     testData,
     submitData,
     setTestData,
@@ -89,7 +90,7 @@ export default function Test(props: { reviewMode: boolean }) {
         });
         setIsDone(mockPreTestData.isDone);
         // somehow totalTime only works as a normal variable, rather than a state or context state
-        totalTime = reviewMode ? 0 : 60;
+        totalTime = reviewMode ? 0 : testDetails.duration * 60;
       }
     } catch (error) {
       console.log(error);
@@ -155,6 +156,7 @@ export default function Test(props: { reviewMode: boolean }) {
           let response = await testApi.submitTest(
             submitDataRef.current as SubmitData
           );
+          console.log(response);
           setSubmitted(true);
           setWaitModal(true);
         } catch (error) {
