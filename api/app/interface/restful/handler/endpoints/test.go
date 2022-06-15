@@ -47,7 +47,13 @@ func GetTestInfo(c *gin.Context) {
 		return
 	}
 
-	app.Response(http.StatusOK, test, nil)
+	var apitest api_dto.Test
+	if err := copier.Copy(&apitest, test); err != nil {
+		app.Response(http.StatusInternalServerError, nil, err)
+		return
+	}
+
+	app.Response(http.StatusOK, apitest, nil)
 
 }
 
@@ -99,7 +105,13 @@ func DoTest(c *gin.Context) {
 		return
 	}
 
-	app.Response(http.StatusOK, test, nil)
+	var apitest api_dto.SkillTest
+	if err := copier.Copy(&apitest, test); err != nil {
+		app.Response(http.StatusInternalServerError, nil, err)
+		return
+	}
+
+	app.Response(http.StatusOK, apitest, nil)
 }
 
 func SubmitTest(c *gin.Context) {

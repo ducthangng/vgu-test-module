@@ -2,7 +2,7 @@ import { AppError } from '../models/Error';
 import { User } from '../models/User';
 
 const BASE_API = process.env.REACT_APP_BASE_API || 'http://localhost:8080';
-const apiUrl = `${BASE_API}`;
+const apiUrl = `${BASE_API}/api`;
 
 /**
  * functions that related to authentication/authorization.
@@ -160,7 +160,7 @@ export const authApi = {
    * @returns role of if user & error if failed.
    */
   validateRole: async () => {
-    const response = await fetch(`${apiUrl}/validateRole`, {
+    const response = await fetch(`${apiUrl}/v1/validateRole`, {
       method: 'GET',
       credentials: 'include',
     })

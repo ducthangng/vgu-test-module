@@ -43,9 +43,9 @@ export const testApi = {
     return response;
   },
 
-  doTest: async (testId: number) => {
+  doTest: async (testId: string) => {
     const response = await fetch(
-      `${apiUrl}/do?` + new URLSearchParams({ test_id: testId.toString() }),
+      `${apiUrl}/do?` + new URLSearchParams({ test_id: testId }),
       {
         method: 'GET',
         credentials: 'include',

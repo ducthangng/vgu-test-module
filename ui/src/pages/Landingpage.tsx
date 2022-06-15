@@ -1,10 +1,8 @@
 import { lazy } from 'react';
 
+//import file json data
 import IntroButton from '../api/IntroButton.json';
-//import MiddleBlock from "../components/contentBlock/middleContent/index";
-//import Container from "../components/Container/index";
-//import ScrollToTop from "../models/ScrollToTop";
-//import ContentBlock from "../components/contentBlock/index";
+
 import { Styles } from '../pages/Styles/styles';
 import Header from '../components/Header/Index';
 

@@ -28,7 +28,7 @@ export default function MatchingHeadingSection(
   useEffect(() => {
     // create answers array made from list of correct answers
     let newAnswers = props.section.content.map((item) => {
-      return item.correct_ans as string;
+      return item.correctAns as string;
     });
 
     // shuffle answers array
@@ -78,7 +78,9 @@ export default function MatchingHeadingSection(
           {props.section.media &&
             props.section.media.map((image) => (
               <div className="flex flex-col items-center">
-                <img src={image.content} className="" />
+                <div className="flex justify-center">
+                  <img className="py-10 w-11/12" src={image.content} />
+                </div>
                 <p className="mb-10 italic">{image.title}</p>
               </div>
             ))}
@@ -96,7 +98,7 @@ export default function MatchingHeadingSection(
                       reviewMode
                         ? submitData.sections[props.sectionIndex - 1].answers[
                             index
-                          ] === question.correct_ans
+                          ] === question.correctAns
                           ? 'bg-green-300'
                           : 'bg-red-300'
                         : ''
