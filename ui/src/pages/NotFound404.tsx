@@ -18,7 +18,8 @@ export default function NotFound404() {
             className="text-5xl font-dark font-bold"
             style={{
               color: '#8172d5',
-              fontFamily: 'Roboto-bold',
+              fontFamily: 'Roboto',
+              fontWeight: 700,
               fontSize: '64px',
             }}
           >

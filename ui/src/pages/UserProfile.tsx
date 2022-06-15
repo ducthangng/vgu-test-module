@@ -49,7 +49,8 @@ function UserProfile() {
           orientation="left"
           style={{
             fontSize: '56px',
-            fontFamily: 'Roboto-bold',
+            fontFamily: 'Roboto',
+            fontWeight: 700,
             color: '#8172d5',
           }}
         >

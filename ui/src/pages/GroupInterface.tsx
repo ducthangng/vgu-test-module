@@ -49,7 +49,8 @@ function GroupSelection() {
         style={{
           color: '#8172d5',
           fontSize: '56px',
-          fontFamily: 'Roboto-bold',
+          fontFamily: 'Roboto',
+          fontWeight: 700,
         }}
       >
         <Button type="primary"> Create new group </Button>

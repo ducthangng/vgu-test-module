@@ -14,7 +14,7 @@ function createGroup() {
     <body>
       <Divider
         orientation="center"
-        style={{ fontSize: '26px', fontFamily: 'Roboto' }}
+        style={{ fontSize: '56px', fontFamily: 'Roboto', color: '#8172d5' }}
       >
         Create Group
       </Divider>

@@ -76,7 +76,6 @@ const Login = () => {
                 borderTopWidth: 0,
                 borderLeftWidth: 0,
                 borderRightWidth: 0,
-                padding: '10px',
                 backgroundColor: '#F2F5F8',
               }}
               onChange={(e) => setUsername(e.target.value)}
@@ -95,7 +94,6 @@ const Login = () => {
                 borderTopWidth: 0,
                 borderLeftWidth: 0,
                 borderRightWidth: 0,
-                padding: '10px',
                 backgroundColor: '#F2F5F8',
               }}
               onChange={(e) => setPassword(e.target.value)}

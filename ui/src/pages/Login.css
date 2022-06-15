@@ -18,6 +18,26 @@
   }
 }
 
+.signup__title {
+  font-size: 56px;
+  font-family: 'Roboto-bold', sans-serif;
+  letter-spacing: 1px;
+  line-height: 1.18;
+  font-weight: 300;
+  color: #8172d5;
+  padding-top: 120px;
+  /* padding-bottom: 8px; */
+  transition: all 0.3s ease;
+
+  @media only screen and (max-width: 890px) {
+    font-size: 36px;
+  }
+
+  @media only screen and (max-width: 414px) {
+    font-size: 32px;
+  }
+}
+
 .login__body {
   width: 100vw;
   display: flex;

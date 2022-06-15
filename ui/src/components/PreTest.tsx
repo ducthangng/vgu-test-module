@@ -37,7 +37,8 @@ function PreTest() {
           style={{
             color: '#8172d5',
             marginLeft: '20px',
-            fontFamily: 'Roboto-bold',
+            fontFamily: 'Roboto',
+            fontWeight: 700,
           }}
         >
           Before The Test
