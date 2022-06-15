@@ -47,7 +47,11 @@ function UserProfile() {
       <body>
         <Divider
           orientation="left"
-          style={{ fontSize: '25px', fontFamily: 'Roboto' }}
+          style={{
+            fontSize: '56px',
+            fontFamily: 'Roboto-bold',
+            color: '#8172d5',
+          }}
         >
           User Profile
         </Divider>
@@ -68,7 +72,7 @@ function UserProfile() {
             >
               Welcome to Peekaboo
             </Title>
-            <p style={{ marginLeft: '100px', fontWeight: 'bold' }}>
+            <p style={{ marginLeft: '100px', fontWeight: 'Roboto' }}>
               Peekaboo is a magical application. It was a question of which of
               the two she preferred. On the one hand, the choice seemed simple.
               The more expensive one with a brand name would be the choice of

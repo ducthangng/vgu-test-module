@@ -50,7 +50,7 @@ function TestSelection() {
     <div className="w-5/6 text-xl font-black">
       <Divider
         orientation="left"
-        style={{ fontSize: '25px', fontFamily: 'Roboto' }}
+        style={{ fontSize: '56px', fontFamily: 'Roboto', color: '#8172d5' }}
       >
         Choose the test
       </Divider>
