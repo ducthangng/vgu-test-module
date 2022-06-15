@@ -20,12 +20,8 @@ const UserLayout = () => {
 
   const defaultSelectedKeys = () => {
     let pathname = window.location.pathname;
-    if (pathname === '/') {
-      return ['1'];
-    } else if (pathname === '/classroom') {
+    if (pathname === 'classroom') {
       return ['2'];
-    } else if (pathname === '/account') {
-      return ['3'];
     } else {
       return ['1'];
     }
@@ -61,21 +57,7 @@ const UserLayout = () => {
             _internalDisableMenuItemTitleTooltip={true}
             disabledOverflow={true}
           >
-            <Menu.Item key="1" onClick={() => navigate('dashboard')}>
-              <div className="flex justify-center items-center">
-                <HomeOutlined className="mr-2" />
-                Dashboard
-              </div>
-            </Menu.Item>
-
-            <Menu.Item key="2" onClick={() => navigate('classroom')}>
-              <div className="flex justify-center items-center">
-                <AppstoreOutlined className="mr-2" />
-                Class
-              </div>
-            </Menu.Item>
-
-            <Menu.Item key="3">
+            <Menu.Item key="1">
               <Dropdown
                 placement="bottom"
                 overlay={
@@ -106,6 +88,13 @@ const UserLayout = () => {
                   <DownOutlined className="ml-2" />
                 </div>
               </Dropdown>
+            </Menu.Item>
+
+            <Menu.Item key="2" onClick={() => navigate('classroom')}>
+              <div className="flex justify-center items-center">
+                <AppstoreOutlined className="mr-2" />
+                Class
+              </div>
             </Menu.Item>
           </Menu>
         </Header>
