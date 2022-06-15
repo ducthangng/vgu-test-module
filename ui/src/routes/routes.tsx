@@ -18,6 +18,7 @@ import UserManagement from '../pages/UserManagement';
 import { AdminEC, StudentEC } from '../models/Guard';
 import { TestProvider } from '../context/test/TestContext';
 import { LoginLayout } from '../pages/LoginLayout';
+import { Register } from '../pages/Register';
 import Login from '../pages/Login';
 
 export default function AppRoute() {
@@ -36,6 +37,7 @@ export default function AppRoute() {
           {/* public routes */}
           <Route element={<LoginLayout />}>
             <Route path="/" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Route>
 
           {/* student routes */}
