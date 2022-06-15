@@ -15,52 +15,52 @@ let defaultData = [
   ['Octorber 31', 8.5],
 ];
 
-interface GraphData {
-  col1: string;
-  col2: string | number;
-}
-
 const UserChart: React.FC = () => {
   // let data: google.visualization.DataTable();
-  const data: (string | number)[][] = [['Test Name', 'Grade']];
+
+  const [data, setData] = useState<(string | number)[][]>([
+    ['Test Name', 'Grade'],
+  ]);
+
   const getData = async () => {
     const id: number = (await authApi.getId()) as number;
     const results: Result[] = (await userApi.getAllTestResult(id)) as Result[];
+
+    console.log('api response:');
+    console.log(results);
 
     if (results.length === 0) {
       return;
     }
 
-    results.forEach((result, index) => {
-      console.log(index + 1 + ' :' + defaultData[index + 1].length);
-      // defaultData[index + 1][0] = result.resultNote;
-      // defaultData[index + 1][1] = result.score;
+    let newData = [...data];
 
-      if (index > defaultData.length) {
-        // defaultData.push(defaultData[1]);
-        return;
-      }
-    });
+    for (let i = results.length - 10; i < results.length; i++) {
+      data.push([unixToDatetime(results[i].dateCreated), results[i].score]);
+    }
 
-    console.log('data: ', data);
-    console.log('data2: ', defaultData);
+    setData(newData);
   };
+
   useEffect(() => {
     getData();
   }, []);
+
   const options = {
     title: 'User Performance',
     curveType: 'function',
     legend: { position: 'bottom' },
   };
   return (
-    <Chart
-      chartType="LineChart"
-      width="100%"
-      height="400px"
-      data={defaultData}
-      options={options}
-    />
+    <>
+      <Chart
+        chartType="LineChart"
+        width="100%"
+        height="400px"
+        data={data}
+        options={options}
+      />
+    </>
   );
 };
 

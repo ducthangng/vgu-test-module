@@ -27,5 +27,5 @@ export const secondToTime = (num: number) => {
 export const unixToDatetime = (s: number) => {
   // let unix_timestamp: number = parseInt(s, 10);
   var timestamp = moment.unix(s);
-  return timestamp.format('YYYY-MM-DD HH:mm:ss');
+  return timestamp.format('DD/MM');
 };
