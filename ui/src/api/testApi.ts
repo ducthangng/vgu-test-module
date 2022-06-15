@@ -110,10 +110,10 @@ export const testApi = {
     return response;
   },
 
-  getResult: async (testResultId: number) => {
+  getResult: async (testResultId: string) => {
     const response = await fetch(
       `${apiUrl}/result?` +
-        new URLSearchParams({ test_result_id: testResultId.toString() }),
+        new URLSearchParams({ test_result_id: testResultId }),
       {
         method: 'GET',
         credentials: 'include',
