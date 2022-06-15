@@ -35,14 +35,10 @@ const TestCard: React.FC<TestCardData> = ({
       <Card hoverable className="h-50 rounded rounded-xl">
         <div className="lg:grid lg:grid-cols-9 flex flex-col lg:flex-row">
           <div className="lg:col-span-2 overflow-y-hidden flex items-center justify-center mb-5 lg:mb-0">
-            <img
-              alt="example"
-              src={test}
-              className="w-3/4 p-0 rounded rounded-lg"
-            />
+            <img alt="example" src={test} className="p-0 rounded rounded-lg" />
           </div>
 
-          <div className="lg:col-span-7 flex flex-col lg:flex-row">
+          <div className="lg:col-span-7 flex flex-col lg:flex-row lg:pl-5">
             <div className="grid grid-rows-2 flex items-start lg:px-3">
               <div className="text-2xl font-medium">{testName}</div>
               <div className="font-medium"> {description} </div>
