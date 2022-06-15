@@ -4,13 +4,13 @@ export const Styles = createGlobalStyle`
 
     @font-face {
         font-family: "Roboto";
-        src: url("/fonts/Motiva-Sans-Light.ttf") format("truetype");
+        src: url("/fonts/Roboto-Regular.ttf") format("truetype");
         font-style: normal;
     }
 
     @font-face {
         font-family: "Roboto";
-        src: url("/fonts/Motiva-Sans-Bold.ttf") format("truetype");
+        src: url("/fonts/Roboto-Bold.ttf") format("truetype");
         font-style: normal;
     }
 
@@ -18,7 +18,7 @@ export const Styles = createGlobalStyle`
     body,
     html,
     a {
-        font-family: 'Roboto', sans-serif;
+        font-family: 'Roboto';
     }
 
 
