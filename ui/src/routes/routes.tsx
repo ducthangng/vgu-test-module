@@ -64,17 +64,14 @@ export default function AppRoute() {
           <Route path="/admin/*" element={<Guard {...AdminGuard} />}>
             <Route element={<UserLayout />}>
               <Route path="dashboard/*">
-                <Route path="user" element={<UserManagement />} />
-                <Route path="test" element={<TestManagement />} />
+                <Route path="" element={<TestManagement />} />
+                <Route path="users" element={<UserManagement />} />
               </Route>
 
               <Route path="classroom/*">
+                <Route path="" element={<GroupSelection />} />
                 <Route element={<ClassroomLayout />}>
-                  <Route path=":id/home" element={<GroupSelection />} />
-                  <Route
-                    path=":classid/test/:testid"
-                    element={<MockTestSelection />}
-                  />
+                  <Route path=":id/home" element={<TestSelection />} />
                 </Route>
                 <Route path="*" element={<Navigate to="" replace />} />
               </Route>

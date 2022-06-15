@@ -56,6 +56,8 @@ func (t *TestUsecase) QuerySkillTest(ctx context.Context, testId int) (test usec
 		if err := copier.Copy(&test, record); err != nil {
 			return test, err
 		}
+
+		test.ID = v
 	}
 
 	return

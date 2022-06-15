@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"encoding/json"
-	"log"
 	"server/app/domain/entity"
 	"server/utils/conversion"
 	"time"
@@ -45,8 +44,6 @@ func (q *Querier) QuerySkillTest(ctx context.Context, id int) (st entity.SkillTe
 	if err != nil {
 		return st, err
 	}
-
-	log.Printf("%s", jsonSection)
 
 	if err = json.Unmarshal([]byte(jsonSection), &st.Section); err != nil {
 		// panic(err)

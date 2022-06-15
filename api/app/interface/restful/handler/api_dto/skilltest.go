@@ -8,7 +8,7 @@ import (
 
 type (
 	SkillTest struct {
-		ID          string    `json:"id"`
+		ID          int       `json:"id"`
 		MediaURL    string    `json:"mediaURL"`
 		Title       string    `json:"title"`
 		Content     string    `json:"content"`

@@ -9,7 +9,7 @@ import (
 type Test struct {
 	ID               int    `json:"id"`
 	TestClassID      int    `json:"testClassId"`
-	TagID            int    `json:"tagid"`
+	TagID            int    `json:"tagId"`
 	TagName          string `json:"tagName"`
 	TestName         string `json:"testName"`
 	CreatedUserID    int    `json:"createdUserId"`
