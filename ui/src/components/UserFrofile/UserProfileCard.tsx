@@ -29,7 +29,7 @@ const UserProfileCard: React.FC<UserCardProps> = ({
       />
 
       <div className={styles.info}>
-        <Title level={3}>{username}</Title>
+        <Title level={3}>@{username}</Title>
         <p style={{ fontSize: '20px', color: '#49484a' }}>{fullname}</p>
         <Space direction="vertical">
           <Text strong>Email: {email}</Text>
