@@ -46,7 +46,11 @@ function GroupSelection() {
     <body>
       <Divider
         orientation="right"
-        style={{ fontSize: '20px', fontFamily: 'Roboto' }}
+        style={{
+          color: '#8172d5',
+          fontSize: '56px',
+          fontFamily: 'Roboto-bold',
+        }}
       >
         <Button type="primary"> Create new group </Button>
       </Divider>
