@@ -11,6 +11,35 @@ const apiUrl = `${BASE_API}/api/v1/test`;
  * fetches for test data.
  */
 export const testApi = {
+  getAllTests: async () => {
+    const response = await fetch(`${apiUrl}/all`, {
+      method: 'GET',
+      credentials: 'include',
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        throw new Error('Network response was not ok.');
+      })
+      .then((data) => {
+        console.log(data);
+        const err: AppError = data.error;
+        if (err.errorCode !== 0) {
+          throw new Error(err.errorMsg + ' ++ ' + err.errorField);
+        }
+
+        const tests: TestDetails[] = data.data;
+        return tests;
+      })
+      .catch((err) => {
+        return err;
+      });
+
+    return response;
+  },
+
   getTest: async (testId: string) => {
     const response = await fetch(
       `${apiUrl}/?` + new URLSearchParams({ test_id: testId }),

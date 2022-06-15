@@ -2,7 +2,6 @@ package endpoints
 
 import (
 	"context"
-	"log"
 	"net/http"
 	"server/app/interface/persistence/rdbms/sqlconnection"
 	"server/app/interface/restful/handler/api_dto"
@@ -19,6 +18,7 @@ import (
 
 func UserHandler(c *gin.RouterGroup) {
 	c.GET("/", GetUserInfo)
+	c.GET("/all", GetAllUsers)
 	c.GET("/class", GetUserClass)
 	c.GET("/test_answer", ReviewTestAnswer)
 	c.GET("/test_result", GetAllTestResult)
@@ -34,7 +34,6 @@ func GetUserInfo(c *gin.Context) {
 	username := c.Query("username")
 	fullname := c.Query("fullname")
 	userId := c.Query("user_id")
-	log.Println(username, " ", fullname, " ", userId)
 	if len(username) == 0 && len(fullname) == 0 && len(userId) == 0 {
 		app.Response(http.StatusOK, 0, e.ErrorInputInvalid)
 		return
@@ -64,6 +63,26 @@ func GetUserInfo(c *gin.Context) {
 
 	app.Response(http.StatusOK, user, nil)
 
+}
+
+func GetAllUsers(c *gin.Context) {
+	app := gctx.Gin{C: c}
+	ctx := context.Background()
+
+	access := registry.BuildUserAccessPoint(false, sqlconnection.DBConn)
+	user, err := access.Service.FindAllUser(ctx)
+	if err != nil {
+		app.Response(http.StatusInternalServerError, 0, err)
+		return
+	}
+
+	var users []api_dto.User
+	if err := copier.Copy(&users, &user); err != nil {
+		app.Response(http.StatusInternalServerError, 0, err)
+		return
+	}
+
+	app.Response(http.StatusOK, users, nil)
 }
 
 func GetUserClass(c *gin.Context) {
@@ -138,8 +157,6 @@ func GetAllTestResult(c *gin.Context) {
 		app.Response(http.StatusInternalServerError, 0, err)
 		return
 	}
-
-	log.Println("result: ", result)
 
 	app.Response(http.StatusOK, result, nil)
 }

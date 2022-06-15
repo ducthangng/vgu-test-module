@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { useNavigate } from 'react-router-dom';
 // import library from antd
 import { Divider, Row, Button } from 'antd';
 import { Pagination } from 'antd';
@@ -8,32 +8,32 @@ import { Pagination } from 'antd';
 import UserTable from '../components/UserTable';
 
 function AdminManagement() {
-  return (
-    <body>
-      <Divider
-        orientation="right"
-        style={{ fontSize: '20px', fontFamily: 'Roboto' }}
-      >
-        <Button type="primary"> Test Information </Button>
-      </Divider>
+  const navigate = useNavigate();
+  const routeChange = () => {
+    navigate('/admin/');
+  };
 
+  return (
+    <div style={{ width: '65%' }}>
       <Divider
         orientation="left"
         style={{ fontSize: '26px', fontFamily: 'Roboto' }}
       >
         User Management
       </Divider>
+      <Divider
+        orientation="right"
+        style={{ fontSize: '20px', fontFamily: 'Roboto' }}
+      >
+        <Button type="primary" onClick={routeChange}>
+          Test Information
+        </Button>
+      </Divider>
+
       <UserTable />
 
       <br></br>
-      <Row justify="center">
-        <Pagination
-          defaultCurrent={1}
-          total={50}
-          style={{ color: '#8172D5' }}
-        />
-      </Row>
-    </body>
+    </div>
   );
 }
 

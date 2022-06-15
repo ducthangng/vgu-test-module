@@ -56,6 +56,24 @@ func (q *Querier) QueryTestHeadline(ctx context.Context, ID int, TestName string
 	return tempt, nil
 }
 
+func (q *Querier) QueryAllTest(ctx context.Context) (result []entity.Test, err error) {
+	data, err := q.DB.QueryContext(ctx, "Select * from testbank where active = ?", 1)
+	if err == sql.ErrNoRows {
+		return result, nil
+	}
+
+	if err != nil {
+		return result, err
+	}
+
+	tempt, err := refactorQueryTest(data, err)
+	if err != nil {
+		return result, err
+	}
+
+	return tempt, nil
+}
+
 func (q *Querier) QueryTestByTestTag(ctx context.Context, TestTagID int) (result []entity.Test, err error) {
 	if TestTagID == 0 {
 		return result, errors.New("invalid input")

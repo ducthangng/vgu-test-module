@@ -1,34 +1,30 @@
-import React from 'react';
-
-//import library from antd
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Divider, Button } from 'antd';
-
-//import Component from components
 import TestTable from '../components/TestTable';
-// import { Test } from '../models/Test';
-
-interface Test {
-  key: string;
-  nameTest: string;
-  testId: number;
-  testDate: string;
-}
 
 function TestManagement() {
-  return (
-    <body>
-      <Divider
-        orientation="right"
-        style={{ fontSize: '20px', fontFamily: 'Roboto' }}
-      >
-        <Button type="primary"> User Information </Button>
-      </Divider>
+  const navigate = useNavigate();
 
+  const routeChange = () => {
+    navigate('users');
+  };
+
+  return (
+    <body style={{ width: '65%' }}>
       <Divider
         orientation="left"
         style={{ fontSize: '26px', fontFamily: 'Roboto' }}
       >
         Test Management
+      </Divider>
+      <Divider
+        orientation="right"
+        style={{ fontSize: '20px', fontFamily: 'Roboto' }}
+      >
+        <Button type="primary" onClick={routeChange}>
+          User Information
+        </Button>
       </Divider>
 
       <TestTable />

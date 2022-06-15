@@ -1,54 +1,47 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-
-//import library from antd
+import { testApi } from '../api/testApi';
+import { TestDetails } from '../models/TestDetails';
 import { Table, Button, Popconfirm } from 'antd';
+import { unixToDatetime } from '../utils/timeConvert';
 
-//import Component from components
-// import { Test } from '../models/Test';
+interface TestData {
+  key: number;
+  testName: string;
+  description: string;
+  testDate: string;
+}
 
-type Test = {};
+const TestTable: React.FC = () => {
+  const [tests, setTests] = useState<TestData[]>([] as TestData[]);
 
-const TestTable: React.FC<Test> = () => {
-  const [DataSource, setDataSource] = React.useState<any>([
-    {
-      key: '1',
-      nameTest: 'Hai',
-      testId: 1,
-      testDate: '2020-01-01',
-    },
-    {
-      key: '2',
-      nameTest: 'IELTS Basic',
-      testId: 2,
-      testDate: '2020-01-02',
-    },
-    {
-      key: '3',
-      nameTest: 'IELTS Academic',
-      testId: 3,
-      testDate: '2020-01-03',
-    },
-  ]);
+  const getData = async () => {
+    let data = (await testApi.getAllTests()) as TestDetails[];
 
-  const fetchData = async () => {
-    const response = await fetch('http://localhost:8080/api/users');
-    const json = await response.json();
-    setDataSource(json);
+    if (data.length === 0) {
+      return;
+    }
+
+    let newData: TestData[] = [];
+
+    data.forEach((item, index) => {
+      let tempt: TestData = {
+        key: index + 1,
+        testName: item.testName,
+        description: item.title,
+        testDate: unixToDatetime(item.dateAssigned),
+      };
+
+      newData.push(tempt);
+    });
+
+    setTests(newData);
   };
 
   useEffect(() => {
-    fetchData();
+    getData();
   }, []);
 
-  //GOTO: Call to delete test information from database
-  const onDelete = (record: any) => {
-    setDataSource((pre: any) => {
-      return pre.filter((test: { key: any }) => test.key !== record.key);
-    });
-  };
-
-  //create title of columns in test table information
   const columns = [
     {
       title: 'Key',
@@ -57,16 +50,16 @@ const TestTable: React.FC<Test> = () => {
     },
     {
       title: 'Test Name',
-      dataIndex: 'nameTest',
-      key: 'nameTest',
+      dataIndex: 'testName',
+      key: 'testName',
     },
     {
-      title: 'Test ID',
-      dataIndex: 'testId',
-      key: 'testId',
+      title: 'Test Description',
+      dataIndex: 'description',
+      key: 'description',
     },
     {
-      title: 'Test Date',
+      title: 'Date Assigned',
       dataIndex: 'testDate',
       key: 'testDate',
     },
@@ -88,10 +81,17 @@ const TestTable: React.FC<Test> = () => {
     },
   ];
 
+  //TODO: Call to delete test information from database
+  const onDelete = (record: any) => {
+    // setDataSource((pre: any) => {
+    //   return pre.filter((test: { key: any }) => test.key !== record.key);
+    // });
+  };
+
   return (
     <div style={{ padding: 20, background: '#fff', minHeight: '360' }}>
       <span>
-        <Table columns={columns} dataSource={DataSource}></Table>
+        <Table columns={columns} dataSource={tests}></Table>
       </span>
     </div>
   );

@@ -17,6 +17,7 @@ import (
 
 func TestHandler(c *gin.RouterGroup) {
 	c.GET("/", GetTestInfo)
+	c.GET("/all", GetAllTests)
 	c.GET("/result", GetTestResult)
 	c.GET("/do", DoTest)
 
@@ -55,6 +56,26 @@ func GetTestInfo(c *gin.Context) {
 
 	app.Response(http.StatusOK, apitest, nil)
 
+}
+
+func GetAllTests(c *gin.Context) {
+	app := gctx.Gin{C: c}
+	ctx := context.Background()
+
+	access := registry.BuildTestAccessPoint(false, sqlconnection.DBConn)
+	test, err := access.Service.QueryAllTest(ctx)
+	if err != nil {
+		app.Response(http.StatusInternalServerError, 0, err)
+		return
+	}
+
+	var tests []api_dto.Test
+	if err := copier.Copy(&tests, &test); err != nil {
+		app.Response(http.StatusInternalServerError, 0, err)
+		return
+	}
+
+	app.Response(http.StatusOK, tests, nil)
 }
 
 func GetTestResult(c *gin.Context) {

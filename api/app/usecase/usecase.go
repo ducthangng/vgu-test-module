@@ -15,6 +15,8 @@ type AdminService interface {
 }
 
 type UserService interface {
+	FindAllUser(ctx context.Context) (result []usecase_dto.User, err error)
+
 	CreateUser(ctx context.Context, user usecase_dto.User) (id int, err error)
 
 	UpdateUser(ctx context.Context, user usecase_dto.User) (err error)
@@ -57,6 +59,8 @@ type TestService interface {
 	QuerySkillTest(ctx context.Context, testId int) (test usecase_dto.SkillTest, err error)
 
 	SubmitTest(ctx context.Context, data usecase_dto.SubmitData, userId int, entityCode int) (testResultId int, err error)
+
+	QueryAllTest(ctx context.Context) (testResult []usecase_dto.Test, err error)
 }
 
 type TestResultService interface {

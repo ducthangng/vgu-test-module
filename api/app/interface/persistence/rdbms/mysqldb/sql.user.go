@@ -137,6 +137,10 @@ func queryUser(q *Querier, ctx context.Context, Username string, Fullname string
 		rows, err := q.DB.QueryContext(ctx, sql_query_id, ID, 1)
 		return refactorUserSelect(rows, err, HasPassword)
 
+	case 3:
+		rows, err := q.DB.QueryContext(ctx, "select * from users where active = ?", 1)
+		return refactorUserSelect(rows, err, HasPassword)
+
 	default:
 		return []entity.User{}, errors.New("wrong Flag")
 	}

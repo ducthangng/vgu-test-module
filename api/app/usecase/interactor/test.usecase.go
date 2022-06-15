@@ -128,3 +128,16 @@ func (t *TestUsecase) SubmitTest(ctx context.Context, data usecase_dto.SubmitDat
 
 	return testResultId, err
 }
+
+func (t *TestUsecase) QueryAllTest(ctx context.Context) (testResult []usecase_dto.Test, err error) {
+	record, err := t.TestRepository.QueryAllTest(ctx)
+	if err != nil {
+		return
+	}
+
+	if err := copier.Copy(&testResult, &record); err != nil {
+		return testResult, err
+	}
+
+	return
+}
