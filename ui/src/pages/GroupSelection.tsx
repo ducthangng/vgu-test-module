@@ -3,28 +3,57 @@ import GroupCard from '../components/GroupCard';
 import { Row, Divider } from 'antd';
 import { Pagination } from 'antd';
 import { Class } from '../models/Class';
-// toast
-import { toast } from 'react-toastify';
-// fetches
 import { classApi } from '../api/classApi';
-// routing
-import { useParams, useNavigate } from 'react-router-dom';
+import { userApi } from '../api/userApi';
+import { authApi } from '../api/authApi';
+
+// const defaultData: Class[] = [
+//   {
+//     id: 1,
+//     className: 'BASIC IELTS CLASS',
+//     info: 'Book unique camping experiences on over 300,000 campsites.',
+//     announcement: '',
+//     roomCode: '',
+//     level: '',
+//   },
+//   {
+//     id: 2,
+//     className: 'ADVANCED IELTS CLASS',
+//     info: 'Book unique camping experiences on over 300,000 campsites.',
+//     announcement: '',
+//     roomCode: '',
+//     level: '',
+//   },
+//   {
+//     id: 3,
+//     className: 'ADVANCED IELTS CLASS',
+//     info: 'Book unique camping experiences on over 300,000 campsites.',
+//     announcement: '',
+//     roomCode: '',
+//     level: '',
+//   },
+//   {
+//     id: 4,
+//     className: 'ADVANCED IELTS CLASS',
+//     info: 'Book unique camping experiences on over 300,000 campsites.',
+//     announcement: '',
+//     roomCode: '',
+//     level: '',
+//   },
+// ];
 
 function GroupSelection() {
-  const [classes, setClasses] = useState<Class[]>([]);
+  const [data, setData] = React.useState<Class[]>([] as Class[]);
 
-  const fetchData = async () => {
-    try {
-      let data = await classApi.getAll();
-      console.log(data);
-      setClasses(data);
-    } catch (error) {
-      toast(`error: ${error}`);
-    }
+  const getClasses = async () => {
+    const id = (await authApi.getId()) as number;
+    const classes = (await userApi.getClass(id)) as Class[];
+
+    setData(classes);
   };
 
   useEffect(() => {
-    fetchData();
+    getClasses();
   }, []);
 
   return (
@@ -42,33 +71,34 @@ function GroupSelection() {
       </Divider>
       <Row
         gutter={[20, 20]}
-        justify="space-between"
+        justify="space-evenly"
         style={{ marginBottom: '5em' }}
       >
-        {classes.map((item) => {
-          return (
-            <div
-              style={{
-                borderColor: '#d4d4d6',
-                borderWidth: '1px',
-                borderRadius: '20px',
-              }}
-            >
-              <GroupCard
-                id={item.id}
-                className={item.className}
-                info={item.info}
-                announcement={item.announcement}
-                roomCode={item.roomCode}
-                level={item.level}
-              />
-            </div>
-          );
-        })}
+        {data &&
+          data.map((item) => {
+            return (
+              <div
+                style={{
+                  borderColor: '#d4d4d6',
+                  borderWidth: '1px',
+                  borderRadius: '20px',
+                }}
+              >
+                <GroupCard
+                  id={item.id}
+                  className={item.className}
+                  info={item.info}
+                  announcement={item.announcement}
+                  roomCode={item.roomCode}
+                  level={item.level}
+                />
+              </div>
+            );
+          })}
       </Row>
-      <Row justify="center">
+      {/* <Row justify="center">
         <Pagination defaultCurrent={1} total={5} style={{ color: '#8172D5' }} />
-      </Row>
+      </Row> */}
     </div>
   );
 }

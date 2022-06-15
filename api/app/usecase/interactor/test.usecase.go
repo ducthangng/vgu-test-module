@@ -3,7 +3,6 @@ package interactor
 import (
 	"context"
 	"fmt"
-	"log"
 	"server/app/domain/entity"
 	"server/app/domain/repository"
 	"server/app/usecase/usecase_dto"
@@ -35,8 +34,6 @@ func (t *TestUsecase) QueryTestInfo(ctx context.Context, testId int) (test useca
 	if err := copier.Copy(&test, &record[0]); err != nil {
 		return test, err
 	}
-
-	log.Println(test)
 
 	return
 }

@@ -56,7 +56,7 @@ func GetUserInfo(c *gin.Context) {
 	}
 
 	access := registry.BuildUserAccessPoint(false, sqlconnection.DBConn)
-	user, err := access.Service.FindUser(ctx, user_record, true)
+	user, err := access.Service.FindUser(ctx, user_record, false)
 	if err != nil {
 		app.Response(http.StatusInternalServerError, 0, err)
 		return

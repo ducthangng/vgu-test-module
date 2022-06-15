@@ -1,17 +1,35 @@
 import { Card, Form, Button } from 'antd';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import test from '../assets/images/test-cover.jpg';
 import { TestCardData } from '../models/TestCardData';
+import { unixToDatetime } from '../utils/timeConvert';
+import { useTestContext } from '../context/test/TestContext';
+import { TestDetails } from '../models/TestDetails';
 
 import { TeamOutlined, CalendarOutlined } from '@ant-design/icons';
 
 const TestCard: React.FC<TestCardData> = ({
   testId,
-  groupId,
+  groupName,
   deadline,
   description,
+  testClassId,
+  testName,
   imageLink,
 }) => {
+  const navigate = useNavigate();
+  const { testDetails, setTestDetails } = useTestContext();
+
+  const routeChange = () => {
+    let newTestDetails: TestDetails = testDetails;
+    newTestDetails.testClassId = testClassId;
+
+    setTestDetails(newTestDetails);
+
+    navigate(`/test/${testId}/details`);
+  };
+
   return (
     <div className="my-3">
       <Card hoverable className="h-50 rounded rounded-xl">
@@ -25,23 +43,26 @@ const TestCard: React.FC<TestCardData> = ({
           </div>
 
           <div className="col-span-3 grid grid-rows-2 flex items-start">
-            <div className="text-2xl font-bold">Test {testId}</div>
+            <div className="text-2xl font-bold">Test {testName}</div>
             <div className="font-medium"> {description} </div>
           </div>
 
           <div className="col-span-3 grid grid-rows-2 flex justify-center items-center">
             <div className="inline-flex">
               <TeamOutlined style={{ color: '#8172D5' }} className="mr-3" />
-              Group {groupId}
+              Group {groupName}
             </div>
             <div className="inline-flex">
               <CalendarOutlined style={{ color: '#8172D5' }} className="mr-3" />
-              {deadline}
+              {unixToDatetime(deadline)}
             </div>
           </div>
 
           <div className="col-span-1 flex flex-col justify-center">
-            <button className="bg-primary px-1 py-2 rounded rounded-lg font-bold text-white">
+            <button
+              className="bg-primary px-1 py-2 rounded rounded-lg font-bold text-white"
+              onClick={routeChange}
+            >
               Take
             </button>
           </div>

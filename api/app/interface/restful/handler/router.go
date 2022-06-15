@@ -27,7 +27,7 @@ func Routing() *gin.Engine {
 		MaxAge:           12 * time.Hour,
 	}))
 
-	r.Use(middleware.RateLimit(2, 5))
+	// r.Use(middleware.RateLimit(2, 5))
 	r.Use(middleware.Tracer())
 
 	r.POST("/api/login", endpoints.Login)

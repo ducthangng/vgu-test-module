@@ -7,20 +7,18 @@ const { Title, Text } = Typography;
 interface UserCardProps {
   id: number;
   fullname: string;
+  username: string;
   email: string;
-  phone: string;
-  address: string;
-  dob: string;
+  gender: string;
   avatar: React.ReactNode;
 }
 
 const UserProfileCard: React.FC<UserCardProps> = ({
   id,
   fullname,
+  username,
+  gender,
   email,
-  phone,
-  address,
-  dob,
 }) => {
   return (
     <div className={styles.content}>
@@ -31,12 +29,11 @@ const UserProfileCard: React.FC<UserCardProps> = ({
       />
 
       <div className={styles.info}>
-        <Title level={3}>{fullname}</Title>
-        <p style={{ fontSize: '20px', color: '#49484a' }}>{email}</p>
+        <Title level={3}>{username}</Title>
+        <p style={{ fontSize: '20px', color: '#49484a' }}>{fullname}</p>
         <Space direction="vertical">
-          <Text strong>{phone}</Text>
-          <Text strong>{address}</Text>
-          <Text strong>{dob}</Text>
+          <Text strong>Email: {email}</Text>
+          <Text strong>Gender: {gender}</Text>
         </Space>
       </div>
     </div>
