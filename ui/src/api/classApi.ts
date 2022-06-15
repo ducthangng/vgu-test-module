@@ -11,7 +11,7 @@ const apiUrl = `${BASE_API}/api/v1/class`;
  */
 export const classApi = {
   getAll: async () => {
-    const response = await fetch(`${apiUrl}`, {
+    const response = await fetch(`${apiUrl}/`, {
       method: 'GET',
       credentials: 'include',
     })

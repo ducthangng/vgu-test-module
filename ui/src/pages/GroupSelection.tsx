@@ -1,45 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import GroupCard from '../components/GroupCard';
 import { Row, Divider } from 'antd';
 import { Pagination } from 'antd';
 import { Class } from '../models/Class';
-
-const defaultData: Class[] = [
-  {
-    id: 1,
-    className: 'BASIC IELTS CLASS',
-    info: 'Book unique camping experiences on over 300,000 campsites.',
-    announcement: '',
-    roomCode: '',
-    level: '',
-  },
-  {
-    id: 2,
-    className: 'ADVANCED IELTS CLASS',
-    info: 'Book unique camping experiences on over 300,000 campsites.',
-    announcement: '',
-    roomCode: '',
-    level: '',
-  },
-  {
-    id: 3,
-    className: 'ADVANCED IELTS CLASS',
-    info: 'Book unique camping experiences on over 300,000 campsites.',
-    announcement: '',
-    roomCode: '',
-    level: '',
-  },
-  {
-    id: 4,
-    className: 'ADVANCED IELTS CLASS',
-    info: 'Book unique camping experiences on over 300,000 campsites.',
-    announcement: '',
-    roomCode: '',
-    level: '',
-  },
-];
+// toast
+import { toast } from 'react-toastify';
+// fetches
+import { classApi } from '../api/classApi';
+// routing
+import { useParams, useNavigate } from 'react-router-dom';
 
 function GroupSelection() {
+  const [classes, setClasses] = useState<Class[]>([]);
+
+  const fetchData = async () => {
+    try {
+      let data = await classApi.getAll();
+      console.log(data);
+      setClasses(data);
+    } catch (error) {
+      toast(`error: ${error}`);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div
       style={{
@@ -58,7 +45,7 @@ function GroupSelection() {
         justify="space-between"
         style={{ marginBottom: '5em' }}
       >
-        {defaultData.map((item) => {
+        {classes.map((item) => {
           return (
             <div
               style={{

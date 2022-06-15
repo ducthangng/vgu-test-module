@@ -3,19 +3,18 @@ import { Button } from 'antd';
 import '../components/PreTest.css';
 // toast
 import { toast } from 'react-toastify';
-// models
-import { TestDetails } from '../models/TestDetails';
 // context
 import { useTestContext } from '../context/test/TestContext';
 // fetches
 import { testApi } from '../api/testApi';
 // routing
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 function PreTest() {
   // context
   const { testDetails, setTestDetails } = useTestContext();
   // routing
+  const navigate = useNavigate();
   const { testId } = useParams();
 
   const fetchData = async () => {
@@ -52,7 +51,12 @@ function PreTest() {
         {testDetails.testName}
         {testDetails.title}
         {testDetails.info}
-        <Button className="btn">
+        <Button
+          className="btn"
+          onClick={() => {
+            navigate(`../do/${testId}`);
+          }}
+        >
           <p className="btn-text" style={{ textAlign: 'center' }}>
             Start
           </p>
