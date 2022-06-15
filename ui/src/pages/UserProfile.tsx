@@ -120,6 +120,7 @@ function UserProfile() {
               most. It was the easy choice. The safe choice. But she wasn't sure
               she actually preferred it.
             </p>
+
             <UserChart />
 
             <div

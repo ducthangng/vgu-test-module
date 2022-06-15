@@ -20,7 +20,7 @@ func Routing() *gin.Engine {
 	r.Use(gin.Recovery(), gin.Logger())
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"http://localhost:3000", "http://ducthang.dev"},
-		AllowMethods:     []string{"POST"},
+		AllowMethods:     []string{"POST", "GET", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type"},
 		ExposeHeaders:    []string{"Content-Length", "Content-Type", "Access-Control-Allow-Headers", "Access-Control-Allow-Origin", "Origin", "Accept-Encoding", "X-CSRF-Token", "Authorization"},
 		AllowCredentials: true,

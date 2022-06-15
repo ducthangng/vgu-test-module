@@ -120,13 +120,13 @@ func GetAllTestResult(c *gin.Context) {
 	app := gctx.Gin{C: c}
 	ctx := context.Background()
 
-	resultID := c.Query("user_id")
-	if resultID == "" {
+	userId := c.Query("user_id")
+	if userId == "" {
 		app.Response(http.StatusOK, 0, e.ErrorInputInvalid)
 		return
 	}
 
-	ID, err := strconv.Atoi(resultID)
+	ID, err := strconv.Atoi(userId)
 	if err != nil {
 		app.Response(http.StatusInternalServerError, 0, err)
 		return
@@ -138,6 +138,8 @@ func GetAllTestResult(c *gin.Context) {
 		app.Response(http.StatusInternalServerError, 0, err)
 		return
 	}
+
+	log.Println("result: ", result)
 
 	app.Response(http.StatusOK, result, nil)
 }
