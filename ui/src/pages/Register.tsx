@@ -7,7 +7,7 @@ export const Register = () => {
   return (
     <>
       <h1
-        className="login__title"
+        className="signup__title"
         style={{ color: '#8172d5', marginLeft: '20px' }}
       >
         Create Account
@@ -26,7 +26,6 @@ export const Register = () => {
                 borderTopWidth: 0,
                 borderLeftWidth: 0,
                 borderRightWidth: 0,
-                padding: '10px',
                 backgroundColor: '#F2F5F8',
               }}
             />
@@ -43,7 +42,6 @@ export const Register = () => {
                 borderTopWidth: 0,
                 borderLeftWidth: 0,
                 borderRightWidth: 0,
-                padding: '10px',
                 backgroundColor: '#F2F5F8',
               }}
             />
@@ -60,7 +58,6 @@ export const Register = () => {
                 borderTopWidth: 0,
                 borderLeftWidth: 0,
                 borderRightWidth: 0,
-                padding: '10px',
                 backgroundColor: '#F2F5F8',
               }}
             />
@@ -77,7 +74,6 @@ export const Register = () => {
                 borderTopWidth: 0,
                 borderLeftWidth: 0,
                 borderRightWidth: 0,
-                padding: '10px',
                 backgroundColor: '#F2F5F8',
               }}
             />
@@ -94,7 +90,6 @@ export const Register = () => {
                 borderTopWidth: 0,
                 borderLeftWidth: 0,
                 borderRightWidth: 0,
-                padding: '10px',
                 backgroundColor: '#F2F5F8',
               }}
             />

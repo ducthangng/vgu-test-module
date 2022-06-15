@@ -51,6 +51,14 @@ const Header = () => {
             <Button>{'Sign up'}</Button>
           </Span>
         </CustomNavLinkSmall>
+        <CustomNavLinkSmall
+          style={{ width: '180px', fontFamily: 'Roboto', color: '#8172d5' }}
+          onClick={() => scrollTo('contact')}
+        >
+          <Span>
+            <Button>{'Sign in'}</Button>
+          </Span>
+        </CustomNavLinkSmall>
       </>
     );
   };
