@@ -2,7 +2,9 @@ import React from 'react';
 
 interface TestCardData {
   testId: number;
-  groupId: number;
+  testClassId: number;
+  groupName: string;
+  testName: string;
   deadline: number;
   description: string;
   imageLink: string;

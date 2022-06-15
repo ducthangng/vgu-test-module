@@ -74,30 +74,31 @@ function GroupSelection() {
         justify="space-evenly"
         style={{ marginBottom: '5em' }}
       >
-        {data.map((item) => {
-          return (
-            <div
-              style={{
-                borderColor: '#d4d4d6',
-                borderWidth: '1px',
-                borderRadius: '20px',
-              }}
-            >
-              <GroupCard
-                id={item.id}
-                className={item.className}
-                info={item.info}
-                announcement={item.announcement}
-                roomCode={item.roomCode}
-                level={item.level}
-              />
-            </div>
-          );
-        })}
+        {data &&
+          data.map((item) => {
+            return (
+              <div
+                style={{
+                  borderColor: '#d4d4d6',
+                  borderWidth: '1px',
+                  borderRadius: '20px',
+                }}
+              >
+                <GroupCard
+                  id={item.id}
+                  className={item.className}
+                  info={item.info}
+                  announcement={item.announcement}
+                  roomCode={item.roomCode}
+                  level={item.level}
+                />
+              </div>
+            );
+          })}
       </Row>
-      <Row justify="center">
+      {/* <Row justify="center">
         <Pagination defaultCurrent={1} total={5} style={{ color: '#8172D5' }} />
-      </Row>
+      </Row> */}
     </div>
   );
 }
