@@ -6,11 +6,18 @@ import { InfoCircleOutlined } from '@ant-design/icons';
 export const Register = () => {
   return (
     <>
-      <h1 className="login__title">Create Account</h1>
+      <h1
+        className="login__title"
+        style={{ color: '#8172d5', marginLeft: '20px' }}
+      >
+        Create Account
+      </h1>
       <div className="temp__form">
         <Form>
           <Form.Item>
-            <label style={{ fontWeight: '700', color: 'black' }}>
+            <label
+              style={{ fontSize: 20, fontWeight: '700', color: '#8172d5' }}
+            >
               Full name
             </label>
             <Input
@@ -19,11 +26,15 @@ export const Register = () => {
                 borderTopWidth: 0,
                 borderLeftWidth: 0,
                 borderRightWidth: 0,
+                padding: '10px',
+                backgroundColor: '#F2F5F8',
               }}
             />
           </Form.Item>
           <Form.Item>
-            <label style={{ fontWeight: '700', color: 'black' }}>
+            <label
+              style={{ fontSize: 20, fontWeight: '700', color: '#8172d5' }}
+            >
               Username
             </label>
             <Input
@@ -32,11 +43,15 @@ export const Register = () => {
                 borderTopWidth: 0,
                 borderLeftWidth: 0,
                 borderRightWidth: 0,
+                padding: '10px',
+                backgroundColor: '#F2F5F8',
               }}
             />
           </Form.Item>
           <Form.Item>
-            <label style={{ fontWeight: '700', color: 'black' }}>
+            <label
+              style={{ fontSize: 20, fontWeight: '700', color: '#8172d5' }}
+            >
               Password
             </label>
             <Input
@@ -45,28 +60,42 @@ export const Register = () => {
                 borderTopWidth: 0,
                 borderLeftWidth: 0,
                 borderRightWidth: 0,
+                padding: '10px',
+                backgroundColor: '#F2F5F8',
               }}
             />
           </Form.Item>
           <Form.Item>
-            <label style={{ fontWeight: '700', color: 'black' }}>Email</label>
+            <label
+              style={{ fontSize: 20, fontWeight: '700', color: '#8172d5' }}
+            >
+              Email
+            </label>
             <Input
               type="email"
               style={{
                 borderTopWidth: 0,
                 borderLeftWidth: 0,
                 borderRightWidth: 0,
+                padding: '10px',
+                backgroundColor: '#F2F5F8',
               }}
             />
           </Form.Item>
           <Form.Item>
-            <label style={{ fontWeight: '700', color: 'black' }}>Gender</label>
+            <label
+              style={{ fontSize: 20, fontWeight: '700', color: '#8172d5' }}
+            >
+              Gender
+            </label>
             <Input
               type="gender"
               style={{
                 borderTopWidth: 0,
                 borderLeftWidth: 0,
                 borderRightWidth: 0,
+                padding: '10px',
+                backgroundColor: '#F2F5F8',
               }}
             />
           </Form.Item>
@@ -76,15 +105,16 @@ export const Register = () => {
               className="login__button login__login"
               style={{
                 width: '100%',
-                height: '40px',
+                height: '50px',
                 borderRadius: '32px',
                 paddingTop: '4px',
+                border: '2px solid #8172d5',
                 paddingBottom: '4px',
                 lineHeight: '14px',
-                color: 'white',
+                fontSize: '20px',
               }}
             >
-              CREATE ACCOUNT
+              Create Account
             </button>
           </Form.Item>
           <Divider>Or</Divider>
@@ -96,7 +126,7 @@ export const Register = () => {
                 width: '100%',
                 height: '40px',
                 borderRadius: '32px',
-                border: '3px solid #181b21',
+                border: '2px solid #8172d5',
                 paddingTop: '4px',
                 paddingBottom: '4px',
                 lineHeight: '14px',

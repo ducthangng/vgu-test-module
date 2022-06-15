@@ -17,7 +17,7 @@ function AdminManagement() {
     <div style={{ width: '65%' }}>
       <Divider
         orientation="left"
-        style={{ fontSize: '26px', fontFamily: 'Roboto' }}
+        style={{ fontSize: '56px', fontFamily: 'Roboto', color: '#8172d5' }}
       >
         User Management
       </Divider>
