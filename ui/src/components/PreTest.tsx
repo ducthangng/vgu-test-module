@@ -32,7 +32,16 @@ function PreTest() {
   return (
     <div className="w-screen h-screen grid grid-rows-6 bg-gray-200">
       <div className="row-span-1 flex justify-center items-center bg-primary rounded rounded-lg m-5 p-3">
-        <h1 className="font-bold text-xl text-white">Before The Test</h1>
+        <h1
+          className="font-bold text-xl text-white"
+          style={{
+            color: '#8172d5',
+            marginLeft: '20px',
+            fontFamily: 'Roboto-bold',
+          }}
+        >
+          Before The Test
+        </h1>
       </div>
 
       <div className="flex flex-col justify-between row-span-5 rounded rounded-lg m-5 p-10 h-3/4 bg-white">
