@@ -11,7 +11,7 @@ const apiUrl = `${BASE_API}/api/v1/user`;
 export const userApi = {
   getInfoByUsername: async (username: string) => {
     const response = await fetch(
-      `${apiUrl}?` + new URLSearchParams({ username }),
+      `${apiUrl}/?` + new URLSearchParams({ username }),
       {
         method: 'GET',
         credentials: 'include',
@@ -43,7 +43,7 @@ export const userApi = {
 
   getInfoById: async (id: number) => {
     const response = await fetch(
-      `${apiUrl}?` + new URLSearchParams({ id: id.toString() }),
+      `${apiUrl}/?` + new URLSearchParams({ user_id: id.toString() }),
       {
         method: 'GET',
         credentials: 'include',

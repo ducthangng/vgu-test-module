@@ -1,45 +1,61 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import GroupCard from '../components/GroupCard';
 import { Row, Divider } from 'antd';
 import { Pagination } from 'antd';
 import { Class } from '../models/Class';
+import { classApi } from '../api/classApi';
+import { userApi } from '../api/userApi';
+import { authApi } from '../api/authApi';
 
-const defaultData: Class[] = [
-  {
-    id: 1,
-    className: 'BASIC IELTS CLASS',
-    info: 'Book unique camping experiences on over 300,000 campsites.',
-    announcement: '',
-    roomCode: '',
-    level: '',
-  },
-  {
-    id: 2,
-    className: 'ADVANCED IELTS CLASS',
-    info: 'Book unique camping experiences on over 300,000 campsites.',
-    announcement: '',
-    roomCode: '',
-    level: '',
-  },
-  {
-    id: 3,
-    className: 'ADVANCED IELTS CLASS',
-    info: 'Book unique camping experiences on over 300,000 campsites.',
-    announcement: '',
-    roomCode: '',
-    level: '',
-  },
-  {
-    id: 4,
-    className: 'ADVANCED IELTS CLASS',
-    info: 'Book unique camping experiences on over 300,000 campsites.',
-    announcement: '',
-    roomCode: '',
-    level: '',
-  },
-];
+// const defaultData: Class[] = [
+//   {
+//     id: 1,
+//     className: 'BASIC IELTS CLASS',
+//     info: 'Book unique camping experiences on over 300,000 campsites.',
+//     announcement: '',
+//     roomCode: '',
+//     level: '',
+//   },
+//   {
+//     id: 2,
+//     className: 'ADVANCED IELTS CLASS',
+//     info: 'Book unique camping experiences on over 300,000 campsites.',
+//     announcement: '',
+//     roomCode: '',
+//     level: '',
+//   },
+//   {
+//     id: 3,
+//     className: 'ADVANCED IELTS CLASS',
+//     info: 'Book unique camping experiences on over 300,000 campsites.',
+//     announcement: '',
+//     roomCode: '',
+//     level: '',
+//   },
+//   {
+//     id: 4,
+//     className: 'ADVANCED IELTS CLASS',
+//     info: 'Book unique camping experiences on over 300,000 campsites.',
+//     announcement: '',
+//     roomCode: '',
+//     level: '',
+//   },
+// ];
 
 function GroupSelection() {
+  const [data, setData] = React.useState<Class[]>([] as Class[]);
+
+  const getClasses = async () => {
+    const id = (await authApi.getId()) as number;
+    const classes = (await userApi.getClass(id)) as Class[];
+
+    setData(classes);
+  };
+
+  useEffect(() => {
+    getClasses();
+  }, []);
+
   return (
     <div
       style={{
@@ -55,10 +71,10 @@ function GroupSelection() {
       </Divider>
       <Row
         gutter={[20, 20]}
-        justify="space-between"
+        justify="space-evenly"
         style={{ marginBottom: '5em' }}
       >
-        {defaultData.map((item) => {
+        {data.map((item) => {
           return (
             <div
               style={{

@@ -3,7 +3,10 @@ import UserChart from '../components/UserChart';
 import UserProfileCard from '../components/UserFrofile/UserProfileCard';
 import styles from '../assets/css/UserProfilePage.module.css';
 import { Layout, Divider, Typography } from 'antd';
+import { userApi } from '../api/userApi';
+import { authApi } from '../api/authApi';
 import { Test } from '../models/Test';
+import { User } from '../models/User';
 
 const { Title } = Typography;
 
@@ -50,6 +53,22 @@ const defaultData: Test[] = [
 ];
 
 function UserProfile() {
+  const [user, setUser] = useState<User>();
+
+  const getUser = async () => {
+    const id = (await authApi.getId()) as number;
+    const userData = (await userApi.getInfoById(id)) as User[];
+
+    console.log('usedata');
+    console.log(userData);
+
+    setUser(userData[0]);
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
   return (
     <div
       style={{
@@ -65,15 +84,13 @@ function UserProfile() {
         >
           User Profile
         </Divider>
-
         <div className={styles.content}>
           <UserProfileCard
-            id={0}
-            fullname={'Nguyen Duc Thang'}
-            email={'ducthang@1.0.pe'}
-            phone={'0911337845'}
-            address={'1 Mountain View, California, USA'}
-            dob={'18.01.2001'}
+            id={user?.id as number}
+            fullname={user?.fullname as string}
+            username={user?.username as string}
+            email={user?.mail as string}
+            gender={user?.gender as string}
             avatar={undefined}
           />
 
@@ -82,16 +99,14 @@ function UserProfile() {
               level={4}
               style={{ marginLeft: '100px', textDecoration: 'underline' }}
             >
-              User Info
+              Welcome to Peekaboo
             </Title>
             <p style={{ marginLeft: '100px', fontWeight: 'bold' }}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni vel
-              dignissimos ullam quo quas odio, autem error quam atque
-              voluptatibus. Vel sed ab saepe sapiente ducimus repellat commodi
-              ratione mollitia dolorem iusto velit illum doloribus hic unde
-              veniam nobis, aut similique alias laborum beatae ipsum aperiam
-              eligendi at esse. Distinctio adipisci praesentium nostrum maxime
-              est molestias maiores ipsam, id cumque?
+              Peekaboo is a magical application. It was a question of which of
+              the two she preferred. On the one hand, the choice seemed simple.
+              The more expensive one with a brand name would be the choice of
+              most. It was the easy choice. The safe choice. But she wasn't sure
+              she actually preferred it.
             </p>
             <UserChart />
 
