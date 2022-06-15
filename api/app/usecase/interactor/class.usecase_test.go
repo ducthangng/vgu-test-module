@@ -32,7 +32,6 @@ func TesrCreateClass(t *testing.T) {
 		want error
 	}
 
-	t.Parallel()
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
 
