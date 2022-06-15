@@ -55,6 +55,8 @@ const defaultData: TestCardData[] = [
   },
 ];
 
+interface TestSelectionProps {}
+
 function TestSelection() {
   return (
     <div className="w-5/6 text-xl font-black">

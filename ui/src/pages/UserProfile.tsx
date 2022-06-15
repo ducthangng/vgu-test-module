@@ -2,49 +2,61 @@ import React, { useEffect, useState } from 'react';
 import UserChart from '../components/UserChart';
 import UserProfileCard from '../components/UserFrofile/UserProfileCard';
 import styles from '../assets/css/UserProfilePage.module.css';
-import { Layout, Divider, Typography } from 'antd';
-import { Test } from '../models/Test';
+import { Divider, Typography } from 'antd';
+import { TestDetails } from '../models/TestDetails';
 
 const { Title } = Typography;
 
-const defaultData: Test[] = [
+const defaultData: TestDetails[] = [
   {
+    id: 1,
     testClassId: 0,
     tagId: 1,
+    tagName: '',
     testName: 'Test 1',
     createdUserId: 0,
     targetEntityCode: 0,
     title: 'Test 1',
     info: 'Test 1',
+    status: '',
     duration: 0,
-    dateAssigned: '',
-    deadline: '',
+    dateAssigned: 0,
+    dateUpdated: 0,
+    deadline: 0,
     isDone: false,
   },
   {
+    id: 2,
     testClassId: 0,
-    tagId: 0,
+    tagId: 1,
+    tagName: '',
     testName: 'Test 2',
     createdUserId: 0,
     targetEntityCode: 0,
     title: 'Test 2',
     info: 'Test 2',
+    status: '',
     duration: 0,
-    dateAssigned: '',
-    deadline: '',
+    dateAssigned: 0,
+    dateUpdated: 0,
+    deadline: 0,
     isDone: false,
   },
   {
+    id: 3,
     testClassId: 0,
-    tagId: 0,
-    testName: 'Test 2',
+    tagId: 1,
+    tagName: '',
+    testName: 'Test 3',
     createdUserId: 0,
     targetEntityCode: 0,
-    title: 'Test 2',
-    info: 'Test 2',
+    title: 'Test 3',
+    info: 'Test 3',
+    status: '',
     duration: 0,
-    dateAssigned: '',
-    deadline: '',
+    dateAssigned: 0,
+    dateUpdated: 0,
+    deadline: 0,
     isDone: false,
   },
 ];

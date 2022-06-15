@@ -1,5 +1,5 @@
 import { AppError } from '../models/Error';
-import { Test } from '../models/Test';
+import { TestDetails } from '../models/TestDetails';
 import { Result } from '../models/Result';
 import TestData from '../models/test/TestData.interface';
 import SubmitData from '../models/test/SubmitData.interface';
@@ -11,9 +11,9 @@ const apiUrl = `${BASE_API}/api/v1/test`;
  * fetches for test data.
  */
 export const testApi = {
-  getTest: async (testId: number) => {
+  getTest: async (testId: string) => {
     const response = await fetch(
-      `${apiUrl}?` + new URLSearchParams({ test_id: testId.toString() }),
+      `${apiUrl}/?` + new URLSearchParams({ test_id: testId }),
       {
         method: 'GET',
         credentials: 'include',
@@ -33,8 +33,8 @@ export const testApi = {
           throw new Error(err.errorMsg + ' ++ ' + err.errorField);
         }
 
-        const test: Test = data.data;
-        return test;
+        const testDetails: TestDetails = data.data;
+        return testDetails;
       })
       .catch((err) => {
         return err;

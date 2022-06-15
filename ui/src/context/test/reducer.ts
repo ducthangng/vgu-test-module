@@ -1,6 +1,7 @@
 import * as types from './constants';
 
 // import interfaces
+import { TestDetails } from '../../models/TestDetails';
 import TestData from '../../models/test/TestData.interface';
 import SubmitData from '../../models/test/SubmitData.interface';
 
@@ -9,6 +10,7 @@ const reducer = (
     reviewMode: boolean;
     isLoading: boolean;
     waitModal: boolean;
+    testDetails: TestDetails;
     testData: TestData;
     submitData: SubmitData;
   },
@@ -31,6 +33,12 @@ const reducer = (
       return {
         ...state,
         waitModal: payload,
+      };
+    }
+    case types.SET_TEST_DETAILS: {
+      return {
+        ...state,
+        testDetails: payload,
       };
     }
     case types.SET_TEST_DATA: {

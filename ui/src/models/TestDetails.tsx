@@ -1,17 +1,21 @@
 import React from 'react';
 
-interface Test {
+interface TestDetails {
+  id: number;
   testClassId: number;
   tagId: number;
+  tagName: string;
   testName: string;
   createdUserId: number;
   targetEntityCode: number;
   title: string;
   info: string;
+  status: string;
   duration: number;
-  dateAssigned: string;
-  deadline: string;
+  dateAssigned: number;
+  dateUpdated: number;
+  deadline: number;
   isDone: boolean;
 }
 
-export type { Test };
+export type { TestDetails };
