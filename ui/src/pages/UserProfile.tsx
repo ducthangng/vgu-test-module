@@ -94,12 +94,12 @@ function UserProfile() {
                   return (
                     <div
                       style={{
-                        width: 200,
+                        width: 220,
                         height: 50,
                         border: '1px solid',
                         borderColor: '#8e9599',
                         borderRadius: '5px',
-                        marginRight: '10px',
+                        marginRight: '15px',
                       }}
                     >
                       <a
@@ -112,14 +112,14 @@ function UserProfile() {
                             flexDirection: 'row',
                             justifyContent: 'space-between',
                             marginTop: '12px',
-                            marginRight: '20px',
-                            marginLeft: '20px',
+                            marginRight: '15px',
+                            marginLeft: '15px',
                           }}
                         >
                           <p style={{ fontWeight: 'bold' }}>
                             {result.testName}
                           </p>
-                          <p>{result.score}</p>
+                          <p>{result.score}/100</p>
                         </div>
                       </a>
                     </div>

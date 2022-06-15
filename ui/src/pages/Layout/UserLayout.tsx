@@ -1,7 +1,7 @@
 import { Layout, Menu, Dropdown } from 'antd';
 import React, { Children } from 'react';
+import logo from '../../assets/images/logo.svg';
 import { Outlet, useNavigate } from 'react-router-dom';
-
 import {
   HomeOutlined,
   AppstoreOutlined,
@@ -12,11 +12,20 @@ import {
 import '../../App.scss';
 
 import { authApi } from '../../api/authApi';
-
 const { Content, Header } = Layout;
 
 const UserLayout = () => {
   let navigate = useNavigate();
+
+  const Logout = async () => {
+    authApi.logout().then((status) => {
+      if (status) {
+        window.location.href = '/';
+      } else {
+        throw new Error('Network response was not ok.');
+      }
+    });
+  };
 
   const defaultSelectedKeys = () => {
     let pathname = window.location.pathname;
@@ -47,8 +56,13 @@ const UserLayout = () => {
             paddingLeft: '8vw',
           }}
         >
-          <a onClick={() => navigate('/')}>
-            <img src="https://picsum.photos/200" width="30px"></img>
+          <a href="/">
+            <img
+              src={logo}
+              alt="logo"
+              width="80px"
+              style={{ marginTop: '20px' }}
+            ></img>
           </a>
           <Menu
             defaultSelectedKeys={defaultSelectedKeys()}
@@ -68,12 +82,7 @@ const UserLayout = () => {
                         Profile
                       </div>
                     </Menu.Item>
-                    <Menu.Item
-                      key="2"
-                      onClick={async () => {
-                        await authApi.logout();
-                      }}
-                    >
+                    <Menu.Item key="2" onClick={Logout}>
                       <div className="flex justify-center items-center">
                         <LogoutOutlined className="mr-2" />
                         Logout
