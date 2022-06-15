@@ -7,15 +7,29 @@ import { Table, Button, Popconfirm } from 'antd';
 //import Component from components
 // import { Test } from '../models/Test';
 
-interface Test {
-  key: string;
-  nameTest: string;
-  testId: number;
-  testDate: string;
-}
+type Test = {};
 
 const TestTable: React.FC<Test> = () => {
-  const [dataSource, setDataSource] = React.useState<any>([]);
+  const [DataSource, setDataSource] = React.useState<any>([
+    {
+      key: '1',
+      nameTest: 'Hai',
+      testId: 1,
+      testDate: '2020-01-01',
+    },
+    {
+      key: '2',
+      nameTest: 'IELTS Basic',
+      testId: 2,
+      testDate: '2020-01-02',
+    },
+    {
+      key: '3',
+      nameTest: 'IELTS Academic',
+      testId: 3,
+      testDate: '2020-01-03',
+    },
+  ]);
 
   const fetchData = async () => {
     const response = await fetch('http://localhost:8080/api/users');
@@ -30,9 +44,7 @@ const TestTable: React.FC<Test> = () => {
   //GOTO: Call to delete test information from database
   const onDelete = (record: any) => {
     setDataSource((pre: any) => {
-      return pre.filter(
-        (user: { userId: any }) => user.userId !== record.userId
-      );
+      return pre.filter((test: { key: any }) => test.key !== record.key);
     });
   };
 
@@ -63,23 +75,23 @@ const TestTable: React.FC<Test> = () => {
       dataIndex: 'action',
       key: 'action',
       // Button to delete test information
-      render: (record: any) => (
-        <Popconfirm
-          title=" You want to delete this test?"
-          onConfirm={() => onDelete(record)}
-        >
-          <Button type="primary" icon="DeleteOutlined">
-            Delete
-          </Button>
-        </Popconfirm>
-      ),
+      render: (record: any) => {
+        return (
+          <Popconfirm
+            title=" You want to delete this test?"
+            onConfirm={() => onDelete(record)}
+          >
+            <Button type="primary">Delete</Button>
+          </Popconfirm>
+        );
+      },
     },
   ];
 
   return (
     <div style={{ padding: 20, background: '#fff', minHeight: '360' }}>
       <span>
-        <Table columns={columns}> dataSource={dataSource}</Table>
+        <Table columns={columns} dataSource={DataSource}></Table>
       </span>
     </div>
   );

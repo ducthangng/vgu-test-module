@@ -15,62 +15,26 @@ interface Test {
   testDate: string;
 }
 
-const defaultData: Test[] = [
-  {
-    key: '1',
-    nameTest: 'Hai',
-    testId: 1,
-    testDate: '2020-01-01',
-  },
-  {
-    key: '2',
-    nameTest: 'IELTS Basic',
-    testId: 2,
-    testDate: '2020-01-02',
-  },
-  {
-    key: '3',
-    nameTest: 'IELTS Academic',
-    testId: 3,
-    testDate: '2020-01-03',
-  },
-];
-
 function TestManagement() {
   return (
-    <div
-      style={{
-        display: 'flex',
-      }}
-    >
-      <body>
-        <Divider
-          orientation="right"
-          style={{ fontSize: '20px', fontFamily: 'Roboto' }}
-        >
-          <Button type="primary"> Test Information </Button>
-        </Divider>
+    <body>
+      <Divider
+        orientation="right"
+        style={{ fontSize: '20px', fontFamily: 'Roboto' }}
+      >
+        <Button type="primary"> Test Information </Button>
+      </Divider>
 
-        <Divider
-          orientation="left"
-          style={{ fontSize: '26px', fontFamily: 'Roboto' }}
-        >
-          Test Management
-        </Divider>
+      <Divider
+        orientation="left"
+        style={{ fontSize: '26px', fontFamily: 'Roboto' }}
+      >
+        Test Management
+      </Divider>
 
-        <Table>
-          <TestTable key={''} nameTest={''} testId={0} testDate={''} />
-        </Table>
-        <br></br>
-        <Row justify="center">
-          <Pagination
-            defaultCurrent={1}
-            total={50}
-            style={{ color: '#8172D5' }}
-          />
-        </Row>
-      </body>
-    </div>
+      <TestTable />
+      <br></br>
+    </body>
   );
 }
 export default TestManagement;
