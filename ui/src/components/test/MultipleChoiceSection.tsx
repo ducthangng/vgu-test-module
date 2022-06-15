@@ -48,7 +48,9 @@ export default function MultipleChoiceSection(
         {props.section.media &&
           props.section.media.map((image) => (
             <div className="flex flex-col items-center">
-              <img src={image.content} className="" />
+              <div className="flex justify-center">
+                <img className="py-10 w-11/12" src={image.content} />
+              </div>
               <p className="mb-10 italic">{image.title}</p>
             </div>
           ))}
@@ -61,7 +63,7 @@ export default function MultipleChoiceSection(
               reviewMode &&
               (submitData.sections[props.sectionIndex - 1].answers[
                 questionIndex
-              ] === question.correct_ans
+              ] === question.correctAns
                 ? 'bg-green-300'
                 : 'bg-red-300')
             } p-3 my-3`}

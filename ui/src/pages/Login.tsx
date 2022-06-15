@@ -8,7 +8,6 @@ import './Login.css';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { Footer } = Layout;
   useEffect(() => {
     document.body.style.overflow = 'hidden';
   }, []);
