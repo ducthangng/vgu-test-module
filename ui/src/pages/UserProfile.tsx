@@ -5,49 +5,61 @@ import styles from '../assets/css/UserProfilePage.module.css';
 import { Layout, Divider, Typography } from 'antd';
 import { userApi } from '../api/userApi';
 import { authApi } from '../api/authApi';
-import { Test } from '../models/Test';
+import { TestDetails } from '../models/TestDetails';
 import { User } from '../models/User';
 
 const { Title } = Typography;
 
-const defaultData: Test[] = [
+const defaultData: TestDetails[] = [
   {
+    id: 1,
     testClassId: 0,
     tagId: 1,
+    tagName: '',
     testName: 'Test 1',
     createdUserId: 0,
     targetEntityCode: 0,
     title: 'Test 1',
     info: 'Test 1',
+    status: '',
     duration: 0,
-    dateAssigned: '',
-    deadline: '',
+    dateAssigned: 0,
+    dateUpdated: 0,
+    deadline: 0,
     isDone: false,
   },
   {
+    id: 2,
     testClassId: 0,
-    tagId: 0,
+    tagId: 1,
+    tagName: '',
     testName: 'Test 2',
     createdUserId: 0,
     targetEntityCode: 0,
     title: 'Test 2',
     info: 'Test 2',
+    status: '',
     duration: 0,
-    dateAssigned: '',
-    deadline: '',
+    dateAssigned: 0,
+    dateUpdated: 0,
+    deadline: 0,
     isDone: false,
   },
   {
+    id: 3,
     testClassId: 0,
-    tagId: 0,
-    testName: 'Test 2',
+    tagId: 1,
+    tagName: '',
+    testName: 'Test 3',
     createdUserId: 0,
     targetEntityCode: 0,
-    title: 'Test 2',
-    info: 'Test 2',
+    title: 'Test 3',
+    info: 'Test 3',
+    status: '',
     duration: 0,
-    dateAssigned: '',
-    deadline: '',
+    dateAssigned: 0,
+    dateUpdated: 0,
+    deadline: 0,
     isDone: false,
   },
 ];

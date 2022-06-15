@@ -84,14 +84,24 @@ export default function AppRoute() {
 
           {/* test routes */}
           <Route path="test">
-            <Route
-              path=":testClassId/*"
-              element={
-                <TestProvider>
-                  <Test reviewMode={false} />
-                </TestProvider>
-              }
-            />
+            <Route path=":testId">
+              <Route
+                path="details"
+                element={
+                  <TestProvider>
+                    <PreTestPage />
+                  </TestProvider>
+                }
+              />
+              <Route
+                path="do/*"
+                element={
+                  <TestProvider>
+                    <Test reviewMode={false} />
+                  </TestProvider>
+                }
+              />
+            </Route>
           </Route>
 
           {/* 404 Not Found */}

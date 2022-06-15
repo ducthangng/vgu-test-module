@@ -1,5 +1,5 @@
 import { AppError } from '../models/Error';
-import { Test } from '../models/Test';
+import { TestDetails } from '../models/TestDetails';
 import TestData from '../models/test/TestData.interface';
 import SubmitData from '../models/test/SubmitData.interface';
 

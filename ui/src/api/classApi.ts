@@ -1,7 +1,7 @@
 import { AppError } from '../models/Error';
 import { User } from '../models/User';
 import { Class } from '../models/Class';
-import { Test } from '../models/Test';
+import { TestDetails } from '../models/TestDetails';
 
 const BASE_API = process.env.REACT_APP_BASE_API || 'http://localhost:8080';
 const apiUrl = `${BASE_API}/api/v1/class`;
@@ -11,7 +11,7 @@ const apiUrl = `${BASE_API}/api/v1/class`;
  */
 export const classApi = {
   getAll: async () => {
-    const response = await fetch(`${apiUrl}`, {
+    const response = await fetch(`${apiUrl}/`, {
       method: 'GET',
       credentials: 'include',
     })
@@ -62,7 +62,7 @@ export const classApi = {
           throw new Error(err.errorMsg + ' ++ ' + err.errorField);
         }
 
-        const tests: Test[] = data.data;
+        const tests: TestDetails[] = data.data;
         return tests;
       })
       .catch((err) => {
