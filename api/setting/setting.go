@@ -22,9 +22,11 @@ type Config struct {
 	SSLMode      string `mapstructure:"DATABASE_SSL_MODE"`
 	CACERTBASE64 string `mapstructure:"DATABASE_CACERTBASE64"`
 
-	Domainstring string `mapstructure:"COOKIE_DOMAIN"`
-	HttpOnly     bool   `mapstructure:"COOKIE_HTTP_ONLY"`
-	Secure       bool   `mapstructure:"COOKIE_SECURE"`
+	CookieDomain   string `mapstructure:"COOKIE_DOMAIN"`
+	CookieHttpOnly bool   `mapstructure:"COOKIE_HTTP_ONLY"`
+	CookieSecure   bool   `mapstructure:"COOKIE_SECURE"`
+
+	APIDomain string `mapstructure:"API_DOMAIN"`
 }
 
 func ReadConfig(path string) (config Config, err error) {

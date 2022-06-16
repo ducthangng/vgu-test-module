@@ -79,6 +79,10 @@ func main() {
 	sqlconnection.Init(config)
 	routers := handler.Routing()
 
+	setting.SetCookieDomain(config.CookieDomain)
+	setting.SetCookieHTTPS(config.CookieHttpOnly)
+	setting.SetCookieSecure(config.CookieSecure)
+
 	timeOut, _ := strconv.Atoi(config.ReadTimeout)
 	headerTimeOut, _ := strconv.Atoi(config.ReadHeaderTimeout)
 	writeTimeOut, _ := strconv.Atoi(config.WriteTimeout)
