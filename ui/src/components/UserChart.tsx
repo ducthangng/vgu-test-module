@@ -29,7 +29,13 @@ const UserChart: React.FC = () => {
 
     let newData = [...data];
 
-    for (let i = results.length - 10; i < results.length; i++) {
+    let i: number;
+    if (results.length > 10) {
+      i = results.length - 10;
+    } else {
+      i = 0;
+    }
+    for (i; i < results.length; i++) {
       data.push([unixToDatetime(results[i].dateCreated), results[i].score]);
     }
 

@@ -71,6 +71,13 @@ const UserLayout = () => {
             _internalDisableMenuItemTitleTooltip={true}
             disabledOverflow={true}
           >
+            <Menu.Item key="2" onClick={() => navigate('classroom')}>
+              <div className="flex justify-center items-center">
+                <AppstoreOutlined className="mr-2" />
+                Class
+              </div>
+            </Menu.Item>
+
             <Menu.Item key="1">
               <Dropdown
                 placement="bottom"
@@ -97,13 +104,6 @@ const UserLayout = () => {
                   <DownOutlined className="ml-2" />
                 </div>
               </Dropdown>
-            </Menu.Item>
-
-            <Menu.Item key="2" onClick={() => navigate('classroom')}>
-              <div className="flex justify-center items-center">
-                <AppstoreOutlined className="mr-2" />
-                Class
-              </div>
             </Menu.Item>
           </Menu>
         </Header>
