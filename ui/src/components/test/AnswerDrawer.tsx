@@ -37,7 +37,7 @@ export default function AnswerDrawer(props: AnswerDrawerProps) {
   };
 
   const handleHome = () => {
-    navigate('/');
+    navigate('/student/dashboard');
   };
 
   return (

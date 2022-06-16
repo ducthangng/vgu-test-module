@@ -33,6 +33,7 @@ const initialState: InitialStateType = {
     tagName: '',
     testName: '',
     createdUserId: 0,
+    previousTestResultId: 0,
     targetEntityCode: 0,
     title: '',
     info: '',

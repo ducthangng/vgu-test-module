@@ -41,10 +41,11 @@ export default function ResultModal(props: ResultModalProps) {
   const handleReview = () => {
     setReviewMode(true);
     setVisible(false);
+    navigate('../../review');
   };
 
   const handleHome = () => {
-    navigate('/');
+    navigate('/student/dashboard');
   };
 
   return (

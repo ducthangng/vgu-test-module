@@ -172,6 +172,39 @@ export const testApi = {
     return response;
   },
 
+  getAnswer: async (testResultId: string) => {
+    const response = await fetch(
+      `${apiUrl}/answer?` +
+        new URLSearchParams({ test_result_id: testResultId }),
+      {
+        method: 'GET',
+        credentials: 'include',
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        throw new Error('Network response was not ok.');
+      })
+      .then((data) => {
+        console.log(data);
+        const err: AppError = data.error;
+        if (err.errorCode !== 0) {
+          throw new Error(err.errorMsg + ' ++ ' + err.errorField);
+        }
+
+        const submitData: SubmitData = data.data;
+        return submitData;
+      })
+      .catch((err) => {
+        return err;
+      });
+
+    return response;
+  },
+
   getTestByTestClassID: async (testClassId: number) => {
     const response = await fetch(
       `${apiUrl}/tcid?` +

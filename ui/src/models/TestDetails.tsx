@@ -7,6 +7,7 @@ interface TestDetails {
   tagName: string;
   testName: string;
   createdUserId: number;
+  previousTestResultId: number;
   targetEntityCode: number;
   title: string;
   info: string;

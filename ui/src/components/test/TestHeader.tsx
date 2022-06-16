@@ -32,13 +32,13 @@ export default function TestHeader(props: TestHeaderProps) {
   };
 
   const handleHome = () => {
-    navigate('/');
+    navigate('/student/dashboard');
   };
 
   return (
     <nav className="sticky top-0 z-30 w-screen bg-white border-gray-200 px-2 sm:px-4 py-2.5">
       <div className="px-5 pcontainer flex flex-wrap justify-between">
-        <a href="https://flowbite.com" className="flex items-center">
+        <a href="/student/dashboard" className="flex items-center">
           <span className="self-center text-xl font-semibold whitespace-nowrap text-primary">
             AprilPE
           </span>

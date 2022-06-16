@@ -17,7 +17,6 @@ const LeftContentBlock = ({
   section,
   id,
 }: ContentBlockProps) => {
-  console.log('dccmmm');
   return (
     <LeftContentSection>
       <Row justify="space-between" align="middle" id={id}>
