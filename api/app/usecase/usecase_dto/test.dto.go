@@ -75,7 +75,7 @@ type (
 
 	SubmitData struct {
 		ID          int                 `json:"id"`
-		TestClassID int                 `json:"test_class_id"`
+		TestClassID int                 `json:"testClassId"`
 		Sections    []SubmitDataSection `json:"sections"`
 	}
 
