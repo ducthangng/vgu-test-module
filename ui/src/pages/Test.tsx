@@ -72,7 +72,7 @@ export default function Test(props: { reviewMode: boolean }) {
         type: data.type,
         sections: data.sections,
       };
-      let newSections = [];
+      let newSections: SectionAnswer[] = [];
       for (let i = 0; i < data.sections.length; i++) {
         let newSection = {
           startIndex: data.sections[i]?.startIndex,
