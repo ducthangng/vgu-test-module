@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [sample]
+
+env:
+  REGISTRY: 'registry.digitalocean.com/gl-prod'
+  SERVER_NAME: 'api'
+  CLIENT_NAME: 'ui'
+
+jobs:
+  build_push_server:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v2
+
+      - name: Build container image
+        run: |
+          cd api 
+          docker build -t $(echo $REGISTRY)/$(echo $SERVER_NAME):$(echo $GITHUB_SHA | head -c7) .
+
+  build_push_client:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+
+      - name: Checkout the repo
+        uses: actions/checkout@v2
+
+      - name: Build container image
+        run: |
+          cd ui
+          docker build -t $(echo $REGISTRY)/$(echo $CLIENT_NAME):$(echo $GITHUB_SHA | head -c7) .
