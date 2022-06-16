@@ -61,6 +61,8 @@ type TestService interface {
 	SubmitTest(ctx context.Context, data usecase_dto.SubmitData, userId int, entityCode int) (testResultId int, err error)
 
 	QueryAllTest(ctx context.Context) (testResult []usecase_dto.Test, err error)
+
+	QueryTestAnswer(ctx context.Context, resultId int) (testResult usecase_dto.SubmitData, err error)
 }
 
 type TestResultService interface {

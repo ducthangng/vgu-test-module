@@ -19,6 +19,7 @@ func TestHandler(c *gin.RouterGroup) {
 	c.GET("/", GetTestInfo)
 	c.GET("/all", GetAllTests)
 	c.GET("/result", GetTestResult)
+	c.GET("/answer", GetTestAnswer)
 	c.GET("/do", DoTest)
 
 	c.POST("/submit", SubmitTest)
@@ -97,6 +98,32 @@ func GetTestResult(c *gin.Context) {
 
 	access := registry.BuildTestResultAccessPoint(false, sqlconnection.DBConn)
 	test, err := access.Service.GetTestResultHeadline(ctx, ID)
+	if err != nil {
+		app.Response(http.StatusInternalServerError, nil, err)
+		return
+	}
+
+	app.Response(http.StatusOK, test, nil)
+}
+
+func GetTestAnswer(c *gin.Context) {
+	ctx := context.Background()
+	app := gctx.Gin{C: c}
+
+	testResultID := c.Query("test_result_id")
+	if len(testResultID) == 0 {
+		app.Response(http.StatusInternalServerError, nil, errors.New("test_result_id is required, but empty."))
+		return
+	}
+
+	ID, err := strconv.Atoi(testResultID)
+	if err != nil {
+		app.Response(http.StatusInternalServerError, nil, err)
+		return
+	}
+
+	access := registry.BuildTestAccessPoint(false, sqlconnection.DBConn)
+	test, err := access.Service.QueryTestAnswer(ctx, ID)
 	if err != nil {
 		app.Response(http.StatusInternalServerError, nil, err)
 		return
