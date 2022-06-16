@@ -47,9 +47,6 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v2
 
-      - name: Checkout the repo
-        uses: actions/checkout@v2
-
       - name: Build container image
         run: |
           cd ui
