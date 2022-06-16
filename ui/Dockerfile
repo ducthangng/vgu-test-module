@@ -8,7 +8,7 @@ WORKDIR /app
 
 COPY ["package.json", "./"]
 COPY [".env", "./"]
-RUN npm install --only=production
+RUN npm install --omit=dev
 COPY . ./
 RUN npm run build
 
