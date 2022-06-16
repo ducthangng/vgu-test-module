@@ -57,12 +57,20 @@ function PreTest() {
 
         <div className="flex justify-end">
           <button
-            className="bg-primary hover:bg-primary/70 rounded rounded-lg px-3 py-2 font-bold text-white text-xl"
+            className="bg-primary hover:bg-primary/70 mx-3 rounded rounded-lg px-3 py-2 font-bold text-white text-xl"
             onClick={() => {
               navigate(`../do/${testId}`);
             }}
           >
             Start
+          </button>
+          <button
+            className="bg-primary hover:bg-primary/70 mx-3 rounded rounded-lg px-3 py-2 font-bold text-white text-xl"
+            onClick={() => {
+              navigate(`../review/${testId}`);
+            }}
+          >
+            Review
           </button>
         </div>
       </div>

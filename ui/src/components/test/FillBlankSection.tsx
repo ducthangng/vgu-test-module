@@ -75,7 +75,7 @@ export default function FillBlankSection(props: FillBlankSectionProps) {
         h2List[i].classList.add('font-bold');
       }
     }
-  }, []);
+  }, [submitData]);
 
   // empty function if in review mode
   const handleInput = reviewMode

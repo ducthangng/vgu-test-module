@@ -59,13 +59,10 @@ export default function Test(props: { reviewMode: boolean }) {
   const submitDataRef = useRef<SubmitData>();
   const waitModalRef = useRef(waitModal);
 
-  //fetch data function, currently it only sets mock data
-  const fetchData = async () => {
+  //fetch data functions
+  const fetchTestData = async () => {
     try {
       let data = await testApi.doTest(testId as string);
-
-      console.log('data:');
-      console.log(data);
 
       let newTestData = {
         mediaURL: data.mediaURL,
@@ -75,7 +72,7 @@ export default function Test(props: { reviewMode: boolean }) {
         type: data.type,
         sections: data.sections,
       };
-      let newSections = [];
+      let newSections: SectionAnswer[] = [];
       for (let i = 0; i < data.sections.length; i++) {
         let newSection = {
           startIndex: data.sections[i]?.startIndex,
@@ -99,11 +96,33 @@ export default function Test(props: { reviewMode: boolean }) {
     }
   };
 
+  const fetchReviewData = async () => {
+    try {
+      setIsLoading(true);
+      let data = await testApi.getAnswer(
+        testDetails.previousTestResultId.toString()
+      );
+      console.log('review data:');
+      console.log(data);
+      setSubmitData(data);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     setReviewMode(props.reviewMode);
-    fetchData();
+    fetchTestData();
     setIsLoading(true);
   }, []);
+
+  useEffect(() => {
+    if (reviewMode) {
+      fetchReviewData();
+      setWaitModal(true);
+    }
+  }, [reviewMode]);
 
   // update waitModalRef when waitModal changes
   useEffect(() => {
@@ -164,8 +183,6 @@ export default function Test(props: { reviewMode: boolean }) {
         } catch (error) {
           console.log(error);
         }
-        // console.log('submit!');
-        // console.log(submitDataRef.current);
       };
 
   // intialize userAnswer

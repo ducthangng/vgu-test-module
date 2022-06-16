@@ -107,6 +107,14 @@ export default function AppRoute() {
                   </TestProvider>
                 }
               />
+              <Route
+                path="review/*"
+                element={
+                  <TestProvider>
+                    <Test reviewMode={true} />
+                  </TestProvider>
+                }
+              />
             </Route>
           </Route>
 

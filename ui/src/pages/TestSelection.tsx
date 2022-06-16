@@ -47,7 +47,7 @@ function TestSelection() {
   }, []);
 
   return (
-    <div className="w-5/6 text-xl font-black">
+    <div>
       <Divider
         orientation="left"
         style={{ fontSize: '56px', fontFamily: 'Roboto', color: '#8172d5' }}
@@ -55,7 +55,7 @@ function TestSelection() {
         Choose the test
       </Divider>
 
-      <div>
+      <div className="py-5">
         {data &&
           data.map((item) => {
             return (
