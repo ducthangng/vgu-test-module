@@ -6,6 +6,10 @@ import { Button, notification } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { Class } from '../models/Class';
 import './Login.css';
+// toast
+import { toast } from 'react-toastify';
+import { Select } from 'antd';
+const { Option } = Select;
 
 export const Register = () => {
   let navigate = useNavigate();
@@ -17,30 +21,36 @@ export const Register = () => {
   const [gender, setGender] = useState('');
 
   const handleRegister = async () => {
-    const id = (await authApi.register({
-      fullname: fullname,
-      username: username,
-      password: password,
-      gender: gender,
-      mail: email,
-    })) as number;
+    try {
+      const id = (await authApi.register({
+        fullname: fullname,
+        username: username,
+        password: password,
+        gender: gender,
+        mail: email,
+      })) as number;
 
-    if (id > 0) {
-      openNotification();
+      if (id > 0) {
+        toast('Successful! Redirecting to login...');
+        navigate('../login');
+      }
+    } catch (error) {
+      toast(`error: ${error}`);
+      console.log(error);
     }
   };
 
-  const openNotification = () => {
-    notification.open({
-      message: 'Create Account Success!',
-      description:
-        'Please move to sign-in section to start using our application.',
-      onClick: () => {
-        console.log('Notification Clicked!');
-      },
-      placement: 'top',
-    });
-  };
+  // const openNotification = () => {
+  //   notification.open({
+  //     message: 'Create Account Success!',
+  //     description:
+  //       'Please move to sign-in section to start using our application.',
+  //     onClick: () => {
+  //       console.log('Notification Clicked!');
+  //     },
+  //     placement: 'top',
+  //   });
+  // };
 
   return (
     <>
@@ -59,13 +69,8 @@ export const Register = () => {
               Full name
             </label>
             <Input
+              required
               type="text"
-              style={{
-                borderTopWidth: 0,
-                borderLeftWidth: 0,
-                borderRightWidth: 0,
-                backgroundColor: '#F2F5F8',
-              }}
               value={fullname}
               onChange={(e) => setFullname(e.target.value)}
             />
@@ -77,13 +82,8 @@ export const Register = () => {
               Username
             </label>
             <Input
+              required
               type="text"
-              style={{
-                borderTopWidth: 0,
-                borderLeftWidth: 0,
-                borderRightWidth: 0,
-                backgroundColor: '#F2F5F8',
-              }}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
@@ -96,12 +96,7 @@ export const Register = () => {
             </label>
             <Input
               type="password"
-              style={{
-                borderTopWidth: 0,
-                borderLeftWidth: 0,
-                borderRightWidth: 0,
-                backgroundColor: '#F2F5F8',
-              }}
+              required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -114,12 +109,7 @@ export const Register = () => {
             </label>
             <Input
               type="email"
-              style={{
-                borderTopWidth: 0,
-                borderLeftWidth: 0,
-                borderRightWidth: 0,
-                backgroundColor: '#F2F5F8',
-              }}
+              required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -130,17 +120,17 @@ export const Register = () => {
             >
               Gender
             </label>
-            <Input
-              type="gender"
-              style={{
-                borderTopWidth: 0,
-                borderLeftWidth: 0,
-                borderRightWidth: 0,
-                backgroundColor: '#F2F5F8',
+            <Select
+              onChange={(value) => {
+                setGender(value);
               }}
-              value={gender}
-              onChange={(e) => setGender(e.target.value)}
-            />
+              className={`w-full text-center py-1 bg-gray-200`}
+              dropdownClassName="text-center"
+            >
+              <Option value={'male'}>Male</Option>
+              <Option value={'female'}>Female</Option>
+              <Option value={'other'}>Other</Option>
+            </Select>
           </Form.Item>
           <Form.Item>
             <button
