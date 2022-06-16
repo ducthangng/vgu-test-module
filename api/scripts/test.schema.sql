@@ -64,7 +64,7 @@ create table skilltests (
 );
 
 create table test_answer (
-	id INT NOT NULL,
+	id INT NOT NULL PRIMARY KEY,
 	section_answer MEDIUMTEXT NOT NULL,
 	UNIQUE KEY (id),
 	FOREIGN KEY (id) REFERENCES testresults (id)
