@@ -98,10 +98,14 @@ export default function Test(props: { reviewMode: boolean }) {
 
   const fetchReviewData = async () => {
     try {
+      setIsLoading(true);
       let data = await testApi.getAnswer(
         testDetails.previousTestResultId.toString()
       );
+      console.log('review data:');
+      console.log(data);
       setSubmitData(data);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }

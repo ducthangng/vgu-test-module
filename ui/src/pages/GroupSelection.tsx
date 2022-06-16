@@ -33,7 +33,11 @@ function GroupSelection() {
     >
       <Divider
         orientation="left"
-        style={{ fontSize: '25px', fontFamily: 'Roboto' }}
+        style={{
+          fontSize: '56px',
+          fontFamily: 'Roboto',
+          color: '#8172d5',
+        }}
       >
         Choose the class
       </Divider>
@@ -42,6 +46,7 @@ function GroupSelection() {
         gutter={[20, 20]}
         justify="space-evenly"
         style={{ marginBottom: '5em' }}
+        className="py-5"
       >
         {data &&
           data.map((item) => {

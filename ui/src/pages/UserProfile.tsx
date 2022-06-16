@@ -44,13 +44,12 @@ function UserProfile() {
         justifyContent: 'center',
       }}
     >
-      <body>
+      <div>
         <Divider
           orientation="left"
           style={{
             fontSize: '56px',
             fontFamily: 'Roboto',
-            fontWeight: 700,
             color: '#8172d5',
           }}
         >
@@ -134,7 +133,7 @@ function UserProfile() {
             </div>
           </div>
         </div>
-      </body>
+      </div>
     </div>
   );
 }
