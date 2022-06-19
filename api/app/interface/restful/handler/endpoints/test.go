@@ -155,7 +155,7 @@ func DoTest(c *gin.Context) {
 	}
 
 	var apitest api_dto.SkillTest
-	if err := copier.Copy(&apitest, test); err != nil {
+	if err := copier.Copy(&apitest, &test); err != nil {
 		app.Response(http.StatusInternalServerError, nil, err)
 		return
 	}
