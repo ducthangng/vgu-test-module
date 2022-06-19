@@ -57,9 +57,10 @@ function TestSelection() {
 
       <div className="py-5">
         {data &&
-          data.map((item) => {
+          data.map((item, index) => {
             return (
               <TestCard
+                key={index}
                 testId={item.id}
                 groupName={className}
                 testClassId={item.testClassId}

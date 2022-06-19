@@ -88,7 +88,6 @@ export const userApi = {
         throw new Error('Network response was not ok.');
       })
       .then((data) => {
-        console.log(data);
         const err: AppError = data.error;
         if (err.errorCode !== 0) {
           throw new Error(err.errorMsg + ' ++ ' + err.errorField);

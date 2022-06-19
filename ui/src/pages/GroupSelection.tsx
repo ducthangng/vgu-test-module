@@ -49,9 +49,10 @@ function GroupSelection() {
         className="py-5"
       >
         {data &&
-          data.map((item) => {
+          data.map((item, index) => {
             return (
               <div
+                key={index}
                 style={{
                   borderColor: '#d4d4d6',
                   borderWidth: '1px',
