@@ -51,7 +51,9 @@ export default function Test(props: { reviewMode: boolean }) {
   let totalTime: number | undefined = undefined;
   const [submitted, setSubmitted] = useState(false);
   const [isDone, setIsDone] = useState(true);
-  const [resultId, setResultId] = useState<number>();
+  const [resultId, setResultId] = useState<number>(
+    testDetails.previousTestResultId
+  );
   const [timeLeft, setTimeLeft] = useState<string>('');
   const [intervalId, setIntervalId] = useState<number | undefined>(undefined);
   const [userAnswers, setUserAnswers] = useState<SectionAnswer[]>([]);
@@ -110,9 +112,7 @@ export default function Test(props: { reviewMode: boolean }) {
   const fetchReviewData = async () => {
     try {
       setIsLoading(true);
-      let data = await testApi.getAnswer(
-        testDetails.previousTestResultId.toString()
-      );
+      let data = await testApi.getAnswer(resultId.toString());
       console.log('review data:');
       console.log(data);
       setSubmitData(data);
