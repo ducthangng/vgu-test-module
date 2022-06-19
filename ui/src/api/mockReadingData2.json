@@ -171,7 +171,7 @@
                         "ans 3",
                         "ans 4"
                     ],
-                    "correct_ans": 1,
+                    "correct_ans": "ans 1",
                     "explanation": "explanation why the answer is correct"
                 },
                 {
@@ -181,7 +181,7 @@
                         "ans 2",
                         "ans 3"
                     ],
-                    "correct_ans": 2,
+                    "correct_ans": "ans 2",
                     "explanation": "explanation why the answer is correct"
                 },
                 {
@@ -191,7 +191,7 @@
                         "ans 2",
                         "ans 3"
                     ],
-                    "correct_ans": 2,
+                    "correct_ans": "ans 3",
                     "explanation": "explanation why the answer is correct"
                 },
                 {
@@ -201,7 +201,7 @@
                         "ans 2",
                         "ans 3"
                     ],
-                    "correct_ans": 1,
+                    "correct_ans": "ans 3",
                     "explanation": "explanation why the answer is correct"
                 },
                 {
@@ -212,7 +212,7 @@
                         "ans 3",
                         "ans 4"
                     ],
-                    "correct_ans": 4,
+                    "correct_ans": "ans 4",
                     "explanation": "explanation why the answer is correct"
                 }
             ]

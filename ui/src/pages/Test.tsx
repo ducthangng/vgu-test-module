@@ -51,7 +51,9 @@ export default function Test(props: { reviewMode: boolean }) {
   let totalTime: number | undefined = undefined;
   const [submitted, setSubmitted] = useState(false);
   const [isDone, setIsDone] = useState(true);
-  const [resultId, setResultId] = useState<number>();
+  const [resultId, setResultId] = useState<number>(
+    testDetails.previousTestResultId
+  );
   const [timeLeft, setTimeLeft] = useState<string>('');
   const [intervalId, setIntervalId] = useState<number | undefined>(undefined);
   const [userAnswers, setUserAnswers] = useState<SectionAnswer[]>([]);
@@ -74,23 +76,34 @@ export default function Test(props: { reviewMode: boolean }) {
       };
       let newSections: SectionAnswer[] = [];
       for (let i = 0; i < data.sections.length; i++) {
+        let answers: string[] = [];
+        // initialize answers array of this section
+        console.log('index is ' + i);
+        console.log(submitData);
+        if (submitData.sections.length == 0) {
+          for (let j = 0; j < data.sections[i].content.length; j++) {
+            answers.push('');
+          }
+        }
         let newSection = {
           startIndex: data.sections[i]?.startIndex,
           endIndex: data.sections[i]?.endIndex,
-          answers: [],
+          answers: answers,
         };
         newSections.push(newSection);
-
-        setTestData(newTestData);
-        setSubmitData({
-          id: data.id,
-          testClassId: 1, //change this later
-          sections: newSections,
-        });
-        setIsDone(mockPreTestData.isDone);
-        // somehow totalTime only works as a normal variable, rather than a state or context state
-        totalTime = reviewMode ? 0 : testDetails.duration * 60;
       }
+
+      setTestData(newTestData);
+      setSubmitData({
+        id: data.id,
+        testClassId: 1, //change this later
+        sections: newSections,
+      });
+
+      console.log(submitData);
+      setIsDone(mockPreTestData.isDone);
+      // somehow totalTime only works as a normal variable, rather than a state or context state
+      totalTime = reviewMode ? 0 : testDetails.duration * 60;
     } catch (error) {
       console.log(error);
     }
@@ -99,9 +112,7 @@ export default function Test(props: { reviewMode: boolean }) {
   const fetchReviewData = async () => {
     try {
       setIsLoading(true);
-      let data = await testApi.getAnswer(
-        testDetails.previousTestResultId.toString()
-      );
+      let data = await testApi.getAnswer(resultId.toString());
       console.log('review data:');
       console.log(data);
       setSubmitData(data);

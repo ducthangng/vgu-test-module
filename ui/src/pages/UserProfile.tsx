@@ -94,9 +94,10 @@ function UserProfile() {
               </Title>
 
               <div className={styles.recent_test}>
-                {results.map((result) => {
+                {results.map((result, resultIndex) => {
                   return (
                     <div
+                      key={resultIndex}
                       style={{
                         width: 220,
                         height: 50,

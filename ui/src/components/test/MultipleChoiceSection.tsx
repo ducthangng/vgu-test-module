@@ -46,8 +46,8 @@ export default function MultipleChoiceSection(
 
       <div>
         {props.section.media &&
-          props.section.media.map((image) => (
-            <div className="flex flex-col items-center">
+          props.section.media.map((image, imageIndex) => (
+            <div key={imageIndex} className="flex flex-col items-center">
               <div className="flex justify-center">
                 <img className="py-10 w-11/12" src={image.content} />
               </div>
@@ -90,8 +90,8 @@ export default function MultipleChoiceSection(
               >
                 <Space direction="vertical">
                   {question.a &&
-                    question.a.map((choice, answerIndex) => (
-                      <Radio value={(answerIndex + 1).toString()}>
+                    question.a.map((choice, choiceIndex) => (
+                      <Radio key={choiceIndex} value={choice}>
                         {choice}
                       </Radio>
                     ))}
@@ -106,11 +106,11 @@ export default function MultipleChoiceSection(
           <h3 className="font-bold">Explanation</h3>
           <div className="p-3 rounded-md border bg-gray-200">
             <div className="">
-              {props.section.content.map((question, index) => (
-                <div>
+              {props.section.content.map((question, questionIndex) => (
+                <div key={questionIndex}>
                   <p>
                     <span className="font-bold">
-                      Câu {props.section.startIndex + index}:
+                      Câu {props.section.startIndex + questionIndex}:
                     </span>{' '}
                     {question.explanation}
                   </p>

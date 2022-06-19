@@ -37,17 +37,6 @@ export default function TrueFalseSection(props: TrueFalseSectionProps) {
         setSubmitData(newSubmitData);
       };
 
-  useEffect(() => {
-    // initialize answers array of this section
-    if (submitData.sections[props.sectionIndex - 1].answers.length < 1) {
-      for (let i = 0; i < props.section.content.length; i++) {
-        if (props.section.content[i].q) {
-          submitData.sections[props.sectionIndex - 1].answers.push('');
-        }
-      }
-    }
-  }, []);
-
   return (
     <div>
       <div
@@ -115,7 +104,7 @@ export default function TrueFalseSection(props: TrueFalseSectionProps) {
           <div className="p-3 rounded-md border bg-gray-200">
             <div className="">
               {props.section.content.map((question, index) => (
-                <div>
+                <div key={index}>
                   <p>
                     <span className="font-bold">
                       Câu {props.section.startIndex + index}:
