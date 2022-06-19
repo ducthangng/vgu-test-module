@@ -72,6 +72,42 @@ export const classApi = {
     return response;
   },
 
+  getSingleTest: async (testId: string, classId: string) => {
+    const response = await fetch(
+      `${apiUrl}/single_test/?` +
+        new URLSearchParams({
+          test_id: testId.toString(),
+          class_id: classId.toString(),
+        }),
+      {
+        method: 'GET',
+        credentials: 'include',
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        throw new Error('Network response was not ok.');
+      })
+      .then((data) => {
+        console.log(data);
+        const err: AppError = data.error;
+        if (err.errorCode !== 0) {
+          throw new Error(err.errorMsg + ' ++ ' + err.errorField);
+        }
+
+        const testDetails: TestDetails = data.data;
+        return testDetails;
+      })
+      .catch((err) => {
+        return err;
+      });
+
+    return response;
+  },
+
   getMembers: async (classId: number) => {
     const response = await fetch(
       `${apiUrl}/members?` +

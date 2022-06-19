@@ -18,6 +18,7 @@ import (
 func ClassHandler(c *gin.RouterGroup) {
 	c.GET("/", GetAllClasses)
 	c.GET("/tests", GetClassTest)
+	c.GET("/single_test", GetSingleClassTest)
 	c.GET("/members", GetClassMembers)
 
 	c.POST("/", CreateClass)
@@ -26,6 +27,44 @@ func ClassHandler(c *gin.RouterGroup) {
 
 	c.DELETE("/remove_test", RemoveTest)
 	c.DELETE("/remove_member", RemoveMember)
+}
+
+func GetSingleClassTest(c *gin.Context) {
+	app := gctx.Gin{C: c}
+	ctx := context.Background()
+
+	classID := c.Query("class_id")
+	if classID == "" {
+		app.Response(http.StatusOK, 0, e.ErrorInputInvalid)
+		return
+	}
+
+	CID, err := strconv.Atoi(classID)
+	if err != nil {
+		app.Response(http.StatusInternalServerError, 0, err)
+		return
+	}
+
+	testID := c.Query("test_id")
+	if testID == "" {
+		app.Response(http.StatusOK, 0, e.ErrorInputInvalid)
+		return
+	}
+
+	TID, err := strconv.Atoi(classID)
+	if err != nil {
+		app.Response(http.StatusInternalServerError, 0, err)
+		return
+	}
+
+	access := registry.BuildClassAccessPoint(false, sqlconnection.DBConn)
+	classes, err := access.Service.GetSingleClassTest(ctx, CID, TID)
+	if err != nil {
+		app.Response(http.StatusInternalServerError, 0, err)
+		return
+	}
+
+	app.Response(http.StatusOK, classes, nil)
 }
 
 func GetAllClasses(c *gin.Context) {

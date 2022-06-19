@@ -50,6 +50,8 @@ type ClassService interface {
 	AddTest2Class(ctx context.Context, classId int, testId int) (err error)
 
 	RemoveTestClass(ctx context.Context, classId int, testId int) (err error)
+
+	GetSingleClassTest(ctx context.Context, classId int, testId int) (test usecase_dto.Test, err error)
 }
 
 type TestService interface {

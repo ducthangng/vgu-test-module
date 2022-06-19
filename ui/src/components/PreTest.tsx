@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { useTestContext } from '../context/test/TestContext';
 // fetches
 import { testApi } from '../api/testApi';
+import { classApi } from '../api/classApi';
 // routing
 import { useParams, useNavigate } from 'react-router-dom';
 
@@ -16,10 +17,17 @@ function PreTest() {
   const navigate = useNavigate();
   const { testId } = useParams();
 
+  // change classId here
+  const classId = 0;
+
   const fetchData = async () => {
     try {
-      let data = await testApi.getTest(testId as string);
+      let data = await classApi.getSingleTest(
+        testId as string,
+        classId.toString()
+      );
       setTestDetails(data);
+      console.log('lỗi ở đây nè: ', data);
     } catch (error) {
       toast(`error: ${error}`);
     }

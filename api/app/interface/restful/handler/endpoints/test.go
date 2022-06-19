@@ -3,6 +3,7 @@ package endpoints
 import (
 	"context"
 	"errors"
+	"log"
 	"net/http"
 	"server/app/interface/persistence/rdbms/sqlconnection"
 	"server/app/interface/restful/handler/api_dto"
@@ -169,12 +170,14 @@ func SubmitTest(c *gin.Context) {
 
 	data, err := api_dto.BindSubmitData(c)
 	if err != nil {
+		log.Println(err)
 		app.Response(http.StatusInternalServerError, nil, err)
 		return
 	}
 
 	var submitTest usecase_dto.SubmitData
 	if err := copier.Copy(&submitTest, &data); err != nil {
+		log.Println(err)
 		app.Response(http.StatusInternalServerError, nil, err)
 		return
 	}
@@ -185,6 +188,7 @@ func SubmitTest(c *gin.Context) {
 	access := registry.BuildTestAccessPoint(true, sqlconnection.DBConn)
 	resultID, err := access.Service.SubmitTest(ctx, submitTest, ID, EntityCode)
 	if err != nil {
+		log.Println(err)
 		app.Response(http.StatusInternalServerError, nil, err)
 		return
 	}

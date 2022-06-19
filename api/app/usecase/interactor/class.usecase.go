@@ -255,3 +255,35 @@ func (c *ClassUsecase) GetClassTest(ctx context.Context, classId int) (tests []u
 
 	return tests, nil
 }
+
+// get all test within a class
+func (c *ClassUsecase) GetSingleClassTest(ctx context.Context, classId int, testId int) (test usecase_dto.Test, err error) {
+	records, err := c.ClassRepository.QueryTestOfClass(ctx, classId)
+	if err != nil {
+		return test, err
+	}
+
+	for _, item := range records {
+		if item.TestID == testId {
+			record_item, err := c.ClassRepository.QueryTestHeadline(ctx, item.TestID, "")
+			if err != nil {
+				return test, err
+			}
+
+			if len(record_item) == 0 {
+				continue
+			}
+
+			if err := copier.Copy(&test, &record_item[0]); err != nil {
+				return test, err
+			}
+
+			test.TestClassID = item.ID
+
+			return test, nil
+		}
+
+	}
+
+	return test, nil
+}
