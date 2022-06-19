@@ -20,7 +20,7 @@ const UserChart: React.FC = () => {
     const id: number = (await authApi.getId()) as number;
     const results: Result[] = (await userApi.getAllTestResult(id)) as Result[];
 
-    console.log('api response:');
+    console.log('chart api response:');
     console.log(results);
 
     if (results.length === 0) {
@@ -45,6 +45,11 @@ const UserChart: React.FC = () => {
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(() => {
+    console.log('chart data changes:');
+    console.log(data);
+  }, [data]);
 
   const options = {
     title: 'User Performance',

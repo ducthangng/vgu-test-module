@@ -21,27 +21,6 @@ export default function FillBlankSection(props: FillBlankSectionProps) {
         htmlContentRef.current.getElementsByTagName('input')
       );
 
-      //initialize answers array
-      if (submitData.sections[props.sectionIndex - 1].answers.length == 0) {
-        console.log('length 0!');
-
-        let newChosenAnswers = [
-          ...submitData.sections[props.sectionIndex - 1].answers,
-        ];
-        for (let i = 0; i < inputList.length; i++) {
-          newChosenAnswers[i] = inputList[i].value;
-        }
-
-        let newSubmitDataSections = [...submitData.sections];
-        newSubmitDataSections[props.sectionIndex - 1].answers =
-          newChosenAnswers;
-        let newSubmitData = {
-          ...submitData,
-          sections: newSubmitDataSections,
-        };
-        setSubmitData(newSubmitData);
-      }
-
       // style them, make disabled if in review mode
       for (let i = 0; i < inputList.length; i++) {
         inputList[i].classList.add('border');
@@ -114,8 +93,8 @@ export default function FillBlankSection(props: FillBlankSectionProps) {
 
       <div>
         {props.section.media &&
-          props.section.media.map((image) => (
-            <div className="flex flex-col items-center">
+          props.section.media.map((image, imageIndex) => (
+            <div key={imageIndex} className="flex flex-col items-center">
               <div className="flex justify-center">
                 <img className="py-10 w-11/12" src={image.content} />
               </div>
@@ -135,11 +114,11 @@ export default function FillBlankSection(props: FillBlankSectionProps) {
           <h3 className="font-bold">Explanation</h3>
           <div className="p-3 rounded-md border bg-gray-200">
             <div className="">
-              {props.section.content.map((question, index) => (
-                <div>
+              {props.section.content.map((question, questionIndex) => (
+                <div key={questionIndex}>
                   <p>
                     <span className="font-bold">
-                      Câu {props.section.startIndex + index}:
+                      Câu {props.section.startIndex + questionIndex}:
                     </span>{' '}
                     {question.explanation}
                   </p>

@@ -107,6 +107,9 @@ export const testApi = {
   submitTest: async (parameter: SubmitData) => {
     const payload = parameter;
 
+    console.log('payload');
+    console.log(payload);
+
     const response = await fetch(`${apiUrl}/submit`, {
       method: 'POST',
       credentials: 'include',
@@ -130,6 +133,8 @@ export const testApi = {
         }
 
         const testResultId: number = data.data;
+        console.log('response:');
+        console.log(data);
         return testResultId;
       })
       .catch((err) => {

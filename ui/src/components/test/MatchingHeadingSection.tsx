@@ -35,15 +35,6 @@ export default function MatchingHeadingSection(
     shuffle(newAnswers);
 
     setAnswers(newAnswers);
-
-    // initialize answers array of this section
-    if (submitData.sections[props.sectionIndex - 1].answers.length < 1) {
-      for (let i = 0; i < props.section.content.length; i++) {
-        if (props.section.content[i].q) {
-          submitData.sections[props.sectionIndex - 1].answers.push('');
-        }
-      }
-    }
   }, []);
 
   // empty function if in review mode
@@ -76,8 +67,8 @@ export default function MatchingHeadingSection(
       <div>
         <div>
           {props.section.media &&
-            props.section.media.map((image) => (
-              <div className="flex flex-col items-center">
+            props.section.media.map((image, imageIndex) => (
+              <div key={imageIndex} className="flex flex-col items-center">
                 <div className="flex justify-center">
                   <img className="py-10 w-11/12" src={image.content} />
                 </div>
@@ -123,10 +114,10 @@ export default function MatchingHeadingSection(
                       className={`w-full py-1`}
                     >
                       {answers &&
-                        answers.map((answer, index) => (
-                          <Option value={answer}>
+                        answers.map((answer, answerIndex) => (
+                          <Option value={answer} key={answerIndex}>
                             <span className="font-bold pr-2">
-                              {String.fromCharCode(index + 65)}
+                              {String.fromCharCode(answerIndex + 65)}
                             </span>{' '}
                             {answer}
                           </Option>
