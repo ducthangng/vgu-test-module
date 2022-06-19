@@ -58,13 +58,19 @@ func GetSingleClassTest(c *gin.Context) {
 	}
 
 	access := registry.BuildClassAccessPoint(false, sqlconnection.DBConn)
-	classes, err := access.Service.GetSingleClassTest(ctx, CID, TID)
+	test, err := access.Service.GetSingleClassTest(ctx, CID, TID)
 	if err != nil {
 		app.Response(http.StatusInternalServerError, 0, err)
 		return
 	}
 
-	app.Response(http.StatusOK, classes, nil)
+	var result api_dto.Test
+	if err := copier.Copy(&result, &test); err != nil {
+		app.Response(http.StatusInternalServerError, 0, err)
+		return
+	}
+
+	app.Response(http.StatusOK, result, nil)
 }
 
 func GetAllClasses(c *gin.Context) {
