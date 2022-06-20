@@ -65,47 +65,29 @@ jobs:
       - name: Push image to DigitalOcean Container Registry
         run: docker push $(echo $REGISTRY)/$(echo $CLIENT_NAME):$(echo $GITHUB_SHA | head -c7)
 
-  # deploy:
-  #   runs-on: ubuntu-latest
-  #   needs: [build_push_server, build_push_client]
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build_push_server, build_push_client]
 
-  #   steps:
-  #     - name: Deploy to Digital Ocean droplet via SSH action
-  #       uses: appleboy/ssh-action@v0.1.3
-  #       with:
-  #         host: ${{ secrets.HOST }}
-  #         username: ${{ secrets.USERNAME }}
-  #         key: ${{ secrets.SSHKEY }}
-  #         passphrase: ${{ secrets.PASSPHRASE }}
-  #         envs: CLIENT_NAME,SERVER_NAME,REGISTRY,{{ secrets.DIGITAL_OCEAN_TOKEN }}, {{ secrets.CA_CERTIFICATE }}, {{ secrets.DB_USER }}, {{ secrets.DB_HOST }}, {{ secrets.DB_PASSWORD }}, GITHUB_SHA
-  #         script: |
-  #           # Login to registry
-  #           docker login -u ${{ secrets.DIGITAL_OCEAN_TOKEN }} -p ${{ secrets.DIGITAL_OCEAN_TOKEN }} registry.digitalocean.com
-  #           # Stop running container
-  #           docker-compose down
-  #           # # create the environment file sample.list from the cloud.list of the default env
-  #           # cp cloud.list sample.list
-  #           touch .env
-  #           # # append keys
-  #           # echo "DATABASE_CACERTBASE64=${{ secrets.CA_CERTIFICATE }}" >> sample.list
-  #           # echo "DATABASE_USER=${{ secrets.DB_USER }}" >> sample.list
-  #           # echo "DATABASE_HOST=${{ secrets.DB_HOST }}" >> sample.list
-  #           # echo "DATABASE_PASSWORD=${{ secrets.DB_PASSWORD}}" >> sample.list
-  #           echo "TAG=$(echo $GITHUB_SHA | head -c7)" >> .env
-  #           # # Run a new container from a new image
-  #           # docker run -d \
-  #           # --restart always \
-  #           # --name $(echo $SERVER_NAME) \
-  #           # -p 8080:8080 \
-  #           # --env-file /root/sample.list \
-  #           # $(echo $REGISTRY)/$(echo $SERVER_NAME):$(echo $GITHUB_SHA | head -c7)
-  #           # # Run a new container from a new image
-  #           # docker run -d \
-  #           # --restart always \
-  #           # --name $(echo $CLIENT_NAME) \
-  #           # -p 3000:3000 \
-  #           # $(echo $REGISTRY)/$(echo $CLIENT_NAME):$(echo $GITHUB_SHA | head -c7)
-  #           docker-compose -f docker-compose.yml -d --env-file .env up
-  #           # remove the last line
-  #           # rm -rf sample.list
-  #           rm -rf .env
+    steps:
+      - name: Deploy to Digital Ocean droplet via SSH action
+        uses: appleboy/ssh-action@v0.1.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSHKEY }}
+          passphrase: ${{ secrets.PASSPHRASE }}
+          envs: CLIENT_NAME,SERVER_NAME,REGISTRY,{{ secrets.DIGITAL_OCEAN_TOKEN }}, GITHUB_SHA
+          script: |
+            # Login to registry
+            docker login -u ${{ secrets.DIGITAL_OCEAN_TOKEN }} -p ${{ secrets.DIGITAL_OCEAN_TOKEN }} registry.digitalocean.com
+            # Stop running container
+            docker-compose down
+
+            touch .env
+            echo "TAG=$(echo $GITHUB_SHA | head -c7)" >> .env
+
+            docker pull registry.digitalocean.com/gl-prod/ui:$(echo $IMAGE_TAG)
+            docker pull registry.digitalocean.com/gl-prod/api:$(echo $IMAGE_TAG)
+
+            docker-compose -f docker-compose.yml -d --env-file .env up
