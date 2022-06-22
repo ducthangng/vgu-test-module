@@ -112,7 +112,7 @@ func (t *TestUsecase) SubmitTest(ctx context.Context, data usecase_dto.SubmitDat
 	}
 
 	if len(data.Sections) != len(sk.Section) {
-		return testResultId, fmt.Errorf("The number of sections is not equal")
+		return testResultId, fmt.Errorf("the number of sections is not equal")
 
 	}
 
@@ -122,7 +122,7 @@ func (t *TestUsecase) SubmitTest(ctx context.Context, data usecase_dto.SubmitDat
 		// @1. Compare result to the database answer to produce the test result.
 		// @2. Save-up user's answer.
 		if len(section.Content) != len(data.Sections[i].Answers) {
-			return 0, fmt.Errorf("The number of sections is not equal")
+			return 0, fmt.Errorf("the number of sections is not equal")
 		}
 
 		for j, content := range section.Content {
