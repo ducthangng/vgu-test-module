@@ -100,13 +100,13 @@ func (m *MockClassUseCaseMockRecorder) QueryClassTestResult(ctx context.Context,
 	return m.mock.ctrl.RecordCallWithMethodType(m.mock, "QueryClassTestResult", reflect.TypeOf((*MockClassUseCase)(nil).QueryClassTestResult), ctx, classId, testId)
 }
 
-func (m *MockClassUseCase) GetClassTest(ctx context.Context, classId int, testName string) (tests []usecase_dto.Test, err error) {
+func (m *MockClassUseCase) GetClassTest(ctx context.Context, classId int) (tests []usecase_dto.Test, err error) {
 	ret := m.ctrl.Call(m, "GetClassTest", ctx, classId, testName)
 	ret0, _ := ret[0].([]usecase_dto.Test)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-func (m *MockClassUseCaseMockRecorder) GetClassTest(ctx context.Context, classId interface{}, testName interface{}) *gomock.Call {
-	return m.mock.ctrl.RecordCallWithMethodType(m.mock, "GetClassTest", reflect.TypeOf((*MockClassUseCase)(nil).GetClassTest), ctx, classId, testName)
+func (m *MockClassUseCaseMockRecorder) GetClassTest(ctx context.Context, classId interface{}) *gomock.Call {
+	return m.mock.ctrl.RecordCallWithMethodType(m.mock, "GetClassTest", reflect.TypeOf((*MockClassUseCase)(nil).GetClassTest), ctx, classId)
 }
