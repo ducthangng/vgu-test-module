@@ -1,6 +1,12 @@
 package mockusecase
 
-import "github.com/golang/mock/gomock"
+import (
+	"context"
+	"reflect"
+	"server/app/usecase/usecase_dto"
+
+	"github.com/golang/mock/gomock"
+)
 
 type MockUserUseCase struct {
 	ctrl     *gomock.Controller
@@ -76,4 +82,3 @@ func (m *MockUserUseCase) ReviewTestResult(ctx context.Context, resultId int) (s
 func (m *MockUserUseCaseMockRecorder) ReviewTestResult(ctx context.Context, resultId interface{}) *gomock.Call {
 	return m.mock.ctrl.RecordCallWithMethodType(m.mock, "ReviewTestResult", reflect.TypeOf((*MockUserUseCase)(nil).ReviewTestResult), ctx, resultId)
 }
-

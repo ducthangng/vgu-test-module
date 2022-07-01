@@ -1,5 +1,13 @@
 package mockusecase
 
+import (
+	"context"
+	"reflect"
+	"server/app/usecase/usecase_dto"
+
+	"github.com/golang/mock/gomock"
+)
+
 type MockTestResultUseCase struct {
 	ctrl     *gomock.Controller
 	recorder *MockTestResultUseCaseMockRecorder
@@ -30,7 +38,7 @@ func (m *MockTestResultUseCaseMockRecorder) GetUserTestResults(ctx context.Conte
 	return m.mock.ctrl.RecordCallWithMethodType(m.mock, "GetUserTestResults", reflect.TypeOf((*MockTestResultUseCase)(nil).GetUserTestResults), ctx, userID)
 }
 
-func (m *MockTestResultUseCase) GetUserTestResultDetail(ctx context.Context, testId int) (result usecase_dto.TestResult, err error){
+func (m *MockTestResultUseCase) GetUserTestResultDetail(ctx context.Context, testId int) (result usecase_dto.TestResult, err error) {
 	ret := m.ctrl.Call(m, "GetUserTestResultDetail", ctx, testId)
 	ret0, _ := ret[0].(usecase_dto.TestResult)
 	ret1, _ := ret[1].(error)
@@ -41,7 +49,7 @@ func (m *MockTestResultUseCaseMockRecorder) GetUserTestResultDetail(ctx context.
 	return m.mock.ctrl.RecordCallWithMethodType(m.mock, "GetUserTestResultDetail", reflect.TypeOf((*MockTestResultUseCase)(nil).GetUserTestResultDetail), ctx, testId)
 }
 
-func (m *MockTestResultUseCase) GetTestResultHeadline(ctx context.Context, testResultId int) (result usecase_dto.TestResult, err error){
+func (m *MockTestResultUseCase) GetTestResultHeadline(ctx context.Context, testResultId int) (result usecase_dto.TestResult, err error) {
 	ret := m.ctrl.Call(m, "GetTestResultHeadline", ctx, testResultId)
 	ret0, _ := ret[0].(usecase_dto.TestResult)
 	ret1, _ := ret[1].(error)
