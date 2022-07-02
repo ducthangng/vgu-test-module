@@ -74,10 +74,10 @@ export const classApi = {
 
   getSingleTest: async (testId: string, classId: string) => {
     const response = await fetch(
-      `${apiUrl}/single_test/?` +
+      `${apiUrl}/single_test?` +
         new URLSearchParams({
           test_id: testId.toString(),
-          class_id: classId.toString(),
+          class_id: '1',
         }),
       {
         method: 'GET',
