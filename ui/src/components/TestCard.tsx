@@ -38,13 +38,13 @@ const TestCard: React.FC<TestCardData> = ({
             <img alt="example" src={test} className="p-0 rounded rounded-lg" />
           </div>
 
-          <div className="lg:col-span-7 flex flex-col lg:flex-row lg:pl-5">
-            <div className="grid grid-rows-2 flex items-start lg:px-3">
-              <div className="text-2xl font-medium">{testName}</div>
+          <div className="lg:col-span-7 lg:grid lg:grid-cols-6 flex flex-col lg:flex-row lg:pl-5">
+            <div className="lg:col-span-3 grid grid-rows-2 flex items-center lg:px-3">
+              <div className="text-2xl font-bold">{testName}</div>
               <div className="font-medium"> {description} </div>
             </div>
 
-            <div className="grid grid-rows-2 flex justify-center items-center py-3 lg:px-3">
+            <div className="lg:col-span-2 grid grid-rows-2 flex items-center py-3 lg:px-3">
               <div className="inline-flex font-medium">
                 <TeamOutlined style={{ color: '#8172D5' }} className="mr-3" />
                 Group {groupName}
