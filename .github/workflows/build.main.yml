@@ -9,8 +9,8 @@ on:
 
 env:
   REGISTRY: 'registry.digitalocean.com/gl-prod'
-  SERVER_NAME: 'vgu-api'
-  CLIENT_NAME: 'vgu-ui'
+  SERVER_NAME: 'landing-api'
+  CLIENT_NAME: 'landing-ui'
   IMAGE_TAG: '$(echo $GITHUB_SHA | head -c7)'
 
 #3

@@ -1,275 +1,262 @@
 package interactor
 
-import (
-	"context"
-	"errors"
-	"reflect"
-	"testing"
+// func buildClassTest() *ClassUsecase {
+// 	var repo repository.DataService
+// 	classusecase := NewClassUsecase(repo)
+// 	return classusecase
 
-	"server/app/domain/repository"
-	"server/app/usecase/usecase_dto"
-	mockusecase "server/app/usecase/usecase_mock"
+// }
 
-	"github.com/golang/mock/gomock"
-)
+// func TesrCreateClass(t *testing.T) {
+// 	type args struct {
+// 		ctx       context.Context
+// 		class_dto usecase_dto.Class
+// 	}
 
-func buildClassTest() *ClassUsecase {
-	var repo repository.DataService
-	classusecase := NewClassUsecase(repo)
-	return classusecase
+// 	type test struct {
+// 		name string
+// 		args args
+// 		want error
+// 	}
 
-}
+// 	mockCtrl := gomock.NewController(t)
+// 	defer mockCtrl.Finish()
 
-func TesrCreateClass(t *testing.T) {
-	type args struct {
-		ctx       context.Context
-		class_dto usecase_dto.Class
-	}
+// 	mockRepo := mockusecase.NewMockClassUseCase(mockCtrl)
 
-	type test struct {
-		name string
-		args args
-		want error
-	}
+// 	tests := []test{
+// 		{
+// 			name: "TestCreateClassSuccess",
+// 			args: args{
+// 				ctx:       context.Background(),
+// 				class_dto: usecase_dto.Class{},
+// 			},
+// 			want: nil,
+// 		},
 
-	mockCtrl := gomock.NewController(t)
-	defer mockCtrl.Finish()
+// 		{
+// 			name: "TestCreateClassError",
+// 			args: args{
+// 				ctx:       context.Background(),
+// 				class_dto: usecase_dto.Class{},
+// 			},
+// 			want: nil,
+// 		},
+// 	}
 
-	mockRepo := mockusecase.NewMockClassUseCase(mockCtrl)
+// 	for _, tt := range tests {
+// 		t.Run(tt.name, func(t *testing.T) {
+// 			if tt.name == "TestCreateClassError" {
+// 				mockRepo.EXPECT().CreateClass(tt.args.ctx, tt.args.class_dto).Return(errors.New("error when creating class"))
+// 				classusecase := buildClassTest()
+// 				if got := classusecase.CreateClass(tt.args.ctx, tt.args.class_dto); got != tt.want {
+// 					t.Errorf("ClassUsecase.CreateClass() = %v, want %v", got, tt.want)
+// 				}
+// 			}
+// 			if tt.name == "TestCreateClassSuccess" {
+// 				mockRepo.EXPECT().CreateClass(tt.args.ctx, tt.args.class_dto).Return(nil)
+// 				classusecase := buildClassTest()
+// 				if got := classusecase.CreateClass(tt.args.ctx, tt.args.class_dto); got != tt.want {
+// 					t.Errorf("ClassUsecase.CreateClass() = %v, want %v", got, tt.want)
+// 				}
+// 			}
+// 		})
+// 	}
 
-	tests := []test{
-		{
-			name: "TestCreateClassSuccess",
-			args: args{
-				ctx:       context.Background(),
-				class_dto: usecase_dto.Class{},
-			},
-			want: nil,
-		},
+// }
 
-		{
-			name: "TestCreateClassError",
-			args: args{
-				ctx:       context.Background(),
-				class_dto: usecase_dto.Class{},
-			},
-			want: nil,
-		},
-	}
+// func TestGetClasses(t *testing.T) {
+// 	type args struct {
+// 		ctx context.Context
+// 	}
 
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if tt.name == "TestCreateClassError" {
-				mockRepo.EXPECT().CreateClass(tt.args.ctx, tt.args.class_dto).Return(errors.New("error when creating class"))
-				classusecase := buildClassTest()
-				if got := classusecase.CreateClass(tt.args.ctx, tt.args.class_dto); got != tt.want {
-					t.Errorf("ClassUsecase.CreateClass() = %v, want %v", got, tt.want)
-				}
-			}
-			if tt.name == "TestCreateClassSuccess" {
-				mockRepo.EXPECT().CreateClass(tt.args.ctx, tt.args.class_dto).Return(nil)
-				classusecase := buildClassTest()
-				if got := classusecase.CreateClass(tt.args.ctx, tt.args.class_dto); got != tt.want {
-					t.Errorf("ClassUsecase.CreateClass() = %v, want %v", got, tt.want)
-				}
-			}
-		})
-	}
+// 	type test struct {
+// 		name    string
+// 		args    args
+// 		want    []usecase_dto.Class
+// 		wantErr error
+// 	}
 
-}
+// 	mockCtrl := gomock.NewController(t)
+// 	defer mockCtrl.Finish()
 
-func TestGetClasses(t *testing.T) {
-	type args struct {
-		ctx context.Context
-	}
+// 	mockRepo := mockusecase.NewMockClassUseCase(mockCtrl)
 
-	type test struct {
-		name    string
-		args    args
-		want    []usecase_dto.Class
-		wantErr error
-	}
+// 	tt := test{
+// 		name: "TestGetClasses",
+// 		args: args{
+// 			ctx: context.Background(),
+// 		},
+// 		want:    []usecase_dto.Class{},
+// 		wantErr: nil,
+// 	}
 
-	mockCtrl := gomock.NewController(t)
-	defer mockCtrl.Finish()
+// 	t.Run(tt.name, func(t *testing.T) {
+// 		mockRepo.EXPECT().GetClasses(tt.args.ctx).Return(tt.want, tt.wantErr)
+// 		classusecase := buildClassTest()
+// 		got, err := classusecase.GetClasses(tt.args.ctx)
+// 		if err != nil {
+// 			t.Errorf("ClassUsecase.GetClasses() = %v, want %v", err, tt.wantErr)
+// 		}
+// 		if !reflect.DeepEqual(got, tt.want) {
+// 			t.Errorf("ClassUsecase.GetClasses() = %v, want %v", got, tt.want)
+// 		}
 
-	mockRepo := mockusecase.NewMockClassUseCase(mockCtrl)
+// 	})
+// }
 
-	tt := test{
-		name: "TestGetClasses",
-		args: args{
-			ctx: context.Background(),
-		},
-		want:    []usecase_dto.Class{},
-		wantErr: nil,
-	}
+// func TestAddMember2Class(t *testing.T) {
+// 	type args struct {
+// 		ctx     context.Context
+// 		classId int
+// 		userId  int
+// 	}
 
-	t.Run(tt.name, func(t *testing.T) {
-		mockRepo.EXPECT().GetClasses(tt.args.ctx).Return(tt.want, tt.wantErr)
-		classusecase := buildClassTest()
-		got, err := classusecase.GetClasses(tt.args.ctx)
-		if err != nil {
-			t.Errorf("ClassUsecase.GetClasses() = %v, want %v", err, tt.wantErr)
-		}
-		if !reflect.DeepEqual(got, tt.want) {
-			t.Errorf("ClassUsecase.GetClasses() = %v, want %v", got, tt.want)
-		}
+// 	type test struct {
+// 		name string
+// 		args args
+// 		want error
+// 	}
 
-	})
-}
+// 	mockCtrl := gomock.NewController(t)
+// 	defer mockCtrl.Finish()
 
-func TestAddMember2Class(t *testing.T) {
-	type args struct {
-		ctx     context.Context
-		classId int
-		userId  int
-	}
+// 	mockRepo := mockusecase.NewMockClassUseCase(mockCtrl)
 
-	type test struct {
-		name string
-		args args
-		want error
-	}
+// 	tt := test{
+// 		name: "TestAddMember2Class",
+// 		args: args{
+// 			ctx:     context.Background(),
+// 			classId: 1,
+// 			userId:  1,
+// 		},
+// 		want: nil,
+// 	}
 
-	mockCtrl := gomock.NewController(t)
-	defer mockCtrl.Finish()
+// 	t.Run(tt.name, func(t *testing.T) {
+// 		mockRepo.EXPECT().AddMember2Class(tt.args.ctx, tt.args.classId, tt.args.userId).Return(tt.want)
+// 		classusecase := buildClassTest()
+// 		if got := classusecase.AddMember2Class(tt.args.ctx, tt.args.classId, tt.args.userId); got != tt.want {
+// 			t.Errorf("ClassUsecase.AddMember2Class() = %v, want %v", got, tt.want)
+// 		}
+// 	})
+// }
 
-	mockRepo := mockusecase.NewMockClassUseCase(mockCtrl)
+// func TestRemoveMemberFromClass(t *testing.T) {
+// 	type args struct {
+// 		ctx     context.Context
+// 		classId int
+// 		userId  int
+// 	}
 
-	tt := test{
-		name: "TestAddMember2Class",
-		args: args{
-			ctx:     context.Background(),
-			classId: 1,
-			userId:  1,
-		},
-		want: nil,
-	}
+// 	type test struct {
+// 		name string
+// 		args args
+// 		want error
+// 	}
 
-	t.Run(tt.name, func(t *testing.T) {
-		mockRepo.EXPECT().AddMember2Class(tt.args.ctx, tt.args.classId, tt.args.userId).Return(tt.want)
-		classusecase := buildClassTest()
-		if got := classusecase.AddMember2Class(tt.args.ctx, tt.args.classId, tt.args.userId); got != tt.want {
-			t.Errorf("ClassUsecase.AddMember2Class() = %v, want %v", got, tt.want)
-		}
-	})
-}
+// 	mockCtrl := gomock.NewController(t)
+// 	defer mockCtrl.Finish()
 
-func TestRemoveMemberFromClass(t *testing.T) {
-	type args struct {
-		ctx     context.Context
-		classId int
-		userId  int
-	}
+// 	mockRepo := mockusecase.NewMockClassUseCase(mockCtrl)
 
-	type test struct {
-		name string
-		args args
-		want error
-	}
+// 	tt := test{
+// 		name: "TestRemoveMemberFromClass",
+// 		args: args{
+// 			ctx:     context.Background(),
+// 			classId: 1,
+// 			userId:  1,
+// 		},
+// 		want: nil,
+// 	}
 
-	mockCtrl := gomock.NewController(t)
-	defer mockCtrl.Finish()
+// 	t.Run(tt.name, func(t *testing.T) {
+// 		mockRepo.EXPECT().RemoveMemberFromClass(tt.args.ctx, tt.args.classId, tt.args.userId).Return(tt.want)
+// 		classusecase := buildClassTest()
+// 		if got := classusecase.RemoveMemberFromClass(tt.args.ctx, tt.args.classId, tt.args.userId); got != tt.want {
+// 			t.Errorf("ClassUsecase.RemoveMemberFromClass() = %v, want %v", got, tt.want)
+// 		}
+// 	})
+// }
 
-	mockRepo := mockusecase.NewMockClassUseCase(mockCtrl)
+// func TestQueryClassTestResult(t *testing.T) {
+// 	type args struct {
+// 		ctx     context.Context
+// 		classId int
+// 		testId  int
+// 	}
 
-	tt := test{
-		name: "TestRemoveMemberFromClass",
-		args: args{
-			ctx:     context.Background(),
-			classId: 1,
-			userId:  1,
-		},
-		want: nil,
-	}
+// 	type test struct {
+// 		name    string
+// 		args    args
+// 		want    usecase_dto.TestResult
+// 		wantErr error
+// 	}
 
-	t.Run(tt.name, func(t *testing.T) {
-		mockRepo.EXPECT().RemoveMemberFromClass(tt.args.ctx, tt.args.classId, tt.args.userId).Return(tt.want)
-		classusecase := buildClassTest()
-		if got := classusecase.RemoveMemberFromClass(tt.args.ctx, tt.args.classId, tt.args.userId); got != tt.want {
-			t.Errorf("ClassUsecase.RemoveMemberFromClass() = %v, want %v", got, tt.want)
-		}
-	})
-}
+// 	mockCtrl := gomock.NewController(t)
+// 	defer mockCtrl.Finish()
 
-func TestQueryClassTestResult(t *testing.T) {
-	type args struct {
-		ctx     context.Context
-		classId int
-		testId  int
-	}
+// 	mockRepo := mockusecase.NewMockClassUseCase(mockCtrl)
 
-	type test struct {
-		name    string
-		args    args
-		want    usecase_dto.TestResult
-		wantErr error
-	}
+// 	tt := test{
+// 		name: "TestQueryClassTestResult",
+// 		args: args{
+// 			ctx:     context.Background(),
+// 			classId: 1,
+// 			testId:  1,
+// 		},
+// 		want:    usecase_dto.TestResult{},
+// 		wantErr: nil,
+// 	}
 
-	mockCtrl := gomock.NewController(t)
-	defer mockCtrl.Finish()
+// 	t.Run(tt.name, func(t *testing.T) {
+// 		mockRepo.EXPECT().QueryClassTestResult(tt.args.ctx, tt.args.classId, tt.args.testId).Return(tt.want, tt.wantErr)
+// 		classusecase := buildClassTest()
+// 		got, err := classusecase.QueryClassTestResult(tt.args.ctx, tt.args.classId, tt.args.testId)
+// 		if err != nil {
+// 			t.Errorf("ClassUsecase.QueryClassTestResult() = %v, want %v", err, tt.wantErr)
+// 		}
+// 		if !reflect.DeepEqual(got, tt.want) {
+// 			t.Errorf("ClassUsecase.QueryClassTestResult() = %v, want %v", got, tt.want)
+// 		}
+// 	})
+// }
 
-	mockRepo := mockusecase.NewMockClassUseCase(mockCtrl)
+// func TestGetClassTest(t *testing.T) {
+// 	type args struct {
+// 		ctx     context.Context
+// 		classId int
+// 	}
 
-	tt := test{
-		name: "TestQueryClassTestResult",
-		args: args{
-			ctx:     context.Background(),
-			classId: 1,
-			testId:  1,
-		},
-		want:    usecase_dto.TestResult{},
-		wantErr: nil,
-	}
+// 	type test struct {
+// 		name    string
+// 		args    args
+// 		want    usecase_dto.Test
+// 		wantErr error
+// 	}
 
-	t.Run(tt.name, func(t *testing.T) {
-		mockRepo.EXPECT().QueryClassTestResult(tt.args.ctx, tt.args.classId, tt.args.testId).Return(tt.want, tt.wantErr)
-		classusecase := buildClassTest()
-		got, err := classusecase.QueryClassTestResult(tt.args.ctx, tt.args.classId, tt.args.testId)
-		if err != nil {
-			t.Errorf("ClassUsecase.QueryClassTestResult() = %v, want %v", err, tt.wantErr)
-		}
-		if !reflect.DeepEqual(got, tt.want) {
-			t.Errorf("ClassUsecase.QueryClassTestResult() = %v, want %v", got, tt.want)
-		}
-	})
-}
+// 	mockCtrl := gomock.NewController(t)
+// 	defer mockCtrl.Finish()
 
-func TestGetClassTest(t *testing.T) {
-	type args struct {
-		ctx     context.Context
-		classId int
-	}
+// 	mockRepo := mockusecase.NewMockClassUseCase(mockCtrl)
 
-	type test struct {
-		name    string
-		args    args
-		want    usecase_dto.Test
-		wantErr error
-	}
+// 	tt := test{
+// 		name: "TestGetClassTest",
+// 		args: args{
+// 			ctx:     context.Background(),
+// 			classId: 1,
+// 		},
+// 	}
 
-	mockCtrl := gomock.NewController(t)
-	defer mockCtrl.Finish()
-
-	mockRepo := mockusecase.NewMockClassUseCase(mockCtrl)
-
-	tt := test{
-		name: "TestGetClassTest",
-		args: args{
-			ctx:     context.Background(),
-			classId: 1,
-		},
-	}
-
-	t.Run(tt.name, func(t *testing.T) {
-		mockRepo.EXPECT().GetClassTest(tt.args.ctx, tt.args.classId).Return(tt.want, tt.wantErr)
-		classusecase := buildClassTest()
-		got, err := classusecase.GetClassTest(tt.args.ctx, tt.args.classId)
-		if err != nil {
-			t.Errorf("ClassUsecase.GetClassTest() = %v, want %v", err, tt.wantErr)
-		}
-		if !reflect.DeepEqual(got, tt.want) {
-			t.Errorf("ClassUsecase.GetClassTest() = %v, want %v", got, tt.want)
-		}
-	})
-}
+// 	t.Run(tt.name, func(t *testing.T) {
+// 		mockRepo.EXPECT().GetClassTest(tt.args.ctx, tt.args.classId).Return(tt.want, tt.wantErr)
+// 		classusecase := buildClassTest()
+// 		got, err := classusecase.GetClassTest(tt.args.ctx, tt.args.classId)
+// 		if err != nil {
+// 			t.Errorf("ClassUsecase.GetClassTest() = %v, want %v", err, tt.wantErr)
+// 		}
+// 		if !reflect.DeepEqual(got, tt.want) {
+// 			t.Errorf("ClassUsecase.GetClassTest() = %v, want %v", got, tt.want)
+// 		}
+// 	})
+// }
